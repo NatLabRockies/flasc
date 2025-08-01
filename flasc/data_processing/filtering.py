@@ -313,9 +313,14 @@ class FlascFilter:
         if not apply_filters_to_df:
             df_in = df_in.copy()
 
-        # Mark data as faulty on the dataframe
+        # Mark data as faulty on the dataframe, omitting boolean type columns.
         N_pre = [df_get_no_faulty_measurements(df_in, tii) for tii in ti]
-        df_out = df_mark_turbdata_as_faulty(df=df_in, cond=condition, turbine_list=ti)
+        df_out = df_mark_turbdata_as_faulty(
+            df=df_in,
+            cond=condition,
+            turbine_list=ti,
+            exclude_columns=df_in.select_dtypes(include=["bool"]).columns.tolist(),
+        )
 
         # Print the reduction in useful data to the console, if verbose
         if verbose:
@@ -1381,6 +1386,7 @@ def filter_df_by_faulty_impacting_turbines(df, ti, df_impacting_turbines, verbos
         df=df,
         cond=test_turbine_impacted,
         turbine_list=[ti],
+        exclude_columns=df.select_dtypes(include=["bool"]).columns.tolist(),
     )
     N_post = df_get_no_faulty_measurements(df_out, ti)
 
