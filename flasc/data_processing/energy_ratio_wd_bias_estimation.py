@@ -427,7 +427,7 @@ class bias_estimation(LoggingManager):
                 x (np.ndarray): Wind direction bias to evaluate. 1D array with 1 element.
             """
             self._get_energy_ratios_allbins(
-                wd_bias=x[0], # pass as float
+                wd_bias=x[0],  # pass as float
                 time_mask=time_mask,
                 ws_mask=ws_mask,
                 wd_mask=wd_mask,
