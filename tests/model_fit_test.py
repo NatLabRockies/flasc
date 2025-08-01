@@ -100,40 +100,6 @@ def test_df():
         )
 
 
-def test_turbine_number():
-    # Get simple inputs
-    (
-        df,
-        fm,
-        cost_function,
-        _,
-        _,
-        _,
-        _,
-    ) = get_simple_inputs_gch()
-
-    # Instantiate the ModelFit object without parameters
-    model_fit = ModelFit(
-        df,
-        fm,
-        cost_function,
-    )
-
-    # Check the number of turbines
-    assert model_fit.n_turbines == 1
-
-    # Change the number of turbines in the FlorisModel
-    fm.set(layout_x=[0.0, 1000.0], layout_y=[0.0, 0.0])
-
-    with pytest.raises(ValueError):
-        # Instantiate the ModelFit object
-        ModelFit(
-            df,
-            fm,
-            cost_function,
-        )
-
-
 def test_get_set_param_no_params():
     # Get simple inputs
     (

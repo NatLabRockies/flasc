@@ -67,7 +67,7 @@ class FlascDataFrame(DataFrame):
                 raise ValueError("long_data_columns must be a dictionary")
             if not all(col in long_data_columns for col in ["variable_column", "value_column"]):
                 raise ValueError(
-                    "long_data_columns must contain keys 'variable_column', " "and 'value_column'"
+                    "long_data_columns must contain keys 'variable_column', and 'value_column'"
                 )
             self._long_data_columns = long_data_columns
 
