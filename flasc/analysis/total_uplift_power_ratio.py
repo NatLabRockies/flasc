@@ -137,7 +137,7 @@ def _total_uplift_power_ratio_single(
             )
             .pivot(
                 values=["power_ratio"],
-                columns="df_name",
+                on="df_name",
                 index=bin_cols_without_df_name + ["weight", "weighted_pow_ref"],
                 aggregate_function="first",
             )
