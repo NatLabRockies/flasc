@@ -89,7 +89,7 @@ class bias_estimation(LoggingManager):
 
     def _load_a_input_for_wd_bias(
         self,
-        wd_bias,
+        wd_bias: float,
     ):
         """Load AnalysisInput objects with bias.
 
@@ -158,7 +158,7 @@ class bias_estimation(LoggingManager):
 
     def _get_energy_ratios_allbins(
         self,
-        wd_bias,
+        wd_bias: float,
         time_mask=None,
         ws_mask=(6.0, 10.0),
         wd_mask=None,
@@ -233,7 +233,7 @@ class bias_estimation(LoggingManager):
 
         for ii, ti in enumerate(self.test_turbines):
             self.logger.info(
-                "    Determining energy ratios for test turbine = %03d." % (ti)
+                "    Determining energy ratios for test turbine = %03d." % ti
                 + " WD bias: %.3f deg." % wd_bias
             )
 
@@ -420,9 +420,14 @@ class bias_estimation(LoggingManager):
         """
         self.logger.info("Estimating the wind direction bias")
 
-        def cost_fun(wd_bias):
+        def cost_fun(x: np.ndarray):
+            """Cost function to minimize.
+
+            Args:
+                x (np.ndarray): Wind direction bias to evaluate. 1D array with 1 element.
+            """
             self._get_energy_ratios_allbins(
-                wd_bias=wd_bias,
+                wd_bias=x[0], # pass as float
                 time_mask=time_mask,
                 ws_mask=ws_mask,
                 wd_mask=wd_mask,
@@ -467,7 +472,7 @@ class bias_estimation(LoggingManager):
             # workers=opt_workers,
         )
 
-        wd_bias = x_opt
+        wd_bias = x_opt[0]
         self.opt_wd_bias = wd_bias
         self.opt_cost = J_opt
         self.opt_wd_grid = x
@@ -476,7 +481,7 @@ class bias_estimation(LoggingManager):
         # End with optimal results and bootstrapping
         self.logger.info("  Evaluating optimal solution with bootstrapping")
         self._get_energy_ratios_allbins(
-            wd_bias=x_opt,
+            wd_bias=wd_bias,
             time_mask=time_mask,
             ws_mask=ws_mask,
             wd_mask=wd_mask,
@@ -530,7 +535,7 @@ class bias_estimation(LoggingManager):
             er_out_test_turbine_list_scada_copy = self.er_out_test_turbine_list_scada.copy()
             # (Re)compute case with wd_bias=0
             self._get_energy_ratios_allbins(
-                wd_bias=0,
+                wd_bias=0.0,
                 time_mask=self._input_args["time_mask"],
                 ws_mask=self._input_args["ws_mask"],
                 wd_mask=self._input_args["wd_mask"],
