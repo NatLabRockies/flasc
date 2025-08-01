@@ -25,19 +25,20 @@ class ResultsAnalysis:
         floris_calibrations: list,
         split_columns: list[str] = [],
         dt: float = 600.0,  # seconds
-        turbine_subset: list[int] = None,
+        turbine_subset: list[int] | None = None,
     ):
         """Initialize the ResultsAnalysis object.
 
         Args:
-            df_scada: DataFrame containing SCADA data.
-            floris_powers: List of power results from FLORIS
-            floris_models: List of wake models
-            floris_calibrations: List of calibration settings for each model
-            split_columns: Columns in df_scada to potentially split the results analysis on
-            dt: Time step in seconds. Default is 600 seconds (10 minutes).
-            turbine_subset: List of turbines to include in the analysis.
-                If None, all turbines are included.
+            df_scada (pd.DataFrame | FlascDataFrame): DataFrame containing SCADA data.
+            floris_powers (list): List of power results from FLORIS.
+            floris_models (list): List of wake models.
+            floris_calibrations (list): List of calibration settings for each model.
+            split_columns (list[str]): Columns in df_scada to potentially split the
+                results analysis on. Defaults to [].
+            dt (float): Time step in seconds. Defaults to 600.0.
+            turbine_subset (list[int] | None): List of turbines to include in the
+                analysis. If None, all turbines are included. Defaults to None.
         """
         # Make sure df_scada has simple indices
         df_scada = df_scada.reset_index(drop=True)
@@ -167,13 +168,14 @@ class ResultsAnalysis:
         self.df_full_table["error_abs"] = self.df_full_table["error"].abs()
 
     # Plot the error distributions
-    def plot_error(self, ax=None, split_column=None):
+    def plot_error(self, ax=None, split_column: str | None = None):
         """Plot the error distributions.
 
         Args:
-            ax: Axes to plot on. If None, create a new figure.
-            split_column: Column to split the error distribution plots.
-                If None, no split is applied.
+            ax (matplotlib.axes.Axes): Axes to plot on. If None, create a new figure.
+                Defaults to None.
+            split_column (str | None): Column to split the error distribution plots.
+                If None, no split is applied. Defaults to None.
         """
         if split_column is None:
             g = sns.catplot(
@@ -202,13 +204,14 @@ class ResultsAnalysis:
         g.set_axis_labels("Model", "Error (kW)")
 
     # Plot the error distributions in absolute
-    def plot_error_abs(self, ax=None, split_column=None):
-        """Plot the error distributions in absolute.
+    def plot_error_abs(self, ax=None, split_column: str | None = None):
+        """Plot the absolute error distributions.
 
         Args:
-            ax: Axes to plot on. If None, create a new figure.
-            split_column: Column to split the error distribution plots.
-                If None, no split is applied.
+            ax (matplotlib.axes.Axes): Axes to plot on. If None, create a new figure.
+                Defaults to None.
+            split_column (str | None): Column to split the error distribution plots.
+                If None, no split is applied. Defaults to None.
         """
         if split_column is None:
             g = sns.catplot(
@@ -238,27 +241,33 @@ class ResultsAnalysis:
 
     def _table_turbine_error(
         self,
-        _df_full_table,
-        dict_model_names={},
-        dict_calibration_names={},
-        decimals=1,
-        calculation="median",
-        use_abs=False,
-        split_value=None,
+        _df_full_table: pd.DataFrame,
+        dict_model_names: dict = {},
+        dict_calibration_names: dict = {},
+        decimals: int = 1,
+        calculation: str = "median",
+        use_abs: bool = False,
+        split_value: str | None = None,
     ):
-        """Generate a summary table of the errors.
+        """Generate a summary table of the turbine errors.
 
         Args:
-            _df_full_table: DataFrame containing the full table of errors.
-            dict_model_names: Dictionary of model names to replace in the table.
-            dict_calibration_names: Dictionary of calibration names to replace in the table.
-            decimals: Number of decimals to display in the table.
-            calculation: Type of calculation to perform. Options are 'median', 'mean', or 'std'.
-            use_abs: If True, use absolute error instead of raw error.
-            split_value: Value of the split column used to generate _df_full_table.
+            _df_full_table (pd.DataFrame): DataFrame containing the full table of errors.
+            dict_model_names (dict): Dictionary of model names to replace in the
+                table. Defaults to {}.
+            dict_calibration_names (dict): Dictionary of calibration names to
+                replace in the table. Defaults to {}.
+            decimals (int): Number of decimals to display in the table.
+                Defaults to 1.
+            calculation (str): Type of calculation to perform. Options are
+                'median', 'mean', or 'std'. Defaults to "median".
+            use_abs (bool): If True, use absolute error instead of raw error.
+                Defaults to False.
+            split_value (str | None): Value of the split column used to
+                generate _df_full_table. Defaults to None.
 
         Returns:
-            GT table of median errors.
+            GT: GT table of turbine errors.
         """
         if use_abs:
             error_term = "error_abs"
@@ -311,26 +320,32 @@ class ResultsAnalysis:
     # Generate the table of statistics of turbine error
     def table_turbine_error(
         self,
-        dict_model_names={},
-        dict_calibration_names={},
-        decimals=1,
-        calculation="median",
-        use_abs=False,
-        split_column=None,
+        dict_model_names: dict = {},
+        dict_calibration_names: dict = {},
+        decimals: int = 1,
+        calculation: str = "median",
+        use_abs: bool = False,
+        split_column: str | None = None,
     ):
-        """Generate a summary table of the errors.
+        """Generate a summary table of the turbine errors.
 
         Args:
-            dict_model_names: Dictionary of model names to replace in the table.
-            dict_calibration_names: Dictionary of calibration names to replace in the table.
-            decimals: Number of decimals to display in the table.
-            calculation: Type of calculation to perform. Options are 'median', 'mean', or 'std'.
-            use_abs: If True, use absolute error instead of raw error.
-            split_column: Column to split the error distribution plots.
-                If None, no split is applied.
+            dict_model_names (dict): Dictionary of model names to replace in the
+                table. Defaults to {}.
+            dict_calibration_names (dict): Dictionary of calibration names to
+                replace in the table. Defaults to {}.
+            decimals (int): Number of decimals to display in the table.
+                Defaults to 1.
+            calculation (str): Type of calculation to perform. Options are
+                'median', 'mean', or 'std'. Defaults to "median".
+            use_abs (bool): If True, use absolute error instead of raw error.
+                Defaults to False.
+            split_column (str | None): Column to split the error distribution
+                plots. If None, no split is applied. Defaults to None.
 
         Returns:
-            GT table of median errors
+            GT | list[GT]: GT table of turbine errors, or list of tables if
+                split_column is provided.
         """
         # If split column is None, call _table_turbine_error directly
         if split_column is None:
@@ -375,25 +390,30 @@ class ResultsAnalysis:
     # Generate the table of median errors
     def _table_farm_energy(
         self,
-        _df_full_table,
-        dict_model_names={},
-        dict_calibration_names={},
-        decimals=1,
-        use_pchange=False,
-        split_value=None,
+        _df_full_table: pd.DataFrame,
+        dict_model_names: dict = {},
+        dict_calibration_names: dict = {},
+        decimals: int = 1,
+        use_pchange: bool = False,
+        split_value: str | None = None,
     ):
-        """Generate a summary table of the errors.
+        """Generate a summary table of farm energy production.
 
         Args:
-            _df_full_table: DataFrame containing the full table of errors.
-            dict_model_names: Dictionary of model names to replace in the table.
-            dict_calibration_names: Dictionary of calibration names to replace in the table.
-            decimals: Number of decimals to display in the table.
-            use_pchange: If True, express results in percent change.
-            split_value: Value of the split column used to generate _df_full_table.
+            _df_full_table (pd.DataFrame): DataFrame containing the full table of errors.
+            dict_model_names (dict): Dictionary of model names to replace in the
+                table. Defaults to {}.
+            dict_calibration_names (dict): Dictionary of calibration names to
+                replace in the table. Defaults to {}.
+            decimals (int): Number of decimals to display in the table.
+                Defaults to 1.
+            use_pchange (bool): If True, express results in percent change.
+                Defaults to False.
+            split_value (str | None): Value of the split column used to
+                generate _df_full_table. Defaults to None.
 
         Returns:
-            GT table of median errors
+            GT: GT table of farm energy production.
         """
         # First compute the SCADA total energy
         # First see what the SCADA result is (same in every case)
@@ -458,24 +478,29 @@ class ResultsAnalysis:
     # Generate the table of median errors
     def table_farm_energy(
         self,
-        dict_model_names={},
-        dict_calibration_names={},
-        decimals=1,
-        use_pchange=False,
-        split_column=None,
+        dict_model_names: dict = {},
+        dict_calibration_names: dict = {},
+        decimals: int = 1,
+        use_pchange: bool = False,
+        split_column: str | None = None,
     ):
-        """Generate a summary table of the errors.
+        """Generate a summary table of farm energy production.
 
         Args:
-            dict_model_names: Dictionary of model names to replace in the table.
-            dict_calibration_names: Dictionary of calibration names to replace in the table.
-            decimals: Number of decimals to display in the table.
-            use_pchange: If True, express results in percent change.
-            split_column: Column to split the error distribution plots.
-                If None, no split is applied.
+            dict_model_names (dict): Dictionary of model names to replace in the
+                table. Defaults to {}.
+            dict_calibration_names (dict): Dictionary of calibration names to
+                replace in the table. Defaults to {}.
+            decimals (int): Number of decimals to display in the table.
+                Defaults to 1.
+            use_pchange (bool): If True, express results in percent change.
+                Defaults to False.
+            split_column (str | None): Column to split the error distribution
+                plots. If None, no split is applied. Defaults to None.
 
         Returns:
-            GT table of median errors
+            GT | list[GT]: GT table of farm energy production, or list of tables if
+                split_column is provided.
         """
         # If split column is None, call _table_farm_energy directly
         if split_column is None:
