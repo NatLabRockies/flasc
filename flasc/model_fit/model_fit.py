@@ -16,7 +16,9 @@ from flasc.utilities.tuner_utilities import replicate_nan_values
 class ModelFit:
     """Fit a FlorisModel to SCADA data.
 
-    Description
+    A modular class for computing fitness evaluation of a FLORIS model to SCADA data.
+    Provides methods to run FLORIS simulations, evaluate cost functions, and manage
+    parameter optimization for model calibration.
     """
 
     def __init__(
@@ -45,13 +47,13 @@ class ModelFit:
             fmodel (FlorisModel | ParFlorisModel | UncertainFlorisModel):
                 FLORIS model to calibrate.
             cost_function (Callable): Handle to the cost function.
-            parameter_list (List[List] | List[Tuple]): List of FLORIS parameters to calibrate.  If
-                None, no parameters are calibrated.  Defaults to None.
-            parameter_name_list (List[str]): List of names for the parameters.  If None, no names
-                are provided.  Defaults to None.
-            parameter_range_list (List[List] | List[Tuple]): List of parameter ranges.  If None, no
-                ranges are provided.  Defaults to None.
-            parameter_index_list (List[int], optional): List of parameter indices. Defaults to None.
+            parameter_list (List[List] | List[Tuple], optional): List of FLORIS parameters to
+                calibrate. If empty, no parameters are calibrated. Defaults to [].
+            parameter_name_list (List[str], optional): List of names for the parameters.
+                If empty, no names are provided. Defaults to [].
+            parameter_range_list (List[List] | List[Tuple], optional): List of parameter ranges.
+                If empty, no ranges are provided. Defaults to [].
+            parameter_index_list (List[int], optional): List of parameter indices. Defaults to [].
             yaw_angles (np.ndarray | None, optional): Array of yaw angles. Defaults to None.
         """
         # Save the dataframe as a FlascDataFrame
@@ -230,7 +232,8 @@ class ModelFit:
                 set method.
 
         Returns:
-            FlascDataFrame: _description_
+            FlascDataFrame: FlascDataFrame containing FLORIS simulation results with wind
+                directions, wind speeds, and turbine powers.
         """
         # Get the wind speeds, wind directions and turbulence intensities
         time = self.df["time"].values
@@ -306,18 +309,18 @@ class ModelFit:
             verbose=self.fmodel.verbose,
         )
 
-    def evaluate_floris(self, turbine_groupings=None, **kwargs) -> float:
+    def evaluate_floris(self, turbine_groupings: Dict[str, Tuple] | None = None, **kwargs) -> float:
         """Evaluate the FLORIS model.
 
         Given the current parameter values, run the FLORIS model and evaluate the cost function.
 
         Args:
-            turbine_groupings (Dict[str, Tuple], optional): Dictionary of turbine groupings.
+            turbine_groupings (Dict[str, Tuple] | None, optional): Dictionary of turbine groupings.
                 Defaults to None.
             **kwargs: Additional keyword arguments to pass to the run_floris_model method.
 
         Returns:
-            float: cost value.
+            float: Cost value.
         """
         # Run the FLORIS model
         df_floris = self.run_floris_model(**kwargs)
@@ -326,13 +329,16 @@ class ModelFit:
         return self.cost_function(self.df, df_floris, self.fmodel, turbine_groupings)
 
     def set_parameter_and_evaluate(
-        self, parameter_values: np.ndarray, turbine_groupings=None, **kwargs
+        self,
+        parameter_values: np.ndarray,
+        turbine_groupings: Dict[str, Tuple] | None = None,
+        **kwargs,
     ) -> float:
         """Internal function to evaluate the cost function with a given set of parameters.
 
         Args:
             parameter_values (np.ndarray): Array of parameter values.
-            turbine_groupings (Dict[str, Tuple], optional): Dictionary of turbine groupings.
+            turbine_groupings (Dict[str, Tuple] | None, optional): Dictionary of turbine groupings.
                  Defaults to None.
             **kwargs: Additional keyword arguments to pass to the optimization algorithm.
 
