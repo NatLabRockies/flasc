@@ -1,6 +1,5 @@
 """This module contains the optimization algorithms for the model fitting."""
 
-import warnings
 from typing import Dict, Tuple
 
 import optuna
@@ -138,64 +137,3 @@ def opt_optuna_with_wd_std(
 
     # Returns results and the study object
     return result_dic, study
-
-
-# Temporarily alias the old function names for continutity with older codes, will eventually remove
-def atomic_opt_optuna(
-    mf: ModelFit,
-    n_trials: int = 100,
-    timeout: float | None = None,
-    turbine_groupings: Dict[str, Tuple] | None = None,
-    verbose: bool = False,
-    seed: int | None = None,
-) -> Tuple[Dict, optuna.Study]:
-    """Alias to opt_optuna for backward compatibility.
-
-    Args:
-        mf (ModelFit): ModelFit object containing the model and parameters to optimize.
-        n_trials (int): Number of trials to run. Defaults to 100.
-        timeout (float | None): Timeout for the optimization in seconds.
-            Defaults to None.
-        turbine_groupings (Dict[str, Tuple] | None): Dictionary of turbine groupings.
-            Defaults to None.
-        verbose (bool): Whether to print out the optimization process. Defaults to False.
-        seed (int | None): Seed for the random number generator. Defaults to None.
-
-    Returns:
-        Tuple[Dict, optuna.Study]: Dictionary containing the optimal parameter values and
-            the Optuna study object.
-    """
-    warnings.warn(
-        "atomic_opt_optuna is deprecated. Use opt_optuna instead.",
-        DeprecationWarning,
-    )
-    return opt_optuna(mf, n_trials, timeout, turbine_groupings, verbose, seed)
-
-
-def opt_optuna_with_unc(
-    mf: ModelFit,
-    n_trials: int = 100,
-    timeout: float | None = None,
-    turbine_groupings: Dict[str, Tuple] | None = None,
-    verbose: bool = False,
-) -> Tuple[Dict, optuna.Study]:
-    """Alias to opt_optuna_with_wd_std for backward compatibility.
-
-    Args:
-        mf (ModelFit): ModelFit object containing the model and parameters to optimize.
-        n_trials (int): Number of trials to run. Defaults to 100.
-        timeout (float | None): Timeout for the optimization in seconds.
-            Defaults to None.
-        turbine_groupings (Dict[str, Tuple] | None): Dictionary of turbine groupings.
-            Defaults to None.
-        verbose (bool): Whether to print out the optimization process. Defaults to False.
-
-    Returns:
-        Tuple[Dict, optuna.Study]: Dictionary containing the optimal parameter values including
-            wd_std and the Optuna study object.
-    """
-    warnings.warn(
-        "opt_optuna_with_unc is deprecated. Use opt_optuna_with_wd_std instead.",
-        DeprecationWarning,
-    )
-    return opt_optuna_with_wd_std(mf, n_trials, timeout, turbine_groupings, verbose)
