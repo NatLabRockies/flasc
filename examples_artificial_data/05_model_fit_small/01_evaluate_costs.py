@@ -3,7 +3,7 @@ import pickle
 import matplotlib.pyplot as plt
 import numpy as np
 
-from flasc.model_fit.cost_library import turbine_power_error_abs
+from flasc.model_fit.cost_library import TurbinePowerMeanAbsoluteError
 from flasc.model_fit.model_fit import ModelFit
 
 # Load the data from previous example
@@ -20,10 +20,11 @@ we_value_set = data["we_value_set"]
 
 # Set up the ModelFit object with the data and FLORIS model
 # Use the absolute turbine power error as cost function
+cost_function = TurbinePowerMeanAbsoluteError(df)
 mf = ModelFit(
     df,
     fm_default,
-    turbine_power_error_abs,
+    cost_function,
 )
 
 # Evaluate the model
@@ -40,7 +41,7 @@ for i, param_value in enumerate(np.arange(0.01, 0.07, 0.01)):
     mf = ModelFit(
         df,
         fm_default,
-        turbine_power_error_abs,
+        cost_function,
     )
     cost_value = mf.evaluate_floris()
 

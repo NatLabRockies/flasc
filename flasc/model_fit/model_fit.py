@@ -25,15 +25,7 @@ class ModelFit:
         self,
         df: pd.DataFrame | FlascDataFrame,
         fmodel: FlorisModel | ParFlorisModel | UncertainFlorisModel,
-        cost_function: Callable[
-            [
-                FlascDataFrame,
-                FlascDataFrame,
-                FlorisModel | ParFlorisModel | UncertainFlorisModel | None,
-                Dict[str, Tuple] | None,
-            ],
-            float,
-        ],
+        cost_function: Callable[[FlascDataFrame]],
         parameter_list: List[List] | List[Tuple] = [],
         parameter_name_list: List[str] = [],
         parameter_range_list: List[List] | List[Tuple] = [],
@@ -103,10 +95,8 @@ class ModelFit:
         # Check that the cost function has 3 inputs, the SCADA dataframe, the FLORIS dataframe,
         # and the FLORIS model
         if not callable(cost_function):
-            raise ValueError("cost_function must be a callable function.")
-        if cost_function.__code__.co_argcount != 4:
-            raise ValueError(
-                "cost_function must have 4 inputs: df_scada, df_floris, fmodel, turbine_groupings."
+            raise TypeError(
+                "cost_function must be a callable function taking one argument: df_floris."
             )
 
         # Save the cost function handle
@@ -326,7 +316,7 @@ class ModelFit:
         df_floris = self.run_floris_model(**kwargs)
 
         # Evaluate the cost function passing the FlorisModel
-        return self.cost_function(self.df, df_floris, self.fmodel, turbine_groupings)
+        return self.cost_function(df_floris)
 
     def set_parameter_and_evaluate(
         self,
