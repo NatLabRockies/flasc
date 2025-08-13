@@ -87,7 +87,8 @@ class TestTotalUplift(unittest.TestCase):
         # compute_total_uplift is the old name for total_uplift_power_ratio, test that
         # it can be used as total_uplift_power_ratio
         # Test the returned energy ratio assuming alternative weightings of the wind speed bins
-        # Remove this test in next major FLASC release since compute_total_uplift is deprecated
+        # TODO: Remove this test in next major FLASC release since compute_total_uplift is
+        # deprecated
         df_base = pd.DataFrame(
             {
                 "wd": [270, 270.0, 270.0, 270.0, 272.0],
