@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import os as os
-from typing import Callable, List, Union
+from typing import Callable, Iterable, List, Union
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -159,15 +159,15 @@ class bias_estimation(LoggingManager):
     def _get_energy_ratios_allbins(
         self,
         wd_bias: float,
-        time_mask=None,
-        ws_mask=(6.0, 10.0),
-        wd_mask=None,
-        ti_mask=None,
-        wd_step=3.0,
-        ws_step=1.0,
-        wd_bin_width=3.0,
-        N_btstrp=1,
-        plot_iter_path=None,
+        time_mask: None=None,
+        ws_mask: Iterable[float, float]=(6.0, 10.0),
+        wd_mask: Iterable[float, float] | None=None,
+        ti_mask: None=None,
+        wd_step: float=3.0,
+        ws_step: float=1.0,
+        wd_bin_width: float=3.0,
+        N_btstrp: int=1,
+        plot_iter_path: str | None=None,
     ):
         """Calculate the energy ratios.
 
@@ -177,8 +177,7 @@ class bias_estimation(LoggingManager):
                 the data based on this variable. Defaults to None.
             ws_mask ([iterable], optional): Wind speed mask. Should be an
                 iterable of length 2, e.g., [6.0, 10.0], defining the lower
-                and upper bound, respectively. If not specified, will not
-                mask the data based on this variable. Defaults to (6, 10).
+                and upper bound, respectively. Defaults to (6, 10).
             wd_mask ([iterable], optional): Wind direction mask. Should
                 be an iterable of length 2, e.g., [0.0, 180.0], defining
                 the lower and upper bound, respectively. If not specified,
