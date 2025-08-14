@@ -20,7 +20,7 @@ we_value_set = data["we_value_set"]
 
 # Set up the ModelFit object with the data and FLORIS model
 # Use the absolute turbine power error as cost function
-cost_function = TurbinePowerMeanAbsoluteError(df)
+cost_function = TurbinePowerMeanAbsoluteError()
 mf = ModelFit(
     df,
     fm_default,

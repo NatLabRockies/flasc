@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from abc import ABCMeta, abstractmethod
-
 from typing import List
 
 import pandas as pd
@@ -128,31 +127,85 @@ def expected_turbine_power_error(
 class CostFunctionBase(metaclass=ABCMeta):
     """Base class for cost functions."""
 
-    def __init__(self, df_scada: FlascDataFrame | pd.DataFrame):
+    def __init__(self, df_scada: pd.DataFrame | FlascDataFrame | None = None):
         """Initialize the cost function class.
 
         Args:
             df_scada (dataframe): The SCADA data to use in the cost function.
         """
-        self.df_scada = FlascDataFrame(df_scada).convert_to_flasc_format()
+        self.assign_df_scada(df_scada)
+        self._ready_for_evaluation = False
 
-    @abstractmethod
+    @property
+    def df_scada(self) -> pd.DataFrame | FlascDataFrame | None:
+        """Get the SCADA dataframe."""
+        if self._df_scada is None:
+            raise AttributeError("SCADA dataframe has not been assigned to cost object.")
+        return self._df_scada
+
+    def assign_df_scada(self, df_scada: pd.DataFrame | FlascDataFrame | None):
+        """Assign the SCADA dataframe."""
+        if (hasattr(self, "_df_scada")
+            and self._df_scada is not None
+            and not self._df_scada.equals(df_scada)
+            ):
+            print("Cost object already has df_scada assigned. Overwriting.")
+        if df_scada is not None:
+            self._df_scada = FlascDataFrame(df_scada).convert_to_flasc_format()
+        else:
+            self._df_scada = None
+    
+    @property
+    def ready_for_evaluation(self) -> bool:
+        """Check if the cost function is ready for evaluation."""
+        return self._ready_for_evaluation
+    
+    @ready_for_evaluation.setter
+    def ready_for_evaluation(self, value: bool):
+        self._ready_for_evaluation = value
+
+    def prepare_for_evaluation(self):
+        """Prepare the cost function for evaluation.
+
+        This method will be called before evaluating the cost function for the first time, and
+        should set the `ready_for_evaluation` property to True.
+        
+        Subclasses may override this method to perform additional setup before evaluation.
+        """
+        self.ready_for_evaluation = True
+
     def __call__(self, df_floris: pd.DataFrame | FlascDataFrame) -> float:
         """Call the instantiated object to evaluate the cost function.
         
         Abstract method to be implemented by subclasses.
         """
-        pass
+        if not self.ready_for_evaluation:
+            self.prepare_for_evaluation()
 
+        return self.cost(df_floris)
 
-class TurbinePowerMeanAbsoluteError(CostFunctionBase):
-    """Cost function for mean absolute error over all turbines and all times."""
+    @abstractmethod
+    def cost(self, df_floris: pd.DataFrame | FlascDataFrame) -> float:
+        """Evaluate the cost function.
+
+        All subclasses must implement this method.
+
+        Args:
+            df_floris (pd.DataFrame | FlascDataFrame): The FLORIS data to use in the cost function.
+
+        Returns:
+            float: The cost value.
+        """
+        raise NotImplementedError("Subclasses must implement this method.")
+    
+class TurbinePowerErrorBase(CostFunctionBase):
+    """Base class for cost functions based on the error between SCADA and FLORIS turbine powers."""
 
     def __init__(
-            self,
-            df_scada: pd.DataFrame | FlascDataFrame,
-            turbine_power_subset: list | None = None
-        ):
+        self,
+        df_scada: pd.DataFrame | FlascDataFrame | None = None,
+        turbine_power_subset: list | None = None
+    ):
         """Initialize the cost function class.
 
         Args:
@@ -162,23 +215,30 @@ class TurbinePowerMeanAbsoluteError(CostFunctionBase):
         """
         super().__init__(df_scada)
 
-        self._turbine_subset = _process_turbine_powers_subset(self.df_scada, turbine_power_subset)
+        # Save other parameters for now. These will be processed in the prepare method.
+        self._turbine_power_subset = turbine_power_subset
 
-    def __call__(self, df_floris: pd.DataFrame | FlascDataFrame) -> float:
-        """Evaluate the cost function.
+    def prepare_for_evaluation(self):
+        """Prepare the cost function for evaluation."""
+        self._turbine_power_subset = self.process_turbine_powers_subset(
+            self.df_scada,
+            self._turbine_power_subset
+        )
+
+    def compute_errors(self, df_floris: pd.DataFrame | FlascDataFrame) -> pd.DataFrame:
+        """Compute the errors between the SCADA and FLORIS turbine powers.
 
         Args:
             df_floris (pd.DataFrame | FlascDataFrame): The FLORIS data to use in the cost function.
 
         Returns:
-            float: The cost value.
+            pd.DataFrame: DataFrame of errors between SCADA and FLORIS turbine powers.
         """
-        df_error = (self.df_scada[self._turbine_subset] - df_floris[self._turbine_subset]).abs()
-
-        return df_error.mean().mean()
-
-
-def _process_turbine_powers_subset(df_scada, turbine_power_subset):
+        return self.df_scada[self._turbine_power_subset] - df_floris[self._turbine_power_subset]
+    
+    @staticmethod
+    def process_turbine_powers_subset(df_scada, turbine_power_subset):
+        """Process the turbine_power_subset parameter."""
         if not isinstance(turbine_power_subset, list) and turbine_power_subset is not None:
             raise TypeError("turbine_power_subset must be a list or None.")
 
@@ -200,4 +260,36 @@ def _process_turbine_powers_subset(df_scada, turbine_power_subset):
             )
 
         return turbine_power_subset
+
+class TurbinePowerMeanAbsoluteError(TurbinePowerErrorBase):
+    """Cost function for mean absolute error over all turbines and all times."""
+
+    def cost(self, df_floris: pd.DataFrame | FlascDataFrame) -> float:
+        """Evaluate the mean absolute error of the turbine powers over all turbines and times.
+
+        Args:
+            df_floris (pd.DataFrame | FlascDataFrame): The FLORIS data to use in the cost function.
+
+        Returns:
+            float: The cost value.
+        """
+        df_error = self.compute_errors(df_floris)
+
+        return df_error.abs().mean().mean()
+
+class TurbinePowerRootMeanSquaredError(TurbinePowerErrorBase):
+    """Cost function for mean squared error over all turbines and all times."""
+
+    def cost(self, df_floris: pd.DataFrame | FlascDataFrame) -> float:
+        """Evaluate the mean squared error of the turbine powers over all turbines and times.
+
+        Args:
+            df_floris (pd.DataFrame | FlascDataFrame): The FLORIS data to use in the cost function.
+
+        Returns:
+            float: The cost value.
+        """
+        df_error = self.compute_errors(df_floris)
+
+        return (df_error**2).mean().mean() ** 0.5
 

@@ -98,6 +98,8 @@ class ModelFit:
             raise TypeError(
                 "cost_function must be a callable function taking one argument: df_floris."
             )
+        # Assign the dataframe to the cost object
+        cost_function.assign_df_scada(self.df)
 
         # Save the cost function handle
         self.cost_function = cost_function
