@@ -15,115 +15,6 @@ from flasc.data_processing.dataframe_manipulations import (
 from flasc.flasc_dataframe import FlascDataFrame
 
 
-def total_wake_loss_error(
-    df_scada: pd.DataFrame | FlascDataFrame,
-    df_floris: pd.DataFrame | FlascDataFrame,
-    fm_: FlorisModel,
-    turbine_groupings: List = None,
-):
-    """Evaluate the overall wake loss from pow_ref to pow_test as percent reductions.
-
-    Args:
-        df_scada (pd.DataFrame): SCADA data
-        df_floris (pd.DataFrame): FLORIS data
-        fm_ (FlorisModel): FLORIS model (Unused but required for compatibility)
-        turbine_groupings (List): List of turbine groupings.  Defaults to None.
-            In None case, assumes pow_ref and pow_test are already identified (note
-            this can be challenging to effect within FLORIS resimulation results).
-
-    Returns:
-        float: Overall wake losses squared error
-
-    """
-    # TODO: make this one work.
-    if turbine_groupings is not None:
-        # Set the reference turbines in both frames
-        df_scada = set_pow_ref_by_turbines(df_scada, turbine_groupings["pow_ref"])
-        df_floris = set_pow_ref_by_turbines(df_floris, turbine_groupings["pow_ref"])
-
-        # Set the test turbines in both frames
-        df_scada = _set_col_by_turbines(
-            "pow_test", "pow", df_scada, turbine_groupings["pow_test"], False
-        )
-        df_floris = _set_col_by_turbines(
-            "pow_test", "pow", df_floris, turbine_groupings["pow_test"], False
-        )
-
-    scada_wake_loss = df_scada["pow_ref"].values - df_scada["pow_test"].values
-    floris_wake_loss = df_floris["pow_ref"].values - df_floris["pow_test"].values
-
-    return ((scada_wake_loss - floris_wake_loss) ** 2).sum()
-
-
-def farm_power_error(
-    df_scada: pd.DataFrame | FlascDataFrame,
-    df_floris: pd.DataFrame | FlascDataFrame,
-):
-    """Evaluate error with respect to farm power.
-
-    Args:
-        df_scada (pd.DataFrame): SCADA data
-        df_floris (pd.DataFrame): FLORIS data
-
-    Returns:
-        float: Overall wake losses squared error
-
-    """
-    df_scada = set_pow_ref_by_turbines(df_scada, list(range(df_scada.n_turbines)))
-    df_floris = set_pow_ref_by_turbines(df_floris, list(range(df_scada.n_turbines)))
-
-    error = df_scada["pow_ref"].values - df_floris["pow_ref"].values
-    error = error**2
-    return error.sum()
-
-
-def turbine_power_error_sq(
-    df_scada: pd.DataFrame | FlascDataFrame,
-    df_floris: pd.DataFrame | FlascDataFrame,
-):
-    """Evaluate error with respect to turbine power.
-
-    Args:
-        df_scada (pd.DataFrame): SCADA data
-        df_floris (pd.DataFrame): FLORIS data
-        fm_ (FlorisModel): FLORIS model (Unused but required for compatibility)
-        turbine_groupings (List): List of turbine groupings.  Defaults to None.
-            In None case, assumes pow_ref and pow_test are already identified (note
-            this can be challenging to effect within FLORIS resimulation results).
-
-    Returns:
-        float: Overall wake losses squared error
-
-    """
-    turbine_columns = [c for c in df_scada.columns if c[:4] == "pow_" and c[4:].isdigit()]
-
-    df_error = (df_scada[turbine_columns] - df_floris[turbine_columns]) ** 2
-
-    return df_error.mean().mean()
-
-
-def expected_turbine_power_error(
-    df_scada: pd.DataFrame | FlascDataFrame,
-    df_floris: pd.DataFrame | FlascDataFrame,
-):
-    """Evaluate error with respect to expected turbine power.
-
-    Args:
-        df_scada (pd.DataFrame): SCADA data
-        df_floris (pd.DataFrame): FLORIS data
-
-    Returns:
-        float: Overall wake losses squared error
-
-    """
-    turbine_columns = [f"pow_{i:03d}" for i in range(df_scada.n_turbines)]
-
-    df_error = (
-        df_scada[turbine_columns].mean(axis=0) - df_floris[turbine_columns].mean(axis=0)
-    ) ** 2
-
-    return df_error.sum()
-
 class CostFunctionBase(metaclass=ABCMeta):
     """Base class for cost functions."""
 
@@ -134,7 +25,7 @@ class CostFunctionBase(metaclass=ABCMeta):
             df_scada (dataframe): The SCADA data to use in the cost function.
         """
         self.assign_df_scada(df_scada)
-        self._ready_for_evaluation = False
+        self._initialized_for_evaluation = False
 
     @property
     def df_scada(self) -> pd.DataFrame | FlascDataFrame | None:
@@ -156,31 +47,36 @@ class CostFunctionBase(metaclass=ABCMeta):
             self._df_scada = None
     
     @property
-    def ready_for_evaluation(self) -> bool:
+    def initialized_for_evaluation(self) -> bool:
         """Check if the cost function is ready for evaluation."""
-        return self._ready_for_evaluation
+        return self._initialized_for_evaluation
     
-    @ready_for_evaluation.setter
-    def ready_for_evaluation(self, value: bool):
-        self._ready_for_evaluation = value
+    @initialized_for_evaluation.setter
+    def initialized_for_evaluation(self, value: bool):
+        self._initialized_for_evaluation = value
 
-    def prepare_for_evaluation(self):
-        """Prepare the cost function for evaluation.
+    def initialize_for_evaluation(self):
+        """Initialize the cost function for evaluation. Called before the first evaluation.
 
         This method will be called before evaluating the cost function for the first time, and
-        should set the `ready_for_evaluation` property to True.
+        should set the `initialized_for_evaluation` property to True.
         
         Subclasses may override this method to perform additional setup before evaluation.
         """
-        self.ready_for_evaluation = True
+        self.initialized_for_evaluation = True
+    
+    def prepare_df_floris_for_evaluation(self, df_floris: pd.DataFrame | FlascDataFrame):
+        """Prepare the cost function for evaluation. Called each time before evaluation."""
+        return df_floris
 
     def __call__(self, df_floris: pd.DataFrame | FlascDataFrame) -> float:
         """Call the instantiated object to evaluate the cost function.
         
         Abstract method to be implemented by subclasses.
         """
-        if not self.ready_for_evaluation:
-            self.prepare_for_evaluation()
+        if not self.initialized_for_evaluation:
+            self.initialize_for_evaluation()
+        df_floris = self.prepare_df_floris_for_evaluation(df_floris)
 
         return self.cost(df_floris)
 
@@ -218,7 +114,7 @@ class TurbinePowerErrorBase(CostFunctionBase):
         # Save other parameters for now. These will be processed in the prepare method.
         self._turbine_power_subset = turbine_power_subset
 
-    def prepare_for_evaluation(self):
+    def initialize_for_evaluation(self):
         """Prepare the cost function for evaluation."""
         self._turbine_power_subset = self.process_turbine_powers_subset(
             self.df_scada,
@@ -278,7 +174,7 @@ class TurbinePowerMeanAbsoluteError(TurbinePowerErrorBase):
         return df_error.abs().mean().mean()
 
 class TurbinePowerRootMeanSquaredError(TurbinePowerErrorBase):
-    """Cost function for mean squared error over all turbines and all times."""
+    """Cost function for root mean squared error over all turbines and all times."""
 
     def cost(self, df_floris: pd.DataFrame | FlascDataFrame) -> float:
         """Evaluate the mean squared error of the turbine powers over all turbines and times.
@@ -293,3 +189,111 @@ class TurbinePowerRootMeanSquaredError(TurbinePowerErrorBase):
 
         return (df_error**2).mean().mean() ** 0.5
 
+class FarmPowerErrorBase(CostFunctionBase):
+    """Base class for cost functions based on the error between SCADA and FLORIS farm powers."""
+
+    def __init__(self, df_scada: pd.DataFrame | FlascDataFrame | None = None):
+        """Initialize the cost function class.
+
+        Args:
+            df_scada (dataframe): The SCADA data to use in the cost function.
+        """
+        super().__init__(df_scada)
+
+    def compute_errors(self, df_floris: pd.DataFrame | FlascDataFrame) -> pd.Series:
+        """Compute the errors between the SCADA and FLORIS farm powers.
+
+        Args:
+            df_floris (pd.DataFrame | FlascDataFrame): The FLORIS data to use in the cost function.
+
+        Returns:
+            pd.DataFrame: DataFrame of errors between SCADA and FLORIS farm powers.
+        """
+        df_scada_ref = set_pow_ref_by_turbines(self.df_scada, list(range(self.df_scada.n_turbines)))
+        df_floris = set_pow_ref_by_turbines(df_floris, list(range(self.df_scada.n_turbines)))
+
+        return df_scada_ref["pow_ref"] - df_floris["pow_ref"]
+
+class FarmPowerMeanAbsoluteError(FarmPowerErrorBase):
+    """Cost function for mean absolute error of farm power over all times."""
+    def cost(self, df_floris: pd.DataFrame | FlascDataFrame) -> float:
+        """Evaluate cost function.
+
+        Args:
+            df_floris (pd.DataFrame | FlascDataFrame): The FLORIS data to use in the cost function.
+
+        Returns:
+            float: The cost value.
+        """
+        return self.compute_errors(df_floris).abs().mean()
+
+class FarmPowerRootMeanSquaredError(FarmPowerErrorBase):
+    """Cost function for root mean squared error of farm power over all times."""
+    def cost(self, df_floris: pd.DataFrame | FlascDataFrame) -> float:
+        """Evaluate cost function.
+
+        Args:
+            df_floris (pd.DataFrame | FlascDataFrame): The FLORIS data to use in the cost function.
+
+        Returns:
+            float: The cost value.
+        """
+        return (self.compute_errors(df_floris)**2).mean() ** 0.5
+
+
+class WakeLossRootMeanSquaredError(CostFunctionBase):
+    """Cost function for the overall wake loss RMSE between SCADA and FLORIS data."""
+
+    def __init__(
+            self,
+            df_scada: pd.DataFrame | FlascDataFrame | None = None,
+            reference_turbines: List[List[int]] | None = None,
+            test_turbines: List[List[int]] | None = None,
+        ):
+        """Initialize the cost function class.
+
+        Args:
+            df_scada (dataframe): The SCADA data to use in the cost function.
+            reference_turbines (List[List[int]] | None): List of lists of turbine indices to use as
+                reference (free stream) turbines for wake loss calculations
+            test_turbines (List[List[int]] | None): List of lists of turbine indices to use as test
+                (waked) turbines for wake loss calculations.
+        """
+        super().__init__(df_scada)
+
+        if reference_turbines is None or test_turbines is None:
+            raise ValueError(
+                "Both reference_turbines and test_turbines must be provided as lists of lists."
+            )
+        self.reference_turbines = reference_turbines
+        self.test_turbines = test_turbines
+
+    def initialize_for_evaluation(self):
+        """Apply the reference and test turbines to the SCADA dataframe."""
+        self.df_scada = set_pow_ref_by_turbines(self.df_scada, self.reference_turbines)
+        self.df_scada = _set_col_by_turbines(
+            "pow_test", "pow", self.df_scada, self.test_turbines, False
+        ) # TODO: We shouldn't be importing a hidden function here.
+        
+        self.initialized_for_evaluation = True
+
+    def prepare_df_floris_evaluation(self, df_floris: pd.DataFrame | FlascDataFrame):
+        """Apply the reference and test turbines to the FLORIS dataframe."""
+        df_floris = set_pow_ref_by_turbines(df_floris, self.reference_turbines)
+        df_floris = _set_col_by_turbines(
+            "pow_test", "pow", df_floris, self.test_turbines, False
+        ) # TODO: We shouldn't be importing a hidden function here.
+
+    def cost(self, df_floris: pd.DataFrame | FlascDataFrame) -> float:
+        """Evaluate the overall wake loss error.
+
+        Args:
+            df_floris (pd.DataFrame | FlascDataFrame): The FLORIS data to use in the cost function.
+
+        Returns:
+            float: The overall wake loss error.
+        """
+        scada_wake_loss = self.df_scada["pow_ref"].values - self.df_scada["pow_test"].values
+        floris_wake_loss = df_floris["pow_ref"].values - df_floris["pow_test"].values
+
+        return ((scada_wake_loss - floris_wake_loss) ** 2).sum()
