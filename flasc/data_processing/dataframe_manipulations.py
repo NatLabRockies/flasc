@@ -138,7 +138,7 @@ def get_column_mean(
     return mean_out
 
 
-def _set_col_by_turbines(col_out, col_prefix, df, turbine_numbers, circular_mean):
+def set_col_by_turbines(col_out, col_prefix, df, turbine_numbers, circular_mean):
     if isinstance(turbine_numbers, str):
         if turbine_numbers.lower() == "all":
             turbine_numbers = range(get_num_turbines(df=df))
@@ -246,7 +246,7 @@ def _set_col_by_radius_from_turbine(
         logger.warn("No turbines within proximity. Try to increase radius.")
         return None
 
-    return _set_col_by_turbines(
+    return set_col_by_turbines(
         col_out=col_out,
         col_prefix=col_prefix,
         df=df,
@@ -346,7 +346,7 @@ def set_wd_by_turbines(
         df (pd.DataFrame | FlascDataFrame): Dataframe which equals the inserted dataframe
             plus the additional column called 'wd'.
     """
-    return _set_col_by_turbines("wd", "wd", df, turbine_numbers, True)
+    return set_col_by_turbines("wd", "wd", df, turbine_numbers, True)
 
 
 def set_wd_by_all_turbines(
@@ -367,7 +367,7 @@ def set_wd_by_all_turbines(
         pd.Dataframe | FlascDataFrame: Dataframe which equals the inserted dataframe
             plus the additional column called 'wd'.
     """
-    return _set_col_by_turbines("wd", "wd", df, "all", True)
+    return set_col_by_turbines("wd", "wd", df, "all", True)
 
 
 def set_wd_by_upstream_turbines(
@@ -552,7 +552,7 @@ def set_ws_by_turbines(
         pd.DataFrame | FlascDataFrame: Dataframe which equals the inserted dataframe
         plus the additional column called 'ws'.
     """
-    return _set_col_by_turbines("ws", "ws", df, turbine_numbers, False)
+    return set_col_by_turbines("ws", "ws", df, turbine_numbers, False)
 
 
 def set_ws_by_all_turbines(
@@ -575,7 +575,7 @@ def set_ws_by_all_turbines(
         pd.Dataframe | FlascDataFrame: Dataframe which equals the inserted dataframe
             plus the additional column called 'ws'.
     """
-    return _set_col_by_turbines("ws", "ws", df, "all", False)
+    return set_col_by_turbines("ws", "ws", df, "all", False)
 
 
 def set_ws_by_upstream_turbines(
@@ -740,7 +740,7 @@ def set_ti_by_turbines(
         pd.Dataframe | FlascDataFrame: Dataframe which equals the inserted dataframe
             plus the additional column called 'ti'.
     """
-    return _set_col_by_turbines("ti", "ti", df, turbine_numbers, False)
+    return set_col_by_turbines("ti", "ti", df, turbine_numbers, False)
 
 
 def set_ti_by_all_turbines(
@@ -763,7 +763,7 @@ def set_ti_by_all_turbines(
         pd.Dataframe | FlascDataFrame: Dataframe which equals the inserted dataframe
         plus the additional column called 'ti'.
     """
-    return _set_col_by_turbines("ti", "ti", df, "all", False)
+    return set_col_by_turbines("ti", "ti", df, "all", False)
 
 
 def set_ti_by_upstream_turbines(
@@ -880,7 +880,7 @@ def set_pow_ref_by_turbines(
         pd.Dataframe | FlascDataFrame: Dataframe which equals the inserted dataframe
             plus the additional column called 'ti'.
     """
-    return _set_col_by_turbines("pow_ref", "pow", df, turbine_numbers, False)
+    return set_col_by_turbines("pow_ref", "pow", df, turbine_numbers, False)
 
 
 def set_pow_ref_by_upstream_turbines(

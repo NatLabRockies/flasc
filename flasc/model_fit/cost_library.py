@@ -9,7 +9,7 @@ import pandas as pd
 from floris import FlorisModel
 
 from flasc.data_processing.dataframe_manipulations import (
-    _set_col_by_turbines,
+    set_col_by_turbines,
     set_pow_ref_by_turbines,
 )
 from flasc.flasc_dataframe import FlascDataFrame
@@ -271,18 +271,18 @@ class WakeLossRootMeanSquaredError(CostFunctionBase):
     def initialize_for_evaluation(self):
         """Apply the reference and test turbines to the SCADA dataframe."""
         self.df_scada = set_pow_ref_by_turbines(self.df_scada, self.reference_turbines)
-        self.df_scada = _set_col_by_turbines(
+        self.df_scada = set_col_by_turbines(
             "pow_test", "pow", self.df_scada, self.test_turbines, False
-        ) # TODO: We shouldn't be importing a hidden function here.
+        )
         
         self.initialized_for_evaluation = True
 
     def prepare_df_floris_evaluation(self, df_floris: pd.DataFrame | FlascDataFrame):
         """Apply the reference and test turbines to the FLORIS dataframe."""
         df_floris = set_pow_ref_by_turbines(df_floris, self.reference_turbines)
-        df_floris = _set_col_by_turbines(
+        df_floris = set_col_by_turbines(
             "pow_test", "pow", df_floris, self.test_turbines, False
-        ) # TODO: We shouldn't be importing a hidden function here.
+        )
 
     def cost(self, df_floris: pd.DataFrame | FlascDataFrame) -> float:
         """Evaluate the overall wake loss error.
