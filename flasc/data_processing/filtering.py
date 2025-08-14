@@ -67,8 +67,6 @@ def df_mark_turbdata_as_faulty(df, cond, turbine_list, exclude_columns=[]):
 
     for ti in turbine_list:
         cols = [s for s in df.columns if s[-4::] == ("_%03d" % ti) and s not in exclude_columns]
-        # TODO: Raises future deprecation warning since is_operational_xxx is a boolean column,
-        # and None is not a valid value.
         df.loc[cond, cols] = None  # Delete measurements
 
     return df
