@@ -159,15 +159,15 @@ class bias_estimation(LoggingManager):
     def _get_energy_ratios_allbins(
         self,
         wd_bias: float,
-        time_mask: None=None,
-        ws_mask: Iterable[float, float]=(6.0, 10.0),
-        wd_mask: Iterable[float, float] | None=None,
-        ti_mask: None=None,
-        wd_step: float=3.0,
-        ws_step: float=1.0,
-        wd_bin_width: float=3.0,
-        N_btstrp: int=1,
-        plot_iter_path: str | None=None,
+        time_mask: None = None,
+        ws_mask: Iterable[float, float] = (6.0, 10.0),
+        wd_mask: Iterable[float, float] | None = None,
+        ti_mask: None = None,
+        wd_step: float = 3.0,
+        ws_step: float = 1.0,
+        wd_bin_width: float = 3.0,
+        N_btstrp: int = 1,
+        plot_iter_path: str | None = None,
     ):
         """Calculate the energy ratios.
 
