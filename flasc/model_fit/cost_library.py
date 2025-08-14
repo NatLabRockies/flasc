@@ -6,7 +6,6 @@ from abc import ABCMeta, abstractmethod
 from typing import List
 
 import pandas as pd
-from floris import FlorisModel
 
 from flasc.data_processing.dataframe_manipulations import (
     set_col_by_turbines,
@@ -36,21 +35,22 @@ class CostFunctionBase(metaclass=ABCMeta):
 
     def assign_df_scada(self, df_scada: pd.DataFrame | FlascDataFrame | None):
         """Assign the SCADA dataframe."""
-        if (hasattr(self, "_df_scada")
+        if (
+            hasattr(self, "_df_scada")
             and self._df_scada is not None
             and not self._df_scada.equals(df_scada)
-            ):
+        ):
             print("Cost object already has df_scada assigned. Overwriting.")
         if df_scada is not None:
             self._df_scada = FlascDataFrame(df_scada).convert_to_flasc_format()
         else:
             self._df_scada = None
-    
+
     @property
     def initialized_for_evaluation(self) -> bool:
         """Check if the cost function is ready for evaluation."""
         return self._initialized_for_evaluation
-    
+
     @initialized_for_evaluation.setter
     def initialized_for_evaluation(self, value: bool):
         self._initialized_for_evaluation = value
@@ -60,18 +60,18 @@ class CostFunctionBase(metaclass=ABCMeta):
 
         This method will be called before evaluating the cost function for the first time, and
         should set the `initialized_for_evaluation` property to True.
-        
+
         Subclasses may override this method to perform additional setup before evaluation.
         """
         self.initialized_for_evaluation = True
-    
+
     def prepare_df_floris_for_evaluation(self, df_floris: pd.DataFrame | FlascDataFrame):
         """Prepare the cost function for evaluation. Called each time before evaluation."""
         return df_floris
 
     def __call__(self, df_floris: pd.DataFrame | FlascDataFrame) -> float:
         """Call the instantiated object to evaluate the cost function.
-        
+
         Abstract method to be implemented by subclasses.
         """
         if not self.initialized_for_evaluation:
@@ -93,14 +93,15 @@ class CostFunctionBase(metaclass=ABCMeta):
             float: The cost value.
         """
         raise NotImplementedError("Subclasses must implement this method.")
-    
+
+
 class TurbinePowerErrorBase(CostFunctionBase):
     """Base class for cost functions based on the error between SCADA and FLORIS turbine powers."""
 
     def __init__(
         self,
         df_scada: pd.DataFrame | FlascDataFrame | None = None,
-        turbine_power_subset: list | None = None
+        turbine_power_subset: list | None = None,
     ):
         """Initialize the cost function class.
 
@@ -117,8 +118,7 @@ class TurbinePowerErrorBase(CostFunctionBase):
     def initialize_for_evaluation(self):
         """Prepare the cost function for evaluation."""
         self._turbine_power_subset = self.process_turbine_powers_subset(
-            self.df_scada,
-            self._turbine_power_subset
+            self.df_scada, self._turbine_power_subset
         )
 
     def compute_errors(self, df_floris: pd.DataFrame | FlascDataFrame) -> pd.DataFrame:
@@ -131,7 +131,7 @@ class TurbinePowerErrorBase(CostFunctionBase):
             pd.DataFrame: DataFrame of errors between SCADA and FLORIS turbine powers.
         """
         return self.df_scada[self._turbine_power_subset] - df_floris[self._turbine_power_subset]
-    
+
     @staticmethod
     def process_turbine_powers_subset(df_scada, turbine_power_subset):
         """Process the turbine_power_subset parameter."""
@@ -139,23 +139,20 @@ class TurbinePowerErrorBase(CostFunctionBase):
             raise TypeError("turbine_power_subset must be a list or None.")
 
         if turbine_power_subset is None:
-            turbine_power_subset = [
-                "pow_{0:03d}".format(t) for t in range(df_scada.n_turbines)
-            ]
+            turbine_power_subset = ["pow_{0:03d}".format(t) for t in range(df_scada.n_turbines)]
         elif isinstance(turbine_power_subset[0], str):
             if not all([c[:4] == "pow_" and c[4:].isdigit() for c in turbine_power_subset]):
-                turbine_power_subset = [
-                    df_scada.channel_name_map[c] for c in turbine_power_subset
-                ]
+                turbine_power_subset = [df_scada.channel_name_map[c] for c in turbine_power_subset]
         elif isinstance(turbine_power_subset[0], int):
             turbine_power_subset = ["pow_{0:03d}".format(t) for t in turbine_power_subset]
         else:
             raise TypeError(
                 "turbine_power_subset must be a list of strings or integers and must",
-                " match the turbine names in df_scada."
+                " match the turbine names in df_scada.",
             )
 
         return turbine_power_subset
+
 
 class TurbinePowerMeanAbsoluteError(TurbinePowerErrorBase):
     """Cost function for mean absolute error over all turbines and all times."""
@@ -173,6 +170,7 @@ class TurbinePowerMeanAbsoluteError(TurbinePowerErrorBase):
 
         return df_error.abs().mean().mean()
 
+
 class TurbinePowerRootMeanSquaredError(TurbinePowerErrorBase):
     """Cost function for root mean squared error over all turbines and all times."""
 
@@ -188,6 +186,7 @@ class TurbinePowerRootMeanSquaredError(TurbinePowerErrorBase):
         df_error = self.compute_errors(df_floris)
 
         return (df_error**2).mean().mean() ** 0.5
+
 
 class FarmPowerErrorBase(CostFunctionBase):
     """Base class for cost functions based on the error between SCADA and FLORIS farm powers."""
@@ -214,8 +213,10 @@ class FarmPowerErrorBase(CostFunctionBase):
 
         return df_scada_ref["pow_ref"] - df_floris["pow_ref"]
 
+
 class FarmPowerMeanAbsoluteError(FarmPowerErrorBase):
     """Cost function for mean absolute error of farm power over all times."""
+
     def cost(self, df_floris: pd.DataFrame | FlascDataFrame) -> float:
         """Evaluate cost function.
 
@@ -227,8 +228,10 @@ class FarmPowerMeanAbsoluteError(FarmPowerErrorBase):
         """
         return self.compute_errors(df_floris).abs().mean()
 
+
 class FarmPowerRootMeanSquaredError(FarmPowerErrorBase):
     """Cost function for root mean squared error of farm power over all times."""
+
     def cost(self, df_floris: pd.DataFrame | FlascDataFrame) -> float:
         """Evaluate cost function.
 
@@ -238,18 +241,18 @@ class FarmPowerRootMeanSquaredError(FarmPowerErrorBase):
         Returns:
             float: The cost value.
         """
-        return (self.compute_errors(df_floris)**2).mean() ** 0.5
+        return (self.compute_errors(df_floris) ** 2).mean() ** 0.5
 
 
 class WakeLossRootMeanSquaredError(CostFunctionBase):
     """Cost function for the overall wake loss RMSE between SCADA and FLORIS data."""
 
     def __init__(
-            self,
-            df_scada: pd.DataFrame | FlascDataFrame | None = None,
-            reference_turbines: List[List[int]] | None = None,
-            test_turbines: List[List[int]] | None = None,
-        ):
+        self,
+        df_scada: pd.DataFrame | FlascDataFrame | None = None,
+        reference_turbines: List[List[int]] | None = None,
+        test_turbines: List[List[int]] | None = None,
+    ):
         """Initialize the cost function class.
 
         Args:
@@ -274,15 +277,13 @@ class WakeLossRootMeanSquaredError(CostFunctionBase):
         self.df_scada = set_col_by_turbines(
             "pow_test", "pow", self.df_scada, self.test_turbines, False
         )
-        
+
         self.initialized_for_evaluation = True
 
     def prepare_df_floris_evaluation(self, df_floris: pd.DataFrame | FlascDataFrame):
         """Apply the reference and test turbines to the FLORIS dataframe."""
         df_floris = set_pow_ref_by_turbines(df_floris, self.reference_turbines)
-        df_floris = set_col_by_turbines(
-            "pow_test", "pow", df_floris, self.test_turbines, False
-        )
+        df_floris = set_col_by_turbines("pow_test", "pow", df_floris, self.test_turbines, False)
 
     def cost(self, df_floris: pd.DataFrame | FlascDataFrame) -> float:
         """Evaluate the overall wake loss error.
