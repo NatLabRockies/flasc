@@ -383,3 +383,20 @@ class ModelFit:
             zip(self.parameter_list, self.parameter_index_list)
         ):
             self.fmodel.set_param(parameter, parameter_values[i], parameter_index)
+
+def extract_trial_data(study_obj, param_name):
+    """Extract parameter values and costs from study trials."""
+    param_values = [trial.params[param_name] for trial in study_obj.trials]
+    cost_values = [trial.value for trial in study_obj.trials]
+
+    # Sort both by parameter values
+    param_values, cost_values = zip(*sorted(zip(param_values, cost_values)))
+
+    # Get the best parameter value and cost
+    best_param_value = study_obj.best_trial.params[param_name]
+    best_cost = study_obj.best_trial.value
+
+    # Normalize the cost values
+    cost_values = np.array(cost_values) / np.min(cost_values)
+
+    return param_values, cost_values, best_param_value, best_cost
