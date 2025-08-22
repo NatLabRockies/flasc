@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Callable, Dict, List, Tuple
+from typing import Dict, List, Tuple
 
 import numpy as np
 import pandas as pd
@@ -10,6 +10,7 @@ from floris import FlorisModel, ParFlorisModel, UncertainFlorisModel
 
 from flasc.data_processing import dataframe_manipulations as dfm
 from flasc.flasc_dataframe import FlascDataFrame
+from flasc.model_fit.cost_library import CostFunctionBase
 from flasc.utilities.tuner_utilities import replicate_nan_values
 
 
@@ -25,7 +26,7 @@ class ModelFit:
         self,
         df: pd.DataFrame | FlascDataFrame,
         fmodel: FlorisModel | ParFlorisModel | UncertainFlorisModel,
-        cost_function: Callable[[FlascDataFrame]],
+        cost_function: CostFunctionBase,
         parameter_list: List[List] | List[Tuple] = [],
         parameter_name_list: List[str] = [],
         parameter_range_list: List[List] | List[Tuple] = [],
@@ -38,7 +39,8 @@ class ModelFit:
             df (pd.DataFrame | FlascDataFrame): DataFrame containing SCADA data.
             fmodel (FlorisModel | ParFlorisModel | UncertainFlorisModel):
                 FLORIS model to calibrate.
-            cost_function (Callable): Handle to the cost function.
+            cost_function (CostFunctionBase): Instance of a cost function class that inherits from
+                CostFunctionBase.
             parameter_list (List[List] | List[Tuple], optional): List of FLORIS parameters to
                 calibrate. If empty, no parameters are calibrated. Defaults to [].
             parameter_name_list (List[str], optional): List of names for the parameters.
@@ -62,6 +64,10 @@ class ModelFit:
             raise ValueError(
                 "fmodel must be a FlorisModel, ParallelFlorisModel or UncertainFlorisModel."
             )
+
+        # Check that cost_function is an instance of CostFunctionBase
+        if not isinstance(cost_function, CostFunctionBase):
+            raise TypeError("cost_function must be subclass of CostFunctionBase.")
 
         # Save the fmodel
         self.fmodel = fmodel

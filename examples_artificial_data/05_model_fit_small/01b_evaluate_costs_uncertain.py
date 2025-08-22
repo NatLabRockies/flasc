@@ -3,7 +3,7 @@ import pickle
 import matplotlib.pyplot as plt
 import numpy as np
 
-from flasc.model_fit.cost_library import turbine_power_error_abs
+from flasc.model_fit.cost_library import TurbinePowerMeanAbsoluteError
 from flasc.model_fit.model_fit import ModelFit
 
 # Since ModelFit is always parallel this is important to include
@@ -31,7 +31,7 @@ if __name__ == "__main__":
         mf = ModelFit(
             df_u,
             fm_default,
-            turbine_power_error_abs,
+            TurbinePowerMeanAbsoluteError(),
         )
         cost_value = mf.evaluate_floris()
 
@@ -44,7 +44,7 @@ if __name__ == "__main__":
         mf = ModelFit(
             df_u,
             ufm_default,
-            turbine_power_error_abs,
+            TurbinePowerMeanAbsoluteError(),
         )
         cost_value = mf.evaluate_floris()
 

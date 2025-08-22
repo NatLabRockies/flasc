@@ -5,7 +5,7 @@ from optuna.visualization.matplotlib import (
     plot_optimization_history,
 )
 
-from flasc.model_fit.cost_library import turbine_power_error_abs
+from flasc.model_fit.cost_library import TurbinePowerMeanAbsoluteError
 from flasc.model_fit.model_fit import ModelFit
 from flasc.model_fit.opt_library import opt_optuna
 
@@ -31,7 +31,7 @@ if __name__ == "__main__":
     mf = ModelFit(
         df,
         fm_default,
-        turbine_power_error_abs,
+        TurbinePowerMeanAbsoluteError(),
         parameter_list=[parameter],
         parameter_name_list=["wake expansion"],
         parameter_range_list=[(0.01, 0.07)],
