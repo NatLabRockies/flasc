@@ -139,6 +139,7 @@ def get_column_mean(
 
 
 def set_col_by_turbines(col_out, col_prefix, df, turbine_numbers, circular_mean):
+    """Average over specified turbines and add as a new column."""
     if isinstance(turbine_numbers, str):
         if turbine_numbers.lower() == "all":
             turbine_numbers = range(get_num_turbines(df=df))
