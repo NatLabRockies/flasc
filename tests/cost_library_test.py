@@ -3,7 +3,7 @@ import pandas as pd
 from floris import FlorisModel
 
 from flasc import FlascDataFrame
-from flasc.model_fit.cost_library import turbine_power_error_abs, turbine_power_error_sq
+from flasc.model_fitting.cost_library import turbine_power_error_abs, turbine_power_error_sq
 
 
 def setup_data():

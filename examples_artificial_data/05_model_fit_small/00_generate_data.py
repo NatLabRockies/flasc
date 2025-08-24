@@ -3,7 +3,7 @@ import pickle
 import numpy as np
 from floris import TimeSeries, UncertainFlorisModel
 
-from flasc.model_fit.model_fit import ModelFit
+from flasc.model_fitting.model_fit import ModelFit
 from flasc.utilities.utilities_examples import load_floris_artificial
 
 """ This example sets up a simple two turbine data set with the Jensen wake model.  Data is saved

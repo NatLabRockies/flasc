@@ -3,8 +3,8 @@ import pickle
 import matplotlib.pyplot as plt
 import numpy as np
 
-from flasc.model_fit.cost_library import TurbinePowerMeanAbsoluteError
-from flasc.model_fit.model_fit import ModelFit
+from flasc.model_fitting.cost_library import TurbinePowerMeanAbsoluteError
+from flasc.model_fitting.model_fit import ModelFit
 
 # Load the data from previous example
 with open("two_turbine_data.pkl", "rb") as f:

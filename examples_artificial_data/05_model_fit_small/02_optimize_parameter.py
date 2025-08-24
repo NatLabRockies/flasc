@@ -5,9 +5,9 @@ from optuna.visualization.matplotlib import (
     plot_optimization_history,
 )
 
-from flasc.model_fit.cost_library import TurbinePowerMeanAbsoluteError
-from flasc.model_fit.model_fit import ModelFit
-from flasc.model_fit.opt_library import opt_optuna
+from flasc.model_fitting.cost_library import TurbinePowerMeanAbsoluteError
+from flasc.model_fitting.model_fit import ModelFit
+from flasc.model_fitting.opt_library import opt_optuna
 
 """ Use ModelFit optimization to find the optimal wake expansion value that best fits the data """
 

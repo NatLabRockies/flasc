@@ -4,7 +4,7 @@ from typing import Dict, Tuple
 
 import optuna
 
-from flasc.model_fit.model_fit import ModelFit
+from flasc.model_fitting.model_fit import ModelFit
 
 
 def opt_optuna(

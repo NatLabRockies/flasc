@@ -10,7 +10,7 @@ from floris import FlorisModel, ParFlorisModel, UncertainFlorisModel
 
 from flasc.data_processing import dataframe_manipulations as dfm
 from flasc.flasc_dataframe import FlascDataFrame
-from flasc.model_fit.cost_library import CostFunctionBase
+from flasc.model_fitting.cost_library import CostFunctionBase
 from flasc.utilities.tuner_utilities import replicate_nan_values
 
 

@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from flasc.model_fit.model_fit import ModelFit
+from flasc.model_fitting.model_fit import ModelFit
 from flasc.utilities.utilities_examples import load_floris_artificial
 
 

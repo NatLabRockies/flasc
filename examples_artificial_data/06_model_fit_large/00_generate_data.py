@@ -5,7 +5,7 @@ import numpy as np
 from floris import TimeSeries
 from floris.layout_visualization import plot_turbine_labels, plot_turbine_points
 
-from flasc.model_fit.model_fit import ModelFit
+from flasc.model_fitting.model_fit import ModelFit
 from flasc.utilities.utilities_examples import load_floris_artificial
 
 """ Generate data from a farm and specify the model to generate the data and the model to tune.
