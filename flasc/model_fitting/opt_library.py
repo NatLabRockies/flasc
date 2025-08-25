@@ -11,7 +11,6 @@ def opt_optuna(
     mf: ModelFit,
     n_trials: int = 100,
     timeout: float | None = None,
-    turbine_groupings: Dict[str, Tuple] | None = None,
     seed: int | None = None,
     verbose: bool = False,
 ) -> Tuple[Dict, optuna.Study]:
@@ -21,8 +20,6 @@ def opt_optuna(
         mf (ModelFit): ModelFit object containing the model and parameters to optimize.
         n_trials (int): Number of trials to run. Defaults to 100.
         timeout (float | None): Timeout for the optimization in seconds.
-            Defaults to None.
-        turbine_groupings (Dict[str, Tuple] | None): Dictionary of turbine groupings.
             Defaults to None.
         seed (int | None): Seed for the random number generator. Defaults to None,
             in which case a random seed will be used.
@@ -43,7 +40,7 @@ def opt_optuna(
                 trial.suggest_float(parameter_name, parameter_range[0], parameter_range[1])
             )
 
-        return mf.set_parameter_and_evaluate(parameter_values, turbine_groupings)
+        return mf.set_parameter_and_evaluate(parameter_values)
 
     # Run the optimization
     study = optuna.create_study(
@@ -76,7 +73,6 @@ def opt_optuna_with_wd_std(
     mf: ModelFit,
     n_trials: int = 100,
     timeout: float | None = None,
-    turbine_groupings: Dict[str, Tuple] | None = None,
     verbose: bool = False,
 ) -> Tuple[Dict, optuna.Study]:
     """Optimize the model parameters using Optuna including wd_std.
@@ -88,8 +84,6 @@ def opt_optuna_with_wd_std(
         mf (ModelFit): ModelFit object containing the model and parameters to optimize.
         n_trials (int): Number of trials to run. Defaults to 100.
         timeout (float | None): Timeout for the optimization in seconds.
-            Defaults to None.
-        turbine_groupings (Dict[str, Tuple] | None): Dictionary of turbine groupings.
             Defaults to None.
         verbose (bool): Whether to print out the optimization process. Defaults to False.
 
@@ -111,7 +105,7 @@ def opt_optuna_with_wd_std(
                 trial.suggest_float(parameter_name, parameter_range[0], parameter_range[1])
             )
 
-        return mf.set_parameter_and_evaluate(parameter_values, turbine_groupings)
+        return mf.set_parameter_and_evaluate(parameter_values)
 
     # Run the optimization
     study = optuna.create_study()
@@ -137,3 +131,23 @@ def opt_optuna_with_wd_std(
 
     # Returns results and the study object
     return result_dic, study
+
+def opt_sweep(
+    n_grid: int | list[int] | None = None,
+    verbose: bool = False,
+) -> Tuple[Dict, optuna.Study]:
+    """Optimize the model parameters using a grid sweep.
+
+    Args:
+        n_grid (int | list[int] | None): Number of grid points to use for each parameter.
+            If an integer is provided, the same number of grid points will be used for
+            each parameter. If a list is provided, it must have the same length as the
+            number of parameters. Defaults to None, in which case 10 grid points will
+            be used for each parameter.
+        verbose (bool): Whether to print out the optimization process. Defaults to False.
+
+    Returns:
+        Tuple[Dict, optuna.Study]: Dictionary containing the optimal parameter values and
+            the Optuna study object.
+    """
+    raise NotImplementedError("Grid sweep optimization is not yet implemented.")
