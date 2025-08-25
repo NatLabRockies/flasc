@@ -1,7 +1,9 @@
 """This module contains the optimization algorithms for the model fitting."""
 
+import itertools
 from typing import Dict, Tuple
 
+import numpy as np
 import optuna
 
 from flasc.model_fitting.model_fit import ModelFit
@@ -13,7 +15,7 @@ def opt_optuna(
     timeout: float | None = None,
     seed: int | None = None,
     verbose: bool = False,
-) -> Tuple[Dict, optuna.Study]:
+) -> Dict:
     """Optimize the model parameters using Optuna.
 
     Args:
@@ -26,8 +28,10 @@ def opt_optuna(
         verbose (bool): Whether to print out the optimization process. Defaults to False.
 
     Returns:
-        Tuple[Dict, optuna.Study]: Dictionary containing the optimal parameter values and
-            the Optuna study object.
+        Dict: Dictionary containing the optimal parameter values and
+            the Optuna study object. All optimizers must contain keys "optimized_parameter_values"
+            and "optimized_cost", and may optionally contain other optimizers-specific key-value
+            pairs.
     """
 
     # Set up the objective function for optuna
@@ -60,13 +64,14 @@ def opt_optuna(
         best_params.append(study.best_params[parameter_name])
 
     # Return results as dictionary
-    result_dic = {
-        "parameter_values": best_params,
-        "best_cost": study.best_value,
+    result_dict = {
+        "optimized_parameter_values": best_params,
+        "optimized_cost": study.best_value,
+        "study": study,
     }
 
-    # Returns results and the study object
-    return result_dic, study
+    # Returns results
+    return result_dict
 
 
 def opt_optuna_with_wd_std(
@@ -88,8 +93,10 @@ def opt_optuna_with_wd_std(
         verbose (bool): Whether to print out the optimization process. Defaults to False.
 
     Returns:
-        Tuple[Dict, optuna.Study]: Dictionary containing the optimal parameter values including
-            wd_std and the Optuna study object.
+        Dict: Dictionary containing the optimal parameter values and
+            the Optuna study object. All optimizers must contain keys "optimized_parameter_values"
+            and "optimized_cost", and may optionally contain other optimizers-specific key-value
+            pairs.
     """
 
     # Set up the objective function for optuna
@@ -119,26 +126,29 @@ def opt_optuna_with_wd_std(
 
     # Make a list of the best parameter values
     best_params = []
-    for parameter_name in mf.parameter_name_list:
+    for parameter_name in mf.parameter_name_list + ["wd_std"]:
         best_params.append(study.best_params[parameter_name])
 
     # Return results as dictionary
-    result_dic = {
-        "wd_std": study.best_params["wd_std"],
-        "parameter_values": best_params,
-        "best_cost": study.best_value,
+    result_dict = {
+        "optimized_parameter_values": best_params,
+        "optimized_cost": study.best_value,
+        "study": study,
     }
 
-    # Returns results and the study object
-    return result_dic, study
+    # Returns results
+    return result_dict
+
 
 def opt_sweep(
+    mf: ModelFit,
     n_grid: int | list[int] | None = None,
     verbose: bool = False,
 ) -> Tuple[Dict, optuna.Study]:
     """Optimize the model parameters using a grid sweep.
 
     Args:
+        mf (ModelFit): ModelFit object containing the model and parameters to optimize.
         n_grid (int | list[int] | None): Number of grid points to use for each parameter.
             If an integer is provided, the same number of grid points will be used for
             each parameter. If a list is provided, it must have the same length as the
@@ -147,7 +157,53 @@ def opt_sweep(
         verbose (bool): Whether to print out the optimization process. Defaults to False.
 
     Returns:
-        Tuple[Dict, optuna.Study]: Dictionary containing the optimal parameter values and
-            the Optuna study object.
+        Dict: Dictionary containing the optimal parameter values. All optimizers must contain keys
+            "optimized_parameter_values" and "optimized_cost", and may optionally contain other
+            optimizers-specific key-value pairs.
     """
-    raise NotImplementedError("Grid sweep optimization is not yet implemented.")
+    # Handle n_grid parameter
+    if n_grid is None:
+        n_grid = [10] * mf.n_parameters
+    elif isinstance(n_grid, int):
+        n_grid = [n_grid] * mf.n_parameters
+    elif len(n_grid) != mf.n_parameters:
+        raise ValueError(
+            f"Length of n_grid ({len(n_grid)}) must match number of parameters ({mf.n_parameters})"
+        )
+
+    # Create parameter arrays for each parameter
+    parameter_arrays = []
+    for p_idx in range(mf.n_parameters):
+        param_array = np.linspace(
+            mf.parameter_range_list[p_idx][0], mf.parameter_range_list[p_idx][1], n_grid[p_idx]
+        )
+        parameter_arrays.append(param_array)
+
+    # Generate all combinations using itertools.product
+    all_combinations = np.array(list(itertools.product(*parameter_arrays)))
+    all_costs = np.zeros(all_combinations.shape[0])
+
+    # Initialize tracking variables
+    best_cost = float("inf")
+    best_params = None
+
+    # Evaluate each combination
+    for i, param_combination in enumerate(all_combinations):
+        if verbose:
+            print(f"Evaluating combination {i+1}/{len(all_combinations)}: {param_combination}")
+
+        cost = mf.set_parameter_and_evaluate(param_combination)
+        all_costs[i] = cost
+
+        if cost < best_cost:
+            best_cost = cost
+            best_params = list(param_combination)
+
+    results_dict = {
+        "optimized_parameter_values": best_params,
+        "optimized_cost": best_cost,
+        "all_parameter_combinations": all_combinations,
+        "all_costs": all_costs,
+    }
+
+    return results_dict
