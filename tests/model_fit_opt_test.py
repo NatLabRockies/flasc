@@ -55,11 +55,14 @@ def get_simple_inputs_gch():
         parameter_index_list,
     )
 
+
 def test_opt_optuna():
     pass
 
+
 def test_opt_optuna_with_wd_std():
     pass
+
 
 def test_opt_sweep():
     # Get simple inputs

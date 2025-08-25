@@ -43,16 +43,16 @@ if __name__ == "__main__":
     baseline_cost = mf.evaluate_floris()
 
     # Optimize
-    opt_result, study = opt_optuna(mf, timeout=time_out, n_trials=None)
+    opt_result = opt_optuna(mf, timeout=time_out, n_trials=None)
 
     # Print results
     print("----------------------------")
     print(f"Default parameter: {we_value_original}")
     print(f"Set parameter: {we_value_set}")
     print()
-    print(f"Calibrated parameter value:  {opt_result['parameter_values'][0]:.2f}")
+    print(f"Calibrated parameter value:  {opt_result['optimized_parameter_values'][0]:.2f}")
     print("----------------------------")
 
     # Show an optuna progress plot
-    plot_optimization_history(study)
+    plot_optimization_history(opt_result["optuna_study"])
     plt.show()

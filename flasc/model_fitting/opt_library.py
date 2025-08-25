@@ -67,7 +67,7 @@ def opt_optuna(
     result_dict = {
         "optimized_parameter_values": best_params,
         "optimized_cost": study.best_value,
-        "study": study,
+        "optuna_study": study,
     }
 
     # Returns results
@@ -133,11 +133,29 @@ def opt_optuna_with_wd_std(
     result_dict = {
         "optimized_parameter_values": best_params,
         "optimized_cost": study.best_value,
-        "study": study,
+        "optuna_study": study,
     }
 
     # Returns results
     return result_dict
+
+
+def extract_optuna_trial_data(study_obj, param_name):
+    """Extract parameter values and costs from study trials."""
+    param_values = [trial.params[param_name] for trial in study_obj.trials]
+    cost_values = [trial.value for trial in study_obj.trials]
+
+    # Sort both by parameter values
+    param_values, cost_values = zip(*sorted(zip(param_values, cost_values)))
+
+    # Get the best parameter value and cost
+    best_param_value = study_obj.best_trial.params[param_name]
+    best_cost = study_obj.best_trial.value
+
+    # Normalize the cost values
+    cost_values = np.array(cost_values) / np.min(cost_values)
+
+    return param_values, cost_values, best_param_value, best_cost
 
 
 def opt_sweep(
