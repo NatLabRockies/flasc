@@ -1,12 +1,14 @@
 import numpy as np
 import pandas as pd
+import pytest
+from floris import UncertainFlorisModel
 
 from flasc.model_fitting.cost_library import (
     CostFunctionBase,
     TurbinePowerMeanAbsoluteError,
 )
 from flasc.model_fitting.model_fit import ModelFit
-from flasc.model_fitting.opt_library import opt_sweep
+from flasc.model_fitting.opt_library import opt_sweep, opt_sweep_with_wd_std
 from flasc.utilities.utilities_examples import load_floris_artificial
 
 
@@ -115,6 +117,46 @@ def test_opt_sweep():
     results = opt_sweep(
         mf=mf,
         n_grid=[5, 4],
+    )
+
+    sweep_best = results["optimized_parameter_values"]
+    test_best = results["all_parameter_combinations"][np.argmin(results["all_costs"])]
+
+    assert np.allclose(sweep_best, test_best)
+
+
+def test_opt_sweep_with_wd_std():
+    # Get simple inputs
+    (
+        df,
+        fm,
+        _,
+        parameter_list,
+        parameter_name_list,
+        parameter_range_list,
+        parameter_index_list,
+    ) = get_simple_inputs_gch()
+
+    # Single parameter
+    mf = ModelFit(
+        df,
+        fm,
+        TurbinePowerMeanAbsoluteError(),
+        parameter_list,
+        parameter_name_list,
+        parameter_range_list,
+        parameter_index_list,
+    )
+
+    # Should raise value error because fm is not an UncertainFlorisModel
+    with pytest.raises(ValueError):
+        opt_sweep_with_wd_std(mf, 5)
+
+    mf.fmodel = UncertainFlorisModel(fm)
+    results = opt_sweep_with_wd_std(
+        mf=mf,
+        n_grid=[5, 3],  # 5 for parameter, 3 for wd_std
+        wd_std_range=(1.0, 3.0),
     )
 
     sweep_best = results["optimized_parameter_values"]
