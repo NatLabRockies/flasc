@@ -29,6 +29,7 @@ def get_simple_inputs_gch():
     class CostFunctionTest(CostFunctionBase):
         def cost(self, df_floris):
             return None
+
     cost_function = CostFunctionTest(df)
 
     # Define the parameters to tune the kA parameter of GCH
@@ -220,9 +221,10 @@ def test_cost_function():
 
     # Cost function has to be subclass of CostFunctionBase
     # Cost function has wrong number of inputs
-    class Cost1():
+    class Cost1:
         def __init__(self):
             pass
+
         def cost(self, df_floris):
             return 0
 
@@ -253,6 +255,7 @@ def test_cost_function():
         def __init__(self, df_scada, temp_arg):
             super().__init__(df_scada)
             self.temp_arg = temp_arg
+
         def cost(self, df_floris):
             self.temp_arg += 1
             return 0

@@ -379,6 +379,7 @@ class ModelFit:
         ):
             self.fmodel.set_param(parameter, parameter_values[i], parameter_index)
 
+
 def extract_trial_data(study_obj, param_name):
     """Extract parameter values and costs from study trials."""
     param_values = [trial.params[param_name] for trial in study_obj.trials]

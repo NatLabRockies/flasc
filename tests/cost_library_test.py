@@ -39,10 +39,13 @@ def test_turbine_power_error():
     cf = TurbinePowerRootMeanSquaredError(df_scada)
 
     error = cf(df_floris)
-    expected_error = np.sqrt((
-        ((df_scada["pow_000"] - df_floris["pow_000"]) ** 2).mean()
-        + ((df_scada["pow_001"] - df_floris["pow_001"]) ** 2).mean()
-    ) / 2)
+    expected_error = np.sqrt(
+        (
+            ((df_scada["pow_000"] - df_floris["pow_000"]) ** 2).mean()
+            + ((df_scada["pow_001"] - df_floris["pow_001"]) ** 2).mean()
+        )
+        / 2
+    )
 
     assert error == expected_error
 
