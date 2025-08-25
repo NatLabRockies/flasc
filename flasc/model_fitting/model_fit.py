@@ -67,7 +67,7 @@ class ModelFit:
 
         # Check that cost_function is an instance of CostFunctionBase
         if not isinstance(cost_function, CostFunctionBase):
-            raise TypeError("cost_function must be subclass of CostFunctionBase.")
+            raise TypeError("cost_function must be an instantiated subclass of CostFunctionBase.")
 
         # Save the fmodel
         self.fmodel = fmodel

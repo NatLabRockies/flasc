@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
+from flasc.model_fitting.cost_library import CostFunctionBase
 from flasc.model_fitting.model_fit import ModelFit
 from flasc.utilities.utilities_examples import load_floris_artificial
 
@@ -25,8 +26,10 @@ def get_simple_inputs_gch():
     fm.set(layout_x=[0.0], layout_y=[0.0])
 
     # Define cost_function as a simple function
-    def cost_function(df_scada, df_floris, fmodel, turbine_groupings):
-        return None
+    class CostFunctionTest(CostFunctionBase):
+        def cost(self, df_floris):
+            return None
+    cost_function = CostFunctionTest(df)
 
     # Define the parameters to tune the kA parameter of GCH
     parameter_list = [("wake", "wake_velocity_parameters", "gauss", "ka")]
@@ -213,51 +216,50 @@ def test_run_floris():
 
 def test_cost_function():
     # Get simple inputs
-    (
-        df,
-        fm,
-        cost_function,
-        _,
-        _,
-        _,
-        _,
-    ) = get_simple_inputs_gch()
+    df, fm = get_simple_inputs_gch()[0:2]
 
-    # Cost function has to be a function
-    with pytest.raises(ValueError):
-        _ = ModelFit(
-            df,
-            fm,
-            1,
-        )
-
+    # Cost function has to be subclass of CostFunctionBase
     # Cost function has wrong number of inputs
-    def cost_1(df_scada):
-        return
+    class Cost1():
+        def __init__(self):
+            pass
+        def cost(self, df_floris):
+            return 0
 
-    def cost_2(df_scada, df_floris):
-        return
-
-    def cost_3(df_scada, df_floris, fm, turbine_groupings):
-        return
-
-    with pytest.raises(ValueError):
-        _ = ModelFit(
+    # Cost function must be an subclass of CostFunctionBase
+    with pytest.raises(TypeError):
+        ModelFit(
             df,
             fm,
-            cost_1,
+            Cost1(),
         )
 
-    with pytest.raises(ValueError):
-        _ = ModelFit(
-            df,
-            fm,
-            cost_2,
-        )
+    # Wrong number of arguments in cost function
+    class Cost2(CostFunctionBase):
+        def cost(self, df_floris, extra_arg):
+            return 0
 
-    # This should work:
-    _ = ModelFit(
-        df,
-        fm,
-        cost_3,
-    )
+    # Uninstantiated cost function raises TypeError
+    with pytest.raises(TypeError):
+        ModelFit(df, fm, Cost2)
+
+    # Wrong number of arguments in cost function.
+    with pytest.raises(TypeError):
+        cf = Cost2()
+        cf(df)
+
+    # Valid cost function (extra argument in init, but not in cost)
+    class Cost3(CostFunctionBase):
+        def __init__(self, df_scada, temp_arg):
+            super().__init__(df_scada)
+            self.temp_arg = temp_arg
+        def cost(self, df_floris):
+            self.temp_arg += 1
+            return 0
+
+    # Instantiate without providing the extra argument raises TypeError
+    with pytest.raises(TypeError):
+        Cost3(df)
+
+    # Instantiate with providing the extra argument works
+    ModelFit(df, fm, Cost3(df, temp_arg=5))

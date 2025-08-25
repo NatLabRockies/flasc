@@ -1,9 +1,11 @@
 import numpy as np
 import pandas as pd
-from floris import FlorisModel
 
 from flasc import FlascDataFrame
-from flasc.model_fitting.cost_library import turbine_power_error_abs, turbine_power_error_sq
+from flasc.model_fitting.cost_library import (
+    TurbinePowerMeanAbsoluteError,
+    TurbinePowerRootMeanSquaredError,
+)
 
 
 def setup_data():
@@ -29,28 +31,27 @@ def setup_data():
         )
     )
 
-    # Create a dummy FlorisModel object
-    fm = FlorisModel(configuration="defaults")
-
-    return df_scada, df_floris, fm
+    return df_scada, df_floris
 
 
 def test_turbine_power_error():
-    df_scada, df_floris, fm = setup_data()
+    df_scada, df_floris = setup_data()
+    cf = TurbinePowerRootMeanSquaredError(df_scada)
 
-    error = turbine_power_error_sq(df_scada, df_floris, fm)
-    expected_error = (
+    error = cf(df_floris)
+    expected_error = np.sqrt((
         ((df_scada["pow_000"] - df_floris["pow_000"]) ** 2).mean()
         + ((df_scada["pow_001"] - df_floris["pow_001"]) ** 2).mean()
-    ) / 2
+    ) / 2)
 
     assert error == expected_error
 
 
 def test_turbine_power_error_abs():
-    df_scada, df_floris, fm = setup_data()
+    df_scada, df_floris = setup_data()
+    cf = TurbinePowerMeanAbsoluteError(df_scada)
 
-    error = turbine_power_error_abs(df_scada, df_floris, fm)
+    error = cf(df_floris)
     expected_error = (
         (df_scada["pow_000"] - df_floris["pow_000"]).abs().mean()
         + (df_scada["pow_001"] - df_floris["pow_001"]).abs().mean()
