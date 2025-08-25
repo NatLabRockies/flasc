@@ -1,5 +1,7 @@
 """This module contains the optimization algorithms for the model fitting."""
 
+from __future__ import annotations
+
 import itertools
 from typing import Dict, Tuple
 
