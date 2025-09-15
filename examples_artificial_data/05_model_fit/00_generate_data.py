@@ -11,7 +11,8 @@ with both uncertain and certain wind speed data."""
 
 # Parameters
 N = 200  # Number of data points
-wd_std = 3.0  # Standard deviation of wind direction in for uncertain model
+wd_std_original = 3.0  # Standard deviation of wind direction in for uncertain model (default)
+wd_std_set = 2.0  # Set point in created data
 we_value_set = 0.03  # Wake expansion value that will be the used to generate the test data
 
 # Resolution parameters
@@ -21,8 +22,15 @@ wd_resolution = 2.0
 
 # Get default FLORIS model
 fm_default, _ = load_floris_artificial(wake_model="jensen")
+fm_param = fm_default.copy()
 ufm_default = UncertainFlorisModel(
-    fm_default.copy(), wd_std=wd_std, ws_resolution=ws_resolution, wd_resolution=wd_resolution
+    fm_default.copy(),
+    wd_std=wd_std_original,
+    ws_resolution=ws_resolution,
+    wd_resolution=wd_resolution,
+)
+ufm_param = UncertainFlorisModel(
+    fm_default.copy(), wd_std=wd_std_set, ws_resolution=ws_resolution, wd_resolution=wd_resolution
 )
 
 # Set a simple two turbine layout
@@ -44,11 +52,9 @@ time_series = TimeSeries(
 
 # Set layout and inflow
 fm_default.set(layout_x=layout_x, layout_y=layout_y, wind_data=time_series)
+fm_param.set(layout_x=layout_x, layout_y=layout_y, wind_data=time_series)
 ufm_default.set(layout_x=layout_x, layout_y=layout_y, wind_data=time_series)
-
-# Get a new model with a different wake expansion value
-fm_param = fm_default.copy()
-ufm_param = ufm_default.copy()
+ufm_param.set(layout_x=layout_x, layout_y=layout_y, wind_data=time_series)
 
 # Set the FLORIS model parameter
 parameter = ("wake", "wake_velocity_parameters", "jensen", "we")
@@ -87,6 +93,8 @@ with open("two_turbine_data.pkl", "wb") as f:
             "parameter": parameter,
             "we_value_original": we_value_original,
             "we_value_set": we_value_set,
+            "wd_std_original": wd_std_original,
+            "wd_std_set": wd_std_set,
         },
         f,
     )
