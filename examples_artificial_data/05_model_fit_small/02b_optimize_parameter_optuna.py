@@ -9,7 +9,10 @@ from flasc.model_fitting.cost_library import TurbinePowerMeanAbsoluteError
 from flasc.model_fitting.model_fit import ModelFit
 from flasc.model_fitting.opt_library import opt_optuna
 
-""" Use ModelFit optimization to find the optimal wake expansion value that best fits the data """
+""" Use ModelFit optimization to find the optimal wake expansion value that best fits the data.
+
+In this example using the opt_optuna optimization routine from the opt_library.
+"""
 
 # Since ModelFit is always parallel this is important to include
 if __name__ == "__main__":
