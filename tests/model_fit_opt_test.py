@@ -8,7 +8,12 @@ from flasc.model_fitting.cost_library import (
     TurbinePowerMeanAbsoluteError,
 )
 from flasc.model_fitting.model_fit import ModelFit
-from flasc.model_fitting.opt_library import opt_sweep, opt_sweep_with_wd_std
+from flasc.model_fitting.opt_library import (
+    opt_optuna,
+    opt_optuna_with_wd_std,
+    opt_sweep,
+    opt_sweep_with_wd_std,
+)
 from flasc.utilities.utilities_examples import load_floris_artificial
 
 
@@ -56,14 +61,6 @@ def get_simple_inputs_gch():
         parameter_range_list,
         parameter_index_list,
     )
-
-
-def test_opt_optuna():
-    pass
-
-
-def test_opt_optuna_with_wd_std():
-    pass
 
 
 def test_opt_sweep():
@@ -163,3 +160,133 @@ def test_opt_sweep_with_wd_std():
     test_best = results["all_parameter_combinations"][np.argmin(results["all_costs"])]
 
     assert np.allclose(sweep_best, test_best)
+
+
+def test_opt_optuna():
+    # Get simple inputs
+    (
+        df,
+        fm,
+        _,
+        parameter_list,
+        parameter_name_list,
+        parameter_range_list,
+        parameter_index_list,
+    ) = get_simple_inputs_gch()
+
+    # Single parameter
+    mf = ModelFit(
+        df,
+        fm,
+        TurbinePowerMeanAbsoluteError(),
+        parameter_list,
+        parameter_name_list,
+        parameter_range_list,
+        parameter_index_list,
+    )
+
+    results = opt_optuna(
+        mf=mf,
+        n_trials=5,  # Use small number for fast testing
+    )
+
+    # Check that results contain expected keys
+    assert "optimized_parameter_values" in results
+    assert "optimized_cost" in results
+    assert "optuna_study" in results
+
+    # Check that optimized_parameter_values is a list with correct length
+    assert isinstance(results["optimized_parameter_values"], list)
+    assert len(results["optimized_parameter_values"]) == len(parameter_name_list)
+
+    # Check that optimized_cost is a number
+    assert isinstance(results["optimized_cost"], (int, float))
+
+    # Reconstruct best from study and compare
+    study = results["optuna_study"]
+    optuna_best = [study.best_params[name] for name in parameter_name_list]
+    assert np.allclose(results["optimized_parameter_values"], optuna_best)
+
+    # Multiple parameters
+    parameter_list.append(("wake", "wake_velocity_parameters", "gauss", "kb"))
+    parameter_name_list.append("kB")
+    parameter_range_list.append((0.001, 0.005))
+
+    mf = ModelFit(
+        df,
+        fm,
+        TurbinePowerMeanAbsoluteError(),
+        parameter_list,
+        parameter_name_list,
+        parameter_range_list,
+        parameter_index_list,
+    )
+
+    results = opt_optuna(
+        mf=mf,
+        n_trials=5,  # Use small number for fast testing
+    )
+
+    # Check that results contain expected keys
+    assert "optimized_parameter_values" in results
+    assert "optimized_cost" in results
+    assert "optuna_study" in results
+
+    # Check that optimized_parameter_values is a list with correct length
+    assert isinstance(results["optimized_parameter_values"], list)
+    assert len(results["optimized_parameter_values"]) == len(parameter_name_list)
+
+    # Check that optimized_cost is a number
+    assert isinstance(results["optimized_cost"], (int, float))
+
+
+def test_opt_optuna_with_wd_std():
+    # Get simple inputs
+    (
+        df,
+        fm,
+        _,
+        parameter_list,
+        parameter_name_list,
+        parameter_range_list,
+        parameter_index_list,
+    ) = get_simple_inputs_gch()
+
+    # Single parameter
+    mf = ModelFit(
+        df,
+        fm,
+        TurbinePowerMeanAbsoluteError(),
+        parameter_list,
+        parameter_name_list,
+        parameter_range_list,
+        parameter_index_list,
+    )
+
+    # Should raise value error because fm is not an UncertainFlorisModel
+    with pytest.raises(ValueError):
+        opt_optuna_with_wd_std(mf, n_trials=5)
+
+    mf.fmodel = UncertainFlorisModel(fm)
+    results = opt_optuna_with_wd_std(
+        mf=mf,
+        n_trials=5,  # Use small number for fast testing
+    )
+
+    # Check that results contain expected keys
+    assert "optimized_parameter_values" in results
+    assert "optimized_cost" in results
+    assert "optuna_study" in results
+
+    # Check that optimized_parameter_values is a list with correct length
+    # Should include the wd_std parameter as well
+    assert isinstance(results["optimized_parameter_values"], list)
+    assert len(results["optimized_parameter_values"]) == len(parameter_name_list) + 1
+
+    # Check that optimized_cost is a number
+    assert isinstance(results["optimized_cost"], (int, float))
+
+    # Reconstruct best (including wd_std) and compare
+    study = results["optuna_study"]
+    optuna_best = [study.best_params[name] for name in (parameter_name_list + ["wd_std"])]
+    assert np.allclose(results["optimized_parameter_values"], optuna_best)
