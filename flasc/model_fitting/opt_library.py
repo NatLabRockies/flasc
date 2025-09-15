@@ -208,7 +208,7 @@ def opt_sweep(
     # Evaluate each combination
     for i, param_combination in enumerate(all_combinations):
         if verbose:
-            print(f"Evaluating combination {i+1}/{len(all_combinations)}: {param_combination}")
+            print(f"Evaluating combination {i + 1}/{len(all_combinations)}: {param_combination}")
 
         cost = mf.set_parameter_and_evaluate(param_combination)
         all_costs[i] = cost
@@ -285,7 +285,7 @@ def opt_sweep_with_wd_std(
     # Evaluate each combination
     for i, param_combination in enumerate(all_combinations):
         if verbose:
-            print(f"Evaluating combination {i+1}/{len(all_combinations)}: {param_combination}")
+            print(f"Evaluating combination {i + 1}/{len(all_combinations)}: {param_combination}")
 
         # Set wd_std
         mf.set_wd_std(wd_std=param_combination[-1])
