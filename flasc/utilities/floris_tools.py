@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import copy
 from time import perf_counter as timerpc
 from typing import Union
 
@@ -922,8 +921,9 @@ def get_dependent_turbines_by_wd(
                 (number of wind directions) x (number of turbines). Returned
                 only if return_influence_magnitudes is True.
     """
-    # Copy fi to a local to not mess with incoming
-    fm = copy.deepcopy(fm_in)
+    # Copy incoming ForisModel to modify locally. FlorisModel.copy() is used,
+    # which will not copy over stored wind_data or control setpoints.
+    fm = fm_in.copy()
 
     # Compute the base power
     fm.set(
@@ -943,8 +943,6 @@ def get_dependent_turbines_by_wd(
     fm.set(
         layout_x=np.delete(fm.layout_x, [test_turbine]),
         layout_y=np.delete(fm.layout_y, [test_turbine]),
-        wind_speeds=ws_test * np.ones_like(wd_array),
-        wind_directions=wd_array,
     )  # This will reindex the turbines; undone in following steps.
     fm.run()
     test_power = fm.get_turbine_powers()

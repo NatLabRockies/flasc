@@ -225,6 +225,7 @@ class TestEnergyRatio(unittest.TestCase):
 
     def test_energy_ratio_input(self):
         # Energy ratio input is deprecated but should still work
+        # TODO: Remove this test in next major release since EnergyRatioInput is deprecated.
 
         # Load data and FLORIS model
         fm, _ = load_floris()
