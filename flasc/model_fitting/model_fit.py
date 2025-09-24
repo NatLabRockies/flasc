@@ -68,6 +68,11 @@ class ModelFit:
         # Check that cost_function is an instance of CostFunctionBase
         if not isinstance(cost_function, CostFunctionBase):
             raise TypeError("cost_function must be an instantiated subclass of CostFunctionBase.")
+        if not hasattr(cost_function, "cost"):
+            raise NotImplementedError(
+                "The cost_function must have a cost() method implemented that takes a dataframe "
+                "(df_floris) as an input and returns a float."
+            )
 
         # Save the fmodel
         self.fmodel = fmodel
@@ -98,12 +103,6 @@ class ModelFit:
         else:
             self.yaw_angles = None
 
-        # Check that the cost function has 3 inputs, the SCADA dataframe, the FLORIS dataframe,
-        # and the FLORIS model
-        if not callable(cost_function):
-            raise TypeError(
-                "cost_function must be a callable function taking one argument: df_floris."
-            )
         # Assign the dataframe to the cost object
         cost_function.assign_df_scada(self.df)
 

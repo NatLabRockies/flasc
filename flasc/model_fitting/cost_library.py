@@ -1,4 +1,4 @@
-"""Library of cost functions for the optimization."""
+"""Library of cost functions for the model fitting optimization."""
 
 from __future__ import annotations
 
@@ -24,7 +24,7 @@ class CostFunctionBase(metaclass=ABCMeta):
             df_scada (dataframe): The SCADA data to use in the cost function.
         """
         self.assign_df_scada(df_scada)
-        self._initialized_for_evaluation = False
+        self._is_initialized_for_evaluation = False
 
     @property
     def df_scada(self) -> pd.DataFrame | FlascDataFrame | None:
@@ -47,13 +47,13 @@ class CostFunctionBase(metaclass=ABCMeta):
             self._df_scada = None
 
     @property
-    def initialized_for_evaluation(self) -> bool:
+    def is_initialized_for_evaluation(self) -> bool:
         """Check if the cost function is ready for evaluation."""
-        return self._initialized_for_evaluation
+        return self._is_initialized_for_evaluation
 
-    @initialized_for_evaluation.setter
-    def initialized_for_evaluation(self, value: bool):
-        self._initialized_for_evaluation = value
+    @is_initialized_for_evaluation.setter
+    def is_initialized_for_evaluation(self, value: bool):
+        self._is_initialized_for_evaluation = value
 
     def initialize_for_evaluation(self):
         """Initialize the cost function for evaluation. Called before the first evaluation.
@@ -63,7 +63,7 @@ class CostFunctionBase(metaclass=ABCMeta):
 
         Subclasses may override this method to perform additional setup before evaluation.
         """
-        self.initialized_for_evaluation = True
+        self.is_initialized_for_evaluation = True
 
     def prepare_df_floris_for_evaluation(self, df_floris: pd.DataFrame | FlascDataFrame):
         """Prepare the cost function for evaluation. Called each time before evaluation."""
@@ -74,7 +74,7 @@ class CostFunctionBase(metaclass=ABCMeta):
 
         Abstract method to be implemented by subclasses.
         """
-        if not self.initialized_for_evaluation:
+        if not self.is_initialized_for_evaluation:
             self.initialize_for_evaluation()
         df_floris = self.prepare_df_floris_for_evaluation(df_floris)
 
@@ -92,7 +92,10 @@ class CostFunctionBase(metaclass=ABCMeta):
         Returns:
             float: The cost value.
         """
-        raise NotImplementedError("Subclasses must implement this method.")
+        raise NotImplementedError(
+            "Subclasses of CostFunctionBase must implement a cost() method. "
+            "This method should take a dataframe (df_floris) as an input and return a float."
+        )
 
 
 class TurbinePowerErrorBase(CostFunctionBase):
@@ -278,7 +281,7 @@ class WakeLossRootMeanSquaredError(CostFunctionBase):
             "pow_test", "pow", self.df_scada, self.test_turbines, False
         )
 
-        self.initialized_for_evaluation = True
+        self.is_initialized_for_evaluation = True
 
     def prepare_df_floris_evaluation(self, df_floris: pd.DataFrame | FlascDataFrame):
         """Apply the reference and test turbines to the FLORIS dataframe."""
