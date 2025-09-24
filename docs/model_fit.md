@@ -75,6 +75,7 @@ result = opt_optuna(mf_multi, n_trials=200)
 ## Cost Functions and Cost Library
 
 The cost library provides a number of pre-built cost functions and base classes for developing custom cost functions.
+Each cost function is implemented as a subclass of `CostFunctionBase` and must implement the `cost()` method that computes the cost given a FLORIS simulation dataframe. This design allows for easy extension and customization of cost metrics, with the ability to add define extra parameters of the cost function on instantiation of the cost function object.
 
 ### Recommended Cost Function
 
@@ -104,9 +105,16 @@ class CustomCostFunction(CostFunctionBase):
         return error.abs().mean()
 ```
 
+Prepackaged cost functions include:
+- `TurbinePowerMeanAbsoluteError`: The mean absolute error in power at each turbine and averages across turbines and time steps. Our recommended cost function.
+- `TurbinePowerRootMeanSquaredError`: The square root of the mean of the squared error in power at each turbine at each time step.
+- `FarmPowerMeanAbsoluteError`: The mean absolute error in total farm power at each time step.
+- `FarmPowerRootMeanSquaredError`: The square root of the mean of the squared error in total farm power at each time step.
+- `WakeLossRootMeanSquaredError`: The root mean squared error in wake loss at each turbine at each time step, where the wake loss is defined as the difference between the free stream power and the "waked" power at the turbine.
+
 ## Optimization Functions and Optimization Library
 
-The optimization library provides algorithms for parameter optimization.  It currently includes a simple grid search and a Bayesian optimization (optuna).
+The optimization library provides algorithms for parameter optimization.  It currently includes a simple grid search and a Bayesian optimization (optuna). The output of each optimization function is a dictionary containing the optimal parameter values (under the `"optimized_parameter_values"` key), the minimum cost achieved (`"optimized_cost"`), and possible additional metadata about the optimization process under optimizer-specific keys.
 
 ### Grid Search Optimization
 
@@ -122,6 +130,7 @@ result = opt_sweep(mf, n_grid=10)
 result = opt_sweep(mf, n_grid=[10, 15, 8])
 ```
 
+As well as the standard `"optimized_parameter_values"` and `"optimized_cost"` keys, the `results` dictionary returned by `opt_sweep` also includes `"all_parameter_combinations"` and `"all_costs"` keys that contain the full set of parameter combinations evaluated and their corresponding costs.
 
 ### Bayesian Optimization with Optuna
 
@@ -138,7 +147,9 @@ result = opt_optuna(mf, n_trials=100)
 result = opt_optuna(mf, n_trials=200, timeout=3600)
 ```
 
-### Optuna Visualization and Analysis
+As well as the standard `"optimized_parameter_values"` and `"optimized_cost"` keys, the `results` dictionary returned by `opt_optuna` also includes an `"optuna_study"` key that contains the full Optuna study object. This can be used for further analysis and visualization of the optimization process.
+
+#### Optuna Visualization and Analysis
 
 Optuna provides analysis tools that can be used directly with ModelFit results:
 
