@@ -90,7 +90,7 @@ def load_floris_artificial(wake_model="gch", wd_std=0.0, cosine_exponent=None):
         for ii in range(len(tdefs)):
             tdefs[ii]["power_thrust_table"]["cosine_loss_exponent_yaw"] = cosine_exponent
 
-        fm.set(turbine_type=tdefs)
+        fm.set(turbine_type=tdefs, reference_wind_height=fm.reference_wind_height)
 
     # Add uncertainty
     if wd_std > 0.01:

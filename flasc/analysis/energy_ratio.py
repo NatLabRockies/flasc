@@ -137,7 +137,7 @@ def _compute_energy_ratio_single(
         .with_columns(energy_ratio=pl.col("test_energy") / pl.col("ref_energy"))
         .pivot(
             values=["energy_ratio", "count"],
-            columns="df_name",
+            on="df_name",
             index="wd_bin",
             aggregate_function="first",
         )

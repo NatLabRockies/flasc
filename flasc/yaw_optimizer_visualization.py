@@ -99,7 +99,7 @@ def plot_uplifts_by_atmospheric_conditions(
             y = [None for _ in range(len(df_list))]
             f = [None for _ in range(len(df_list))]
             for dii, df in enumerate(df_list):
-                df_group = df.groupby(xq_col)
+                df_group = df.groupby(xq_col, observed=False)
                 if yii == 0:
                     y[dii] = 100.0 * (df_group["Prel"].apply(np.nanmean) - 1.0)
                 else:

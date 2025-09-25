@@ -67,7 +67,7 @@ class yaw_pow_fitting:
         if df_upstream is not None:
             df_upstr_ti = df_upstream[[ti in tl for tl in df_upstream["turbines"]]]
             df_upstr_ti = df_upstr_ti.reset_index(drop=True)
-            in_range = [False for _ in range(df.shape[0])]
+            in_range = np.array([False for _ in range(df.shape[0])])
             for i in range(df_upstr_ti.shape[0]):
                 wd_min = df_upstr_ti.loc[i, "wd_min"]
                 wd_max = df_upstr_ti.loc[i, "wd_max"]

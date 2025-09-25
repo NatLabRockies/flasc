@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import os as os
-from typing import Callable, List, Union
+from typing import Callable, Iterable, List, Union
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -89,7 +89,7 @@ class bias_estimation(LoggingManager):
 
     def _load_a_input_for_wd_bias(
         self,
-        wd_bias,
+        wd_bias: float,
     ):
         """Load AnalysisInput objects with bias.
 
@@ -158,16 +158,16 @@ class bias_estimation(LoggingManager):
 
     def _get_energy_ratios_allbins(
         self,
-        wd_bias,
-        time_mask=None,
-        ws_mask=(6.0, 10.0),
-        wd_mask=None,
-        ti_mask=None,
-        wd_step=3.0,
-        ws_step=1.0,
-        wd_bin_width=3.0,
-        N_btstrp=1,
-        plot_iter_path=None,
+        wd_bias: float,
+        time_mask: None = None,
+        ws_mask: Iterable[float, float] = (6.0, 10.0),
+        wd_mask: Iterable[float, float] | None = None,
+        ti_mask: None = None,
+        wd_step: float = 3.0,
+        ws_step: float = 1.0,
+        wd_bin_width: float = 3.0,
+        N_btstrp: int = 1,
+        plot_iter_path: str | None = None,
     ):
         """Calculate the energy ratios.
 
@@ -177,8 +177,7 @@ class bias_estimation(LoggingManager):
                 the data based on this variable. Defaults to None.
             ws_mask ([iterable], optional): Wind speed mask. Should be an
                 iterable of length 2, e.g., [6.0, 10.0], defining the lower
-                and upper bound, respectively. If not specified, will not
-                mask the data based on this variable. Defaults to (6, 10).
+                and upper bound, respectively. Defaults to (6, 10).
             wd_mask ([iterable], optional): Wind direction mask. Should
                 be an iterable of length 2, e.g., [0.0, 180.0], defining
                 the lower and upper bound, respectively. If not specified,
@@ -233,7 +232,7 @@ class bias_estimation(LoggingManager):
 
         for ii, ti in enumerate(self.test_turbines):
             self.logger.info(
-                "    Determining energy ratios for test turbine = %03d." % (ti)
+                "    Determining energy ratios for test turbine = %03d." % ti
                 + " WD bias: %.3f deg." % wd_bias
             )
 
@@ -420,9 +419,14 @@ class bias_estimation(LoggingManager):
         """
         self.logger.info("Estimating the wind direction bias")
 
-        def cost_fun(wd_bias):
+        def cost_fun(x: np.ndarray):
+            """Cost function to minimize.
+
+            Args:
+                x (np.ndarray): Wind direction bias to evaluate. 1D array with 1 element.
+            """
             self._get_energy_ratios_allbins(
-                wd_bias=wd_bias,
+                wd_bias=x[0],  # pass as float
                 time_mask=time_mask,
                 ws_mask=ws_mask,
                 wd_mask=wd_mask,
@@ -467,7 +471,7 @@ class bias_estimation(LoggingManager):
             # workers=opt_workers,
         )
 
-        wd_bias = x_opt
+        wd_bias = x_opt[0]
         self.opt_wd_bias = wd_bias
         self.opt_cost = J_opt
         self.opt_wd_grid = x
@@ -476,7 +480,7 @@ class bias_estimation(LoggingManager):
         # End with optimal results and bootstrapping
         self.logger.info("  Evaluating optimal solution with bootstrapping")
         self._get_energy_ratios_allbins(
-            wd_bias=x_opt,
+            wd_bias=wd_bias,
             time_mask=time_mask,
             ws_mask=ws_mask,
             wd_mask=wd_mask,
@@ -530,7 +534,7 @@ class bias_estimation(LoggingManager):
             er_out_test_turbine_list_scada_copy = self.er_out_test_turbine_list_scada.copy()
             # (Re)compute case with wd_bias=0
             self._get_energy_ratios_allbins(
-                wd_bias=0,
+                wd_bias=0.0,
                 time_mask=self._input_args["time_mask"],
                 ws_mask=self._input_args["ws_mask"],
                 wd_mask=self._input_args["wd_mask"],
