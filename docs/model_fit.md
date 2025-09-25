@@ -1,4 +1,4 @@
-# Model Fitting with ModelFit
+# FLORIS model calibration with ModelFit
 
 FLASC's ModelFit capability provides a modular framework for calibrating FLORIS engineering wake models to SCADA data. This automated calibration process optimizes model parameters to minimize differences between predicted and observed turbine performance, improving the accuracy of wake modeling for wind farm analysis.
 
@@ -211,9 +211,9 @@ The SMARTEOLE example in `examples_smarteole/11_model_tuning_with_model_fit.ipyn
 
 ## Deprecated Code
 
-ModelFit replaces several older calibration methods that are now deprecated:
+ModelFit replaces several older calibration methods. The following items are deprecated and will be removed in a future release. They remain available for the time being in keeping with semantic versioning principles.
 
 ### Deprecated Modules
-- **`flasc.model_fitting.floris_tuning`**: Original tuning implementation (deprecated v2.4)
-- **Examples 07 and 08**: SMARTEOLE tuning examples using old methods
+- **`flasc.model_fitting.floris_tuning`**: Original tuning implementation (deprecated in v2.4). Use `flasc.model_fitting.model_fit` instead.
+- **Examples 07 and 08**: SMARTEOLE tuning examples using old methods. See `examples_smarteole/11_model_tuning_with_model_fit.ipynb` for the replacement.
 
