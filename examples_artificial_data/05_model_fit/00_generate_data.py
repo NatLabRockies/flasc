@@ -1,9 +1,10 @@
 import pickle
 
 import numpy as np
+import pandas as pd
 from floris import TimeSeries, UncertainFlorisModel
 
-from flasc.model_fitting.model_fit import ModelFit
+from flasc import FlascDataFrame
 from flasc.utilities.utilities_examples import load_floris_artificial
 
 """ This example sets up a simple two turbine data set with the Jensen wake model.  Data is saved
@@ -74,13 +75,33 @@ powers_u = ufm_param.get_turbine_powers() / 1000
 time = np.arange(N)
 
 # Build the dataframe
-df = ModelFit.form_flasc_dataframe(
-    time=time, wind_directions=wind_directions, wind_speeds=wind_speeds, powers=powers
+df = pd.DataFrame(
+    {
+        "time": time,
+        "wd": wind_directions,
+        "ws": wind_speeds,
+    }
 )
 
-df_u = ModelFit.form_flasc_dataframe(
-    time=time, wind_directions=wind_directions, wind_speeds=wind_speeds, powers=powers_u
+for i in range(powers.shape[1]):
+    df[f"pow_{i:03}"] = powers[:, i]
+
+df = FlascDataFrame(df)
+
+
+df_u = pd.DataFrame(
+    {
+        "time": time,
+        "wd": wind_directions,
+        "ws": wind_speeds,
+    }
 )
+
+for i in range(powers_u.shape[1]):
+    df_u[f"pow_{i:03}"] = powers_u[:, i]
+
+df_u = FlascDataFrame(df_u)
+
 
 # Save the dataframe and default model and target parameter to a pickle file
 with open("two_turbine_data.pkl", "wb") as f:

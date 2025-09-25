@@ -174,9 +174,12 @@ class ModelFit:
         if "ws" not in df.columns or "wd" not in df.columns:
             raise ValueError("DataFrame must contain 'ws' and 'wd' columns.")
 
-    @staticmethod
-    def form_flasc_dataframe(
-        time: np.ndarray, wind_directions: np.ndarray, wind_speeds: np.ndarray, powers: np.ndarray
+    def _form_flasc_dataframe(
+        self,
+        time: np.ndarray,
+        wind_directions: np.ndarray,
+        wind_speeds: np.ndarray,
+        powers: np.ndarray,
     ) -> FlascDataFrame:
         """Form a FlascDataFrame from wind directions, wind speeds, and powers.
 
@@ -266,7 +269,7 @@ class ModelFit:
         turbine_powers = self.fmodel.get_turbine_powers() / 1000
 
         # Generate FLORIS dataframe
-        df_floris = self.form_flasc_dataframe(time, wind_directions, wind_speeds, turbine_powers)
+        df_floris = self._form_flasc_dataframe(time, wind_directions, wind_speeds, turbine_powers)
 
         # Make sure the NaN values in the SCADA data appear in the same locations in the
         # FLORIS data
