@@ -1,5 +1,5 @@
 
-# FLASC Documentation
+# FLASC
 
 Welcome to the documentation of the NREL FLASC repository!
 
