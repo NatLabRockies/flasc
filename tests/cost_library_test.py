@@ -5,6 +5,9 @@ from flasc import FlascDataFrame
 from flasc.model_fitting.cost_library import (
     TurbinePowerMeanAbsoluteError,
     TurbinePowerRootMeanSquaredError,
+    FarmPowerMeanAbsoluteError,
+    FarmPowerRootMeanSquaredError,
+    WakeLossRootMeanSquaredError,
 )
 
 
@@ -34,7 +37,7 @@ def setup_data():
     return df_scada, df_floris
 
 
-def test_turbine_power_error():
+def test_TurbinePowerRootMeanSquaredError():
     df_scada, df_floris = setup_data()
     cf = TurbinePowerRootMeanSquaredError(df_scada)
 
@@ -50,7 +53,7 @@ def test_turbine_power_error():
     assert error == expected_error
 
 
-def test_turbine_power_error_abs():
+def test_TurbinePowerMeanAbsoluteError():
     df_scada, df_floris = setup_data()
     cf = TurbinePowerMeanAbsoluteError(df_scada)
 
@@ -59,5 +62,50 @@ def test_turbine_power_error_abs():
         (df_scada["pow_000"] - df_floris["pow_000"]).abs().mean()
         + (df_scada["pow_001"] - df_floris["pow_001"]).abs().mean()
     ) / 2
+
+    assert error == expected_error
+
+def test_FarmPowerRootMeanSquaredError():
+    df_scada, df_floris = setup_data()
+    cf = FarmPowerRootMeanSquaredError(df_scada)
+
+    error = cf(df_floris)
+    expected_error = np.sqrt(
+        ((
+            df_scada["pow_000"] + df_scada["pow_001"]
+            - (df_floris["pow_000"] + df_floris["pow_001"])
+         ) ** 2).mean()
+    )
+
+    assert error == expected_error
+
+def test_FarmPowerMeanAbsoluteError():
+    df_scada, df_floris = setup_data()
+    cf = FarmPowerMeanAbsoluteError(df_scada)
+
+    error = cf(df_floris)
+    expected_error = (
+        (df_scada["pow_000"] + df_scada["pow_001"]
+         - (df_floris["pow_000"] + df_floris["pow_001"])
+        ).abs().mean()
+    )
+
+    assert error == expected_error
+
+def test_WakeLossRootMeanSquaredError():
+    df_scada, df_floris = setup_data()
+    cf = WakeLossRootMeanSquaredError(
+        df_scada,
+        test_turbines=[1],
+        reference_turbines=[0],
+    )
+
+    error = cf(df_floris)
+    expected_error = np.sqrt(
+        ((
+            (df_scada["pow_000"] - df_scada["pow_001"])
+            - (df_floris["pow_000"] - df_floris["pow_001"])
+         ) ** 2).mean()
+    )
 
     assert error == expected_error

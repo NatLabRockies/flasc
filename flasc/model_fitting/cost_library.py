@@ -211,10 +211,11 @@ class FarmPowerErrorBase(CostFunctionBase):
         Returns:
             pd.DataFrame: DataFrame of errors between SCADA and FLORIS farm powers.
         """
-        df_scada_ref = set_pow_ref_by_turbines(self.df_scada, list(range(self.df_scada.n_turbines)))
-        df_floris = set_pow_ref_by_turbines(df_floris, list(range(self.df_scada.n_turbines)))
+        pow_columns = ["pow_{0:03d}".format(t) for t in range(self.df_scada.n_turbines)]
+        pow_farm_scada = self.df_scada[pow_columns].sum(axis=1)
+        pow_farm_floris = df_floris[pow_columns].sum(axis=1)
 
-        return df_scada_ref["pow_ref"] - df_floris["pow_ref"]
+        return pow_farm_scada - pow_farm_floris
 
 
 class FarmPowerMeanAbsoluteError(FarmPowerErrorBase):
@@ -276,9 +277,11 @@ class WakeLossRootMeanSquaredError(CostFunctionBase):
 
     def initialize_for_evaluation(self):
         """Apply the reference and test turbines to the SCADA dataframe."""
-        self.df_scada = set_pow_ref_by_turbines(self.df_scada, self.reference_turbines)
-        self.df_scada = set_col_by_turbines(
-            "pow_test", "pow", self.df_scada, self.test_turbines, False
+        self.assign_df_scada(
+            set_pow_ref_by_turbines(self.df_scada, self.reference_turbines)
+        )
+        self.assign_df_scada(
+            set_col_by_turbines("pow_test", "pow", self.df_scada, self.test_turbines, False)
         )
 
         self.is_initialized_for_evaluation = True
@@ -287,6 +290,8 @@ class WakeLossRootMeanSquaredError(CostFunctionBase):
         """Apply the reference and test turbines to the FLORIS dataframe."""
         df_floris = set_pow_ref_by_turbines(df_floris, self.reference_turbines)
         df_floris = set_col_by_turbines("pow_test", "pow", df_floris, self.test_turbines, False)
+
+        return df_floris
 
     def cost(self, df_floris: pd.DataFrame | FlascDataFrame) -> float:
         """Evaluate the overall wake loss error.
@@ -297,6 +302,8 @@ class WakeLossRootMeanSquaredError(CostFunctionBase):
         Returns:
             float: The overall wake loss error.
         """
+        df_floris = self.prepare_df_floris_evaluation(df_floris)
+
         scada_wake_loss = self.df_scada["pow_ref"].values - self.df_scada["pow_test"].values
         floris_wake_loss = df_floris["pow_ref"].values - df_floris["pow_test"].values
 
