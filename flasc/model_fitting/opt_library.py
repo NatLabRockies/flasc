@@ -16,7 +16,7 @@ def opt_optuna(
     n_trials: int = 100,
     timeout: float | None = None,
     seed: int | None = None,
-    verbose: bool = False,
+    verbose: bool = True,
 ) -> Dict:
     """Optimize the model parameters using Optuna.
 
@@ -27,7 +27,8 @@ def opt_optuna(
             Defaults to None.
         seed (int | None): Seed for the random number generator. Defaults to None,
             in which case a random seed will be used.
-        verbose (bool): Whether to print out the optimization process. Defaults to False.
+        verbose (bool): Whether to print out the optimization process. Defaults to True which
+            gives optuna INFO logging.
 
     Returns:
         Dict: Dictionary containing the optimal parameter values and
@@ -52,6 +53,10 @@ def opt_optuna(
     study = optuna.create_study(
         sampler=optuna.samplers.TPESampler(seed=seed), study_name="ModelFit"
     )
+
+    # If not verbose
+    if not verbose:
+        optuna.logging.set_verbosity(optuna.logging.WARNING)
 
     # Seed the initial value
     init_dict = {}
