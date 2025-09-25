@@ -85,7 +85,7 @@ def opt_optuna_with_wd_std(
     mf: ModelFit,
     n_trials: int = 100,
     timeout: float | None = None,
-    verbose: bool = False,
+    verbose: bool = True,
 ) -> Tuple[Dict, optuna.Study]:
     """Optimize the model parameters using Optuna including wd_std.
 
@@ -97,7 +97,8 @@ def opt_optuna_with_wd_std(
         n_trials (int): Number of trials to run. Defaults to 100.
         timeout (float | None): Timeout for the optimization in seconds.
             Defaults to None.
-        verbose (bool): Whether to print out the optimization process. Defaults to False.
+        verbose (bool): Whether to print out the optimization process. Defaults to True which
+            gives optuna INFO logging.
 
     Returns:
         Dict: Dictionary containing the optimal parameter values and
@@ -123,6 +124,10 @@ def opt_optuna_with_wd_std(
 
     # Run the optimization
     study = optuna.create_study()
+
+    # If not verbose
+    if not verbose:
+        optuna.logging.set_verbosity(optuna.logging.WARNING)
 
     # Seed the initial value
     init_dict = {"wd_std": 3.0}
