@@ -44,6 +44,7 @@ if __name__ == "__main__":
     # Optimize
     opt_result = opt_sweep(mf, n_grid=n_grid)
 
+    print("Final optimization results (opt_result dictionary):")
     print(opt_result)
 
     # Print results
