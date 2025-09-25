@@ -33,6 +33,3 @@ SMARTEOLE_WakeSteering_Map.pdf
 SMARTEOLE-WFC-open-dataset.zip
 examples_artificial_data/03_energy_ratio/heterogeneity_layouts.pdf
 *.pkl
-
-# Rules
-.cursor/rules/
