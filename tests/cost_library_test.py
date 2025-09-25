@@ -3,10 +3,10 @@ import pandas as pd
 
 from flasc import FlascDataFrame
 from flasc.model_fitting.cost_library import (
-    TurbinePowerMeanAbsoluteError,
-    TurbinePowerRootMeanSquaredError,
     FarmPowerMeanAbsoluteError,
     FarmPowerRootMeanSquaredError,
+    TurbinePowerMeanAbsoluteError,
+    TurbinePowerRootMeanSquaredError,
     WakeLossRootMeanSquaredError,
 )
 
@@ -65,19 +65,25 @@ def test_TurbinePowerMeanAbsoluteError():
 
     assert error == expected_error
 
+
 def test_FarmPowerRootMeanSquaredError():
     df_scada, df_floris = setup_data()
     cf = FarmPowerRootMeanSquaredError(df_scada)
 
     error = cf(df_floris)
     expected_error = np.sqrt(
-        ((
-            df_scada["pow_000"] + df_scada["pow_001"]
-            - (df_floris["pow_000"] + df_floris["pow_001"])
-         ) ** 2).mean()
+        (
+            (
+                df_scada["pow_000"]
+                + df_scada["pow_001"]
+                - (df_floris["pow_000"] + df_floris["pow_001"])
+            )
+            ** 2
+        ).mean()
     )
 
     assert error == expected_error
+
 
 def test_FarmPowerMeanAbsoluteError():
     df_scada, df_floris = setup_data()
@@ -85,12 +91,13 @@ def test_FarmPowerMeanAbsoluteError():
 
     error = cf(df_floris)
     expected_error = (
-        (df_scada["pow_000"] + df_scada["pow_001"]
-         - (df_floris["pow_000"] + df_floris["pow_001"])
-        ).abs().mean()
+        (df_scada["pow_000"] + df_scada["pow_001"] - (df_floris["pow_000"] + df_floris["pow_001"]))
+        .abs()
+        .mean()
     )
 
     assert error == expected_error
+
 
 def test_WakeLossRootMeanSquaredError():
     df_scada, df_floris = setup_data()
@@ -102,10 +109,13 @@ def test_WakeLossRootMeanSquaredError():
 
     error = cf(df_floris)
     expected_error = np.sqrt(
-        ((
-            (df_scada["pow_000"] - df_scada["pow_001"])
-            - (df_floris["pow_000"] - df_floris["pow_001"])
-         ) ** 2).mean()
+        (
+            (
+                (df_scada["pow_000"] - df_scada["pow_001"])
+                - (df_floris["pow_000"] - df_floris["pow_001"])
+            )
+            ** 2
+        ).mean()
     )
 
     assert error == expected_error
