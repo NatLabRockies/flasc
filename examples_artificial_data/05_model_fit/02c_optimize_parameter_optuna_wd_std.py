@@ -90,8 +90,8 @@ if __name__ == "__main__":
     ax = plot_contour(opt_result["optuna_study"])
     ax.axvline(we_value_original, color="k", linestyle="--", label="Original value")
     ax.axvline(we_value_set, color="r", linestyle="--", label="Set value")
-    ax.axhline(wd_std_original, color="k", linestyle="--", label="Original value")
-    ax.axhline(wd_std_set, color="r", linestyle="--", label="Set value")
+    ax.axhline(wd_std_original, color="k", linestyle="--")
+    ax.axhline(wd_std_set, color="r", linestyle="--")
     ax.legend()
 
     plt.tight_layout()
