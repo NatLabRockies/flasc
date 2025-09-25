@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import pytest
+from floris import UncertainFlorisModel
 
 from flasc.model_fitting.cost_library import CostFunctionBase
 from flasc.model_fitting.model_fit import ModelFit
@@ -266,3 +267,68 @@ def test_cost_function():
 
     # Instantiate with providing the extra argument works
     ModelFit(df, fm, Cost3(df, temp_arg=5))
+
+
+def test_use_non_default_wd_sample_points():
+    """Test that use_non_default_wd_sample_points correctly scales wd_sample_points with wd_std."""
+    # Create a simple dataframe
+    df = pd.DataFrame(
+        {
+            "time": np.array([0, 1, 2]),
+            "pow_000": np.array([1000.0, np.nan, 1200.0]),
+            "ws_000": np.array([8.0, 9.0, 10.0]),
+            "wd_000": np.array([270.0, 270.0, 270.0]),
+        }
+    )
+    df = df.assign(ws=df["ws_000"], wd=df["wd_000"])
+
+    # Load floris and set to single turbine layout
+    fm, _ = load_floris_artificial(wake_model="gch")
+    fm.set(layout_x=[0.0], layout_y=[0.0])
+
+    # Create an UncertainFlorisModel with initial wd_std and custom wd_sample_points
+    initial_wd_std = 5.0
+    custom_wd_sample_points = np.array([-3.0, -1.5, 0.0, 1.5, 3.0])  # in degrees
+    fm_uncertain = UncertainFlorisModel(
+        fm.core.as_dict(), wd_std=initial_wd_std, wd_sample_points=custom_wd_sample_points
+    )
+
+    # Define cost_function as a simple function
+    class CostFunctionTest(CostFunctionBase):
+        def cost(self, df_floris):
+            return None
+
+    cost_function = CostFunctionTest(df)
+
+    # Create ModelFit with use_non_default_wd_sample_points=True
+    model_fit = ModelFit(df, fm_uncertain, cost_function, use_non_default_wd_sample_points=True)
+
+    # Test with first wd_std value
+    wd_std_1 = 3.0
+    model_fit.set_wd_std(wd_std_1)
+
+    # Expected wd_sample_points should be the original custom points scaled by the ratio
+    expected_wd_sample_points_1 = custom_wd_sample_points * (wd_std_1 / initial_wd_std)
+    np.testing.assert_allclose(
+        model_fit.fmodel.wd_sample_points, expected_wd_sample_points_1, rtol=1e-10
+    )
+
+    # Test with second wd_std value
+    wd_std_2 = 7.0
+    model_fit.set_wd_std(wd_std_2)
+
+    # Expected wd_sample_points should be the original custom points scaled by the new ratio
+    expected_wd_sample_points_2 = custom_wd_sample_points * (wd_std_2 / initial_wd_std)
+    np.testing.assert_allclose(
+        model_fit.fmodel.wd_sample_points, expected_wd_sample_points_2, rtol=1e-10
+    )
+
+    # Verify that the scaling is different for the two wd_std values
+    assert not np.allclose(expected_wd_sample_points_1, expected_wd_sample_points_2)
+
+    # Test that if wd_std_3 is 5.0, the wd_sample_points are the same as the original custom points
+    wd_std_3 = 5.0
+    model_fit.set_wd_std(wd_std_3)
+    np.testing.assert_allclose(
+        model_fit.fmodel.wd_sample_points, custom_wd_sample_points, rtol=1e-10
+    )

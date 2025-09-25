@@ -32,6 +32,7 @@ class ModelFit:
         parameter_range_list: List[List] | List[Tuple] = [],
         parameter_index_list: List[int] = [],
         yaw_angles: np.ndarray | None = None,
+        use_non_default_wd_sample_points: bool = False,
     ):
         """Initialize the ModelFit class.
 
@@ -49,6 +50,12 @@ class ModelFit:
                 If empty, no ranges are provided. Defaults to [].
             parameter_index_list (List[int], optional): List of parameter indices. Defaults to [].
             yaw_angles (np.ndarray | None, optional): Array of yaw angles. Defaults to None.
+            use_non_default_wd_sample_points (bool, optional): Whether to use non-default wind
+                direction sample points. If True, the wind direction sample points will be set to
+                the sample points in the FLORIS model will be recorded in units of wd_std and
+                rescaled with the new wd_std. If False, the default wind direction sample points
+                will be used ([-2 * wd_std, -1 * wd_std, 0, wd_std, 2 * wd_std]).
+                Defaults to False.
         """
         # Save the dataframe as a FlascDataFrame
         self.df = FlascDataFrame(df)
@@ -86,6 +93,16 @@ class ModelFit:
                 "WARNING: The number of turbines in the dataframe and the "
                 "Floris model do not match."
             )
+
+        # Store the use_non_default_wd_sample_points flag
+        self.use_non_default_wd_sample_points = use_non_default_wd_sample_points
+
+        # If the user requests to use non-default wind direction sample points,
+        # learn what these should be from the floris model in units of wd_std
+        if use_non_default_wd_sample_points:
+            self.wd_sample_points_in_wd_std = [
+                wdsp / fmodel.wd_std for wdsp in fmodel.wd_sample_points
+            ]
 
         # If yaw angles are provided, check that they are the same length as the number of turbines
         if yaw_angles is not None:
@@ -293,6 +310,15 @@ class ModelFit:
         if not isinstance(self.fmodel, UncertainFlorisModel):
             raise ValueError("The floris model must be an UncertainFlorisModel.")
 
+        # If the user requests to use non-default wind direction sample points,
+        # learn what these should be from the floris model in units of wd_std
+        if self.use_non_default_wd_sample_points:
+            wd_sample_points = np.array(self.wd_sample_points_in_wd_std) * wd_std
+        else:
+            # Default to None which will use the default wd_sample_points
+            # [-2 * wd_std, -1 * wd_std, 0, wd_std, 2 * wd_std]
+            wd_sample_points = None
+
         # Update the UncertainFlorisModel
         self.fmodel = UncertainFlorisModel(
             self.fmodel.fmodel_unexpanded,
@@ -303,7 +329,7 @@ class ModelFit:
             power_setpoint_resolution=self.fmodel.power_setpoint_resolution,
             awc_amplitude_resolution=self.fmodel.awc_amplitude_resolution,
             wd_std=wd_std,
-            wd_sample_points=None,  # recompute
+            wd_sample_points=wd_sample_points,
             fix_yaw_to_nominal_direction=self.fmodel.fix_yaw_to_nominal_direction,
             verbose=self.fmodel.verbose,
         )
