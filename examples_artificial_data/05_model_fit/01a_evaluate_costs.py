@@ -46,7 +46,6 @@ for i, param_value in enumerate(np.arange(0.01, 0.07, 0.01)):
 
     param_result.append(param_value)
     cost_result.append(cost_value)
-    print(f"... cost value: {cost_value}")
 
 # Show the results
 fix, ax = plt.subplots()
