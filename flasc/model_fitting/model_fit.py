@@ -240,15 +240,14 @@ class ModelFit:
         wind_speeds = self.df["ws"].values
         wind_directions = self.df["wd"].values
 
-        # TODO: Possible code for handling TI, but we might not want to force
-        # TI inclusion
-        # if "ti" in self.df.columns:
-        #     turbulence_intensities = self.df["ti"].values
-        # else:
-        #     turbulence_intensities = None
-
-        # For now just set to first value of current model
-        turbulence_intensities = np.ones_like(wind_speeds) * self.fmodel.turbulence_intensities[0]
+        # TI is used direcly if included in the dataframe
+        # Else the first value of the current model is used
+        if "ti" in self.df.columns:
+            turbulence_intensities = self.df["ti"].values
+        else:
+            turbulence_intensities = (
+                np.ones_like(wind_speeds) * self.fmodel.turbulence_intensities[0]
+            )
 
         # Set the FlorisModel
         self.fmodel.set(
