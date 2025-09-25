@@ -26,7 +26,6 @@ if __name__ == "__main__":
     cost_result = []
     cost_result_u = []
     for i, param_value in enumerate(np.arange(0.01, 0.07, 0.01)):
-        print(f"Evaluating cost function for parameter value {param_value} ({i + 1}/{n_steps})")
         fm_default.set_param(parameter, param_value)
         mf = ModelFit(
             df_u,
