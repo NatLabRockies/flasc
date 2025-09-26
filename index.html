@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>FLASC documentation &#8212; FLASC</title>
+    <title>FLASC &#8212; FLASC</title>
   
   
   
@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -73,7 +73,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'index';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Overview" href="overview.html" />
+    <link rel="next" title="Introduction to FLASC" href="introduction.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="python"/>
   </head>
@@ -189,19 +189,14 @@
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1 current active">
                 <a class="reference internal" href="#">
-                    FLASC documentation
+                    FLASC
                 </a>
             </li>
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
-
-
-
-
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction to FLASC</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Reference</span></p>
 <ul class="nav bd-sidenav">
@@ -210,6 +205,7 @@
 <li class="toctree-l1"><a class="reference internal" href="energy_ratio.html">Energy ratio analysis</a></li>
 
 <li class="toctree-l1"><a class="reference internal" href="energy_change.html">Calculating the change in energy production</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model_fit.html">FLORIS model calibration with ModelFit</a></li>
 <li class="toctree-l1"><a class="reference internal" href="licensing.html">Licensing</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Examples Data Processing</span></p>
@@ -301,6 +297,7 @@
 <li class="toctree-l4"><a class="reference internal" href="_autosummary/flasc.data_processing.dataframe_manipulations.get_num_turbines.html">flasc.data_processing.dataframe_manipulations.get_num_turbines</a></li>
 <li class="toctree-l4"><a class="reference internal" href="_autosummary/flasc.data_processing.dataframe_manipulations.is_day_or_night.html">flasc.data_processing.dataframe_manipulations.is_day_or_night</a></li>
 <li class="toctree-l4"><a class="reference internal" href="_autosummary/flasc.data_processing.dataframe_manipulations.plot_sun_altitude_with_day_night_color.html">flasc.data_processing.dataframe_manipulations.plot_sun_altitude_with_day_night_color</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/flasc.data_processing.dataframe_manipulations.set_col_by_turbines.html">flasc.data_processing.dataframe_manipulations.set_col_by_turbines</a></li>
 <li class="toctree-l4"><a class="reference internal" href="_autosummary/flasc.data_processing.dataframe_manipulations.set_pow_ref_by_n_closest_upstream_turbines.html">flasc.data_processing.dataframe_manipulations.set_pow_ref_by_n_closest_upstream_turbines</a></li>
 <li class="toctree-l4"><a class="reference internal" href="_autosummary/flasc.data_processing.dataframe_manipulations.set_pow_ref_by_turbines.html">flasc.data_processing.dataframe_manipulations.set_pow_ref_by_turbines</a></li>
 <li class="toctree-l4"><a class="reference internal" href="_autosummary/flasc.data_processing.dataframe_manipulations.set_pow_ref_by_upstream_turbines.html">flasc.data_processing.dataframe_manipulations.set_pow_ref_by_upstream_turbines</a></li>
@@ -623,7 +620,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>FLASC documentation</h1>
+    <h1>FLASC</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -633,7 +630,17 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weto-software">WETO software</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-flasc">What is FLASC?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#documentation-structure">Documentation Structure</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-started">Getting Started</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#core-concepts">Core Concepts</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#practical-applications">Practical Applications</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-features">Key Features</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#weto-software">WETO software</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -645,31 +652,68 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="flasc-documentation">
-<h1>FLASC documentation<a class="headerlink" href="#flasc-documentation" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="flasc">
+<h1>FLASC<a class="headerlink" href="#flasc" title="Link to this heading">#</a></h1>
 <p>Welcome to the documentation of the NREL FLASC repository!</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>FLASC v2.3 now requires <code class="docutils literal notranslate"><span class="pre">numpy</span></code> version 2, following the update in FLORIS v4.3. See the <a class="reference external" href="https://numpy.org/doc/stable/numpy_2_0_migration_guide.html">numpy documentation for details</a>.</p>
 </div>
-<p>FLASC provides a rich suite of analysis tools for SCADA data filtering &amp;
-analysis, wind farm model validation, field experiment design, and field
-experiment monitoring. The repository is centrally built around NRELs
-in-house <a class="reference external" href="https://github.com/NREL/floris/discussions/">FLORIS</a>
-wake modeling utility.</p>
-<p>FLASC also largely relies on the energy ratio to, among other things, quantify wake
-losses in synthetic and historical data, to perform turbine northing
-calibrations, and for model parameter estimation.</p>
+<p>FLASC provides a comprehensive toolkit for wind farm analysis, combining SCADA data processing with advanced wake modeling capabilities. The repository is intended as a community-driven toolbox, available on its <a class="reference external" href="https://github.com/NREL/flasc">GitHub Repository</a>.</p>
+<section id="what-is-flasc">
+<h2>What is FLASC?<a class="headerlink" href="#what-is-flasc" title="Link to this heading">#</a></h2>
+<p>FLASC offers analysis tools for SCADA data filtering &amp; analysis, wind farm model validation, field experiment design, and field experiment monitoring. Built around NREL's <a class="reference external" href="https://github.com/NREL/floris/discussions/">FLORIS</a> wake modeling utility, FLASC enables researchers and practitioners to:</p>
+<ul class="simple">
+<li><p><strong>Process and filter SCADA data</strong> with robust outlier detection and quality control</p></li>
+<li><p><strong>Analyze energy production patterns</strong> using energy ratio methodology for wake quantification</p></li>
+<li><p><strong>Calibrate wake models</strong> automatically to match observed turbine performance</p></li>
+<li><p><strong>Evaluate field experiments</strong> with comprehensive uplift analysis tools</p></li>
+</ul>
+</section>
+<section id="documentation-structure">
+<h2>Documentation Structure<a class="headerlink" href="#documentation-structure" title="Link to this heading">#</a></h2>
+<p>This documentation is organized to guide you from basic concepts to advanced applications:</p>
+<section id="getting-started">
+<h3>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong><a class="reference internal" href="introduction.html"><span class="doc std std-doc">Introduction</span></a></strong>: Overview of FLASC capabilities and package structure</p></li>
+<li><p><strong><a class="reference internal" href="installation.html"><span class="doc std std-doc">Installation</span></a></strong>: Setup instructions and requirements</p></li>
+</ul>
+</section>
+<section id="core-concepts">
+<h3>Core Concepts<a class="headerlink" href="#core-concepts" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong><a class="reference internal" href="flasc_data_format.html"><span class="doc std std-doc">FLASC Data Format</span></a></strong>: Understanding FLASC's data structures and conventions</p></li>
+<li><p><strong><a class="reference internal" href="energy_ratio.html"><span class="doc std std-doc">Energy Ratio Analysis</span></a></strong>: Quantifying wake effects and turbine performance</p></li>
+<li><p><strong><a class="reference internal" href="energy_change.html"><span class="doc std std-doc">Energy Change Analysis</span></a></strong>: Methods for calculating production changes</p></li>
+<li><p><strong><a class="reference internal" href="model_fit.html"><span class="doc std std-doc">Model Fitting</span></a></strong>: Automated FLORIS model calibration to SCADA data</p></li>
+</ul>
+</section>
+<section id="practical-applications">
+<h3>Practical Applications<a class="headerlink" href="#practical-applications" title="Link to this heading">#</a></h3>
+<p>The documentation includes extensive examples demonstrating real-world applications using both synthetic data (<code class="docutils literal notranslate"><span class="pre">examples_artificial_data/</span></code>) and field experiment data (<code class="docutils literal notranslate"><span class="pre">examples_smarteole/</span></code>). These examples follow a typical FLASC workflow: data processing → analysis → model calibration.</p>
+</section>
+</section>
+<section id="key-features">
+<h2>Key Features<a class="headerlink" href="#key-features" title="Link to this heading">#</a></h2>
+<p>FLASC's modular design supports the complete wind farm analysis workflow:</p>
+<ul class="simple">
+<li><p><strong>Data Processing</strong>: Import, filter, and quality-control SCADA data with specialized tools for wind measurements</p></li>
+<li><p><strong>Wake Analysis</strong>: Quantify wake effects using energy ratios and validate against physics-based models</p></li>
+<li><p><strong>Model Calibration</strong>: Automatically tune FLORIS parameters to match observed performance</p></li>
+<li><p><strong>Experiment Analysis</strong>: Evaluate control strategies and technology impacts with statistical rigor</p></li>
+</ul>
 <p>The FLASC repository is intended as a community driven toolbox, available on
 its <a class="reference external" href="https://github.com/NREL/flasc">GitHub Repository</a>.</p>
 <section id="weto-software">
-<h2>WETO software<a class="headerlink" href="#weto-software" title="Link to this heading">#</a></h2>
+<h3>WETO software<a class="headerlink" href="#weto-software" title="Link to this heading">#</a></h3>
 <p>FLASC is primarily developed with the support of the U.S. Department of Energy and is part of the <a class="reference external" href="https://nrel.github.io/WETOStack">WETO Software Stack</a>. For more information and other integrated modeling software, see:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://nrel.github.io/WETOStack/portfolio_analysis/overview.html">Portfolio Overview</a></p></li>
 <li><p><a class="reference external" href="https://nrel.github.io/WETOStack/_static/entry_guide/index.html">Entry Guide</a></p></li>
 <li><p><a class="reference external" href="https://nrel.github.io/WETOStack/workshops/user_workshops_2024.html#wind-farm-controls-and-analysis">Controls and Analysis Workshop</a></p></li>
 </ul>
+</section>
 </section>
 <div class="toctree-wrapper compound">
 </div>
@@ -714,11 +758,11 @@ its <a class="reference external" href="https://github.com/NREL/flasc">GitHub Re
                   
 <div class="prev-next-area">
     <a class="right-next"
-       href="overview.html"
+       href="introduction.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Overview</p>
+        <p class="prev-next-title">Introduction to FLASC</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -738,7 +782,17 @@ its <a class="reference external" href="https://github.com/NREL/flasc">GitHub Re
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weto-software">WETO software</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-flasc">What is FLASC?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#documentation-structure">Documentation Structure</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-started">Getting Started</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#core-concepts">Core Concepts</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#practical-applications">Practical Applications</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-features">Key Features</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#weto-software">WETO software</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 

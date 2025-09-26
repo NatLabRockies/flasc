@@ -31,7 +31,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -195,19 +195,14 @@ window.addEventListener("load", () => mermaid.run());
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="../../../index.html">
-                    FLASC documentation
+                    FLASC
                 </a>
             </li>
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">Overview</a></li>
-
-
-
-
+<li class="toctree-l1"><a class="reference internal" href="../../../introduction.html">Introduction to FLASC</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting started</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Reference</span></p>
 <ul class="nav bd-sidenav">
@@ -216,6 +211,7 @@ window.addEventListener("load", () => mermaid.run());
 <li class="toctree-l1"><a class="reference internal" href="../../../energy_ratio.html">Energy ratio analysis</a></li>
 
 <li class="toctree-l1"><a class="reference internal" href="../../../energy_change.html">Calculating the change in energy production</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../model_fit.html">FLORIS model calibration with ModelFit</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../licensing.html">Licensing</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Examples Data Processing</span></p>
@@ -307,6 +303,7 @@ window.addEventListener("load", () => mermaid.run());
 <li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/flasc.data_processing.dataframe_manipulations.get_num_turbines.html">flasc.data_processing.dataframe_manipulations.get_num_turbines</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/flasc.data_processing.dataframe_manipulations.is_day_or_night.html">flasc.data_processing.dataframe_manipulations.is_day_or_night</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/flasc.data_processing.dataframe_manipulations.plot_sun_altitude_with_day_night_color.html">flasc.data_processing.dataframe_manipulations.plot_sun_altitude_with_day_night_color</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/flasc.data_processing.dataframe_manipulations.set_col_by_turbines.html">flasc.data_processing.dataframe_manipulations.set_col_by_turbines</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/flasc.data_processing.dataframe_manipulations.set_pow_ref_by_n_closest_upstream_turbines.html">flasc.data_processing.dataframe_manipulations.set_pow_ref_by_n_closest_upstream_turbines</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/flasc.data_processing.dataframe_manipulations.set_pow_ref_by_turbines.html">flasc.data_processing.dataframe_manipulations.set_pow_ref_by_turbines</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/flasc.data_processing.dataframe_manipulations.set_pow_ref_by_upstream_turbines.html">flasc.data_processing.dataframe_manipulations.set_pow_ref_by_upstream_turbines</a></li>
@@ -637,21 +634,21 @@ document.write(`
     <span class="c1"># Carry out the mean calculations</span>
     <span class="n">df_regular</span> <span class="o">=</span> <span class="p">(</span>
         <span class="n">df</span><span class="p">[</span><span class="n">cols_regular</span><span class="p">]</span>  <span class="c1"># Select only non-angular columns</span>
-        <span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window_width</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="n">center</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">min_periods</span><span class="o">=</span><span class="n">min_periods</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window_width</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="n">center</span><span class="p">,</span> <span class="n">min_periods</span><span class="o">=</span><span class="n">min_periods</span><span class="p">)</span>
         <span class="o">.</span><span class="n">mean</span><span class="p">()</span>
     <span class="p">)</span>
 
     <span class="n">df_cos</span> <span class="o">=</span> <span class="p">(</span>
         <span class="n">df</span><span class="p">[</span><span class="n">cols_angular</span><span class="p">]</span>  <span class="c1"># Select only angular columns</span>
         <span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="k">lambda</span> <span class="n">df_</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">df_</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mf">180.0</span><span class="p">))</span>
-        <span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window_width</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="n">center</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">min_periods</span><span class="o">=</span><span class="n">min_periods</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window_width</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="n">center</span><span class="p">,</span> <span class="n">min_periods</span><span class="o">=</span><span class="n">min_periods</span><span class="p">)</span>
         <span class="o">.</span><span class="n">mean</span><span class="p">()</span>
     <span class="p">)</span>
 
     <span class="n">df_sin</span> <span class="o">=</span> <span class="p">(</span>
         <span class="n">df</span><span class="p">[</span><span class="n">cols_angular</span><span class="p">]</span>  <span class="c1"># Select only angular columns</span>
         <span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="k">lambda</span> <span class="n">df_</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">df_</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mf">180.0</span><span class="p">))</span>
-        <span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window_width</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="n">center</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">min_periods</span><span class="o">=</span><span class="n">min_periods</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window_width</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="n">center</span><span class="p">,</span> <span class="n">min_periods</span><span class="o">=</span><span class="n">min_periods</span><span class="p">)</span>
         <span class="o">.</span><span class="n">mean</span><span class="p">()</span>
     <span class="p">)</span>
 
@@ -664,7 +661,7 @@ document.write(`
 
     <span class="k">if</span> <span class="n">calc_median_min_max_std</span><span class="p">:</span>  <span class="c1"># if including other statistics</span>
         <span class="n">df_regular_stats</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">df</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window_width</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="n">center</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">min_periods</span><span class="o">=</span><span class="n">min_periods</span><span class="p">)</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window_width</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="n">center</span><span class="p">,</span> <span class="n">min_periods</span><span class="o">=</span><span class="n">min_periods</span><span class="p">)</span>
             <span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s2">&quot;median&quot;</span><span class="p">,</span> <span class="s2">&quot;min&quot;</span><span class="p">,</span> <span class="s2">&quot;max&quot;</span><span class="p">,</span> <span class="s2">&quot;std&quot;</span><span class="p">])</span>
             <span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="k">lambda</span> <span class="n">df_</span><span class="p">:</span> <span class="n">flatten_cols</span><span class="p">(</span><span class="n">df_</span><span class="p">))</span>
         <span class="p">)</span>
@@ -752,7 +749,7 @@ document.write(`
 
     <span class="c1"># Now calculate downsampled dataframe, automatically</span>
     <span class="c1"># mark by label on the right (i.e., &quot;past 10 minutes&quot;).</span>
-    <span class="n">df_resample</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="n">window_width</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">df_resample</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="n">window_width</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">)</span>
 
     <span class="c1"># First calculate mean values of non-angular columns</span>
     <span class="n">df_mean</span> <span class="o">=</span> <span class="n">df_resample</span><span class="p">[</span><span class="n">cols_regular</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -788,7 +785,7 @@ document.write(`
         <span class="c1"># Compute the stats for the non_angular columns</span>
         <span class="n">df_stats_regular</span> <span class="o">=</span> <span class="p">(</span>
             <span class="n">df_stats</span><span class="p">[</span><span class="n">cols_regular</span><span class="p">]</span>  <span class="c1"># Select non-angular columns</span>
-            <span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="n">window_width</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># Resample to desired window</span>
+            <span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="n">window_width</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">)</span>  <span class="c1"># Resample to desired window</span>
             <span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s2">&quot;median&quot;</span><span class="p">,</span> <span class="s2">&quot;min&quot;</span><span class="p">,</span> <span class="s2">&quot;max&quot;</span><span class="p">,</span> <span class="s2">&quot;std&quot;</span><span class="p">])</span>  <span class="c1"># Perform aggregations</span>
             <span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="k">lambda</span> <span class="n">df_</span><span class="p">:</span> <span class="n">flatten_cols</span><span class="p">(</span><span class="n">df_</span><span class="p">))</span>  <span class="c1"># Flatten columns</span>
         <span class="p">)</span>
@@ -808,7 +805,7 @@ document.write(`
             <span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">180</span><span class="p">)</span>  <span class="c1"># Shift up by 180 (start of sequence for -180/180 wrap)</span>
             <span class="o">.</span><span class="n">mod</span><span class="p">(</span><span class="mi">360</span><span class="p">)</span>  <span class="c1"># Wrap by 360</span>
             <span class="o">.</span><span class="n">subtract</span><span class="p">(</span><span class="mi">180</span><span class="p">)</span>  <span class="c1"># Remove shift (end of sequence for -180/180 wrap)</span>
-            <span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="n">window_width</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># Resample to desired window</span>
+            <span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="n">window_width</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">)</span>  <span class="c1"># Resample to desired window</span>
         <span class="p">)</span>
 
         <span class="c1"># Now create the individual statistics</span>
@@ -881,7 +878,7 @@ document.write(`
 
     <span class="k">if</span> <span class="n">return_index_mapping</span><span class="p">:</span>
         <span class="n">df_tmp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()[</span><span class="s2">&quot;time&quot;</span><span class="p">],</span> <span class="s2">&quot;tmp&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span>
-            <span class="n">window_width</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span>
+            <span class="n">window_width</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;right&quot;</span>
         <span class="p">)</span>
 
         <span class="c1"># Grab index of first and last time entry for each window</span>

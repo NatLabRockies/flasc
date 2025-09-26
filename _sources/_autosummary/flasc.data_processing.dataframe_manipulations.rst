@@ -27,6 +27,7 @@ flasc.data\_processing.dataframe\_manipulations
       get_num_turbines
       is_day_or_night
       plot_sun_altitude_with_day_night_color
+      set_col_by_turbines
       set_pow_ref_by_n_closest_upstream_turbines
       set_pow_ref_by_turbines
       set_pow_ref_by_upstream_turbines

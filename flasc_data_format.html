@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -74,7 +74,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Energy ratio analysis" href="energy_ratio.html" />
-    <link rel="prev" title="Getting started" href="getting_started.html" />
+    <link rel="prev" title="Installation" href="installation.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="python"/>
   </head>
@@ -188,19 +188,14 @@
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="index.html">
-                    FLASC documentation
+                    FLASC
                 </a>
             </li>
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
-
-
-
-
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction to FLASC</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Reference</span></p>
 <ul class="current nav bd-sidenav">
@@ -209,6 +204,7 @@
 <li class="toctree-l1"><a class="reference internal" href="energy_ratio.html">Energy ratio analysis</a></li>
 
 <li class="toctree-l1"><a class="reference internal" href="energy_change.html">Calculating the change in energy production</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model_fit.html">FLORIS model calibration with ModelFit</a></li>
 <li class="toctree-l1"><a class="reference internal" href="licensing.html">Licensing</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Examples Data Processing</span></p>
@@ -300,6 +296,7 @@
 <li class="toctree-l4"><a class="reference internal" href="_autosummary/flasc.data_processing.dataframe_manipulations.get_num_turbines.html">flasc.data_processing.dataframe_manipulations.get_num_turbines</a></li>
 <li class="toctree-l4"><a class="reference internal" href="_autosummary/flasc.data_processing.dataframe_manipulations.is_day_or_night.html">flasc.data_processing.dataframe_manipulations.is_day_or_night</a></li>
 <li class="toctree-l4"><a class="reference internal" href="_autosummary/flasc.data_processing.dataframe_manipulations.plot_sun_altitude_with_day_night_color.html">flasc.data_processing.dataframe_manipulations.plot_sun_altitude_with_day_night_color</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/flasc.data_processing.dataframe_manipulations.set_col_by_turbines.html">flasc.data_processing.dataframe_manipulations.set_col_by_turbines</a></li>
 <li class="toctree-l4"><a class="reference internal" href="_autosummary/flasc.data_processing.dataframe_manipulations.set_pow_ref_by_n_closest_upstream_turbines.html">flasc.data_processing.dataframe_manipulations.set_pow_ref_by_n_closest_upstream_turbines</a></li>
 <li class="toctree-l4"><a class="reference internal" href="_autosummary/flasc.data_processing.dataframe_manipulations.set_pow_ref_by_turbines.html">flasc.data_processing.dataframe_manipulations.set_pow_ref_by_turbines</a></li>
 <li class="toctree-l4"><a class="reference internal" href="_autosummary/flasc.data_processing.dataframe_manipulations.set_pow_ref_by_upstream_turbines.html">flasc.data_processing.dataframe_manipulations.set_pow_ref_by_upstream_turbines</a></li>
@@ -818,18 +815,18 @@ document.write(`
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>FlascDataFrame in user (wide) format
    time  wind_speed_TB01  wind_speed_TB02  wind_speed_TB03  wind_dir_TB01  \
-0     0         8.061603         7.793448         9.033996     277.456588   
-1     1         8.817900         7.529401         8.679348     274.616223   
-2     2         8.832154         8.320152         9.400810     277.997448   
-3     3         8.517560         8.016745         8.666481     271.543981   
-4     4         8.208883         7.743552         8.761684     276.995065   
+0     0         8.658772         7.972934         8.783778     279.645277   
+1     1         8.960106         7.802872         8.602124     270.568539   
+2     2         8.440632         8.427677         8.953404     274.132768   
+3     3         8.376440         7.995713         9.156574     273.530942   
+4     4         8.414782         8.422190         8.706713     274.008906   
 
    wind_dir_TB02  wind_dir_TB03  power_TB01  power_TB02  power_TB03  
-0     276.613977     277.229081  523.919107  473.357117  737.292287  
-1     271.922201     273.302332  685.639100  426.855977  653.824646  
-2     277.292730     275.014780  688.969376  575.961917  830.798824  
-3     275.400211     271.867816  617.938903  515.221825  650.921113  
-4     276.511116     277.621733  553.161789  464.323419  672.609121  
+0     270.250299     278.178144  649.185664  506.820837  677.710210  
+1     270.911699     278.743355  719.348786  475.076400  636.527331  
+2     275.521400     278.825908  601.346611  598.581969  717.735698  
+3     277.267195     278.960046  587.730873  511.177401  767.713253  
+4     276.092337     272.189927  595.838490  597.413631  660.028492  
 </pre></div>
 </div>
 </div>
@@ -859,44 +856,44 @@ document.write(`
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>FlascDataFrame in FLASC format
    time    ws_000    ws_001    ws_002      wd_000      wd_001      wd_002  \
-0     0  8.061603  7.793448  9.033996  277.456588  276.613977  277.229081   
-1     1  8.817900  7.529401  8.679348  274.616223  271.922201  273.302332   
+0     0  8.658772  7.972934  8.783778  279.645277  270.250299  278.178144   
+1     1  8.960106  7.802872  8.602124  270.568539  270.911699  278.743355   
 
       pow_000     pow_001     pow_002  
-0  523.919107  473.357117  737.292287  
-1  685.639100  426.855977  653.824646  
+0  649.185664  506.820837  677.710210  
+1  719.348786  475.076400  636.527331  
 
 
 
 FlascDataFrame in user (wide) format
    time  wind_speed_TB01  wind_speed_TB02  wind_speed_TB03  wind_dir_TB01  \
-0     0         8.061603         7.793448         9.033996     277.456588   
-1     1         8.817900         7.529401         8.679348     274.616223   
+0     0         8.658772         7.972934         8.783778     279.645277   
+1     1         8.960106         7.802872         8.602124     270.568539   
 
    wind_dir_TB02  wind_dir_TB03  power_TB01  power_TB02  power_TB03  
-0     276.613977     277.229081  523.919107  473.357117  737.292287  
-1     271.922201     273.302332  685.639100  426.855977  653.824646  
+0     270.250299     278.178144  649.185664  506.820837  677.710210  
+1     270.911699     278.743355  719.348786  475.076400  636.527331  
 
 
 
 FlascDataFrame in FLASC format
    time    ws_000    ws_001    ws_002      wd_000      wd_001      wd_002  \
-0     0  8.061603  7.793448  9.033996  277.456588  276.613977  277.229081   
-1     1  8.817900  7.529401  8.679348  274.616223  271.922201  273.302332   
+0     0  8.658772  7.972934  8.783778  279.645277  270.250299  278.178144   
+1     1  8.960106  7.802872  8.602124  270.568539  270.911699  278.743355   
 
       pow_000     pow_001     pow_002  
-0  523.919107  473.357117  737.292287  
-1  685.639100  426.855977  653.824646  
+0  649.185664  506.820837  677.710210  
+1  719.348786  475.076400  636.527331  
 
 
 FlascDataFrame in user (wide) format
    time  wind_speed_TB01  wind_speed_TB02  wind_speed_TB03  wind_dir_TB01  \
-0     0         8.061603         7.793448         9.033996     277.456588   
-1     1         8.817900         7.529401         8.679348     274.616223   
+0     0         8.658772         7.972934         8.783778     279.645277   
+1     1         8.960106         7.802872         8.602124     270.568539   
 
    wind_dir_TB02  wind_dir_TB03  power_TB01  power_TB02  power_TB03  
-0     276.613977     277.229081  523.919107  473.357117  737.292287  
-1     271.922201     273.302332  685.639100  426.855977  653.824646  
+0     270.250299     278.178144  649.185664  506.820837  677.710210  
+1     270.911699     278.743355  719.348786  475.076400  636.527331  
 </pre></div>
 </div>
 </div>
@@ -930,17 +927,17 @@ FlascDataFrame in user (wide) format
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>     time          channel       value
-0       0  wind_speed_TB01    8.061603
-1       1  wind_speed_TB01    8.817900
-2       2  wind_speed_TB01    8.832154
-3       3  wind_speed_TB01    8.517560
-4       4  wind_speed_TB01    8.208883
+0       0  wind_speed_TB01    8.658772
+1       1  wind_speed_TB01    8.960106
+2       2  wind_speed_TB01    8.440632
+3       3  wind_speed_TB01    8.376440
+4       4  wind_speed_TB01    8.414782
 ..    ...              ...         ...
-175    15       power_TB03  839.126419
-176    16       power_TB03  797.651737
-177    17       power_TB03  646.260739
-178    18       power_TB03  623.388230
-179    19       power_TB03  647.364554
+175    15       power_TB03  699.219638
+176    16       power_TB03  732.853662
+177    17       power_TB03  705.274910
+178    18       power_TB03  672.298459
+179    19       power_TB03  624.038201
 
 [180 rows x 3 columns]
 </pre></div>
@@ -963,11 +960,11 @@ FlascDataFrame in user (wide) format
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>FlascDataFrame in user (long) format
    time          channel     value
-0     0  wind_speed_TB01  8.061603
-1     1  wind_speed_TB01  8.817900
-2     2  wind_speed_TB01  8.832154
-3     3  wind_speed_TB01  8.517560
-4     4  wind_speed_TB01  8.208883
+0     0  wind_speed_TB01  8.658772
+1     1  wind_speed_TB01  8.960106
+2     2  wind_speed_TB01  8.440632
+3     3  wind_speed_TB01  8.376440
+4     4  wind_speed_TB01  8.414782
 </pre></div>
 </div>
 </div>
@@ -988,19 +985,19 @@ FlascDataFrame in user (wide) format
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>FlascDataFrame in FLASC format
    time     pow_000     pow_001     pow_002      wd_000      wd_001  \
-0     0  523.919107  473.357117  737.292287  277.456588  276.613977   
-1     1  685.639100  426.855977  653.824646  274.616223  271.922201   
+0     0  649.185664  506.820837  677.710210  279.645277  270.250299   
+1     1  719.348786  475.076400  636.527331  270.568539  270.911699   
 
        wd_002    ws_000    ws_001    ws_002  
-0  277.229081  8.061603  7.793448  9.033996  
-1  273.302332  8.817900  7.529401  8.679348  
+0  278.178144  8.658772  7.972934  8.783778  
+1  278.743355  8.960106  7.802872  8.602124  
 
 
 
 FlascDataFrame in user (long) format
    time     channel       value
-0     0  power_TB01  523.919107
-1     0  power_TB02  473.357117
+0     0  power_TB01  649.185664
+1     0  power_TB02  506.820837
 </pre></div>
 </div>
 </div>
@@ -1021,35 +1018,35 @@ FlascDataFrame in user (long) format
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                       raw_ActivePowerMean  raw_YawAngleMean  \
 TimeStamp_StartFormat                                          
-0                               523.919107        277.456588   
-1                               685.639100        274.616223   
-2                               688.969376        277.997448   
-3                               617.938903        271.543981   
-4                               553.161789        276.995065   
+0                               649.185664        279.645277   
+1                               719.348786        270.568539   
+2                               601.346611        274.132768   
+3                               587.730873        273.530942   
+4                               595.838490        274.008906   
 
                        raw_WindSpeedMean TurbineName  PitchAngleMean  \
 TimeStamp_StartFormat                                                  
-0                               8.061603         000               0   
-1                               8.817900         000               0   
-2                               8.832154         000               0   
-3                               8.517560         000               0   
-4                               8.208883         000               0   
+0                               8.658772         000               0   
+1                               8.960106         000               0   
+2                               8.440632         000               0   
+3                               8.376440         000               0   
+4                               8.414782         000               0   
 
                        GenRpmMean  raw_ShutdownDuration  ActivePowerMean  \
 TimeStamp_StartFormat                                                      
-0                            1000                     0       523.919107   
-1                            1000                     0       685.639100   
-2                            1000                     0       688.969376   
-3                            1000                     0       617.938903   
-4                            1000                     0       553.161789   
+0                            1000                     0       649.185664   
+1                            1000                     0       719.348786   
+2                            1000                     0       601.346611   
+3                            1000                     0       587.730873   
+4                            1000                     0       595.838490   
 
                        WindSpeedMean  YawAngleMean  ShutdownDuration  
 TimeStamp_StartFormat                                                 
-0                           8.061603    277.456588                 0  
-1                           8.817900    274.616223                 0  
-2                           8.832154    277.997448                 0  
-3                           8.517560    271.543981                 0  
-4                           8.208883    276.995065                 0  
+0                           8.658772    279.645277                 0  
+1                           8.960106    270.568539                 0  
+2                           8.440632    274.132768                 0  
+3                           8.376440    273.530942                 0  
+4                           8.414782    274.008906                 0  
 </pre></div>
 </div>
 </div>
@@ -1088,12 +1085,12 @@ TimeStamp_StartFormat
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="getting_started.html"
+       href="installation.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Getting started</p>
+        <p class="prev-next-title">Installation</p>
       </div>
     </a>
     <a class="right-next"

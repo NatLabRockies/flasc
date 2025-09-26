@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -188,19 +188,14 @@
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="../index.html">
-                    FLASC documentation
+                    FLASC
                 </a>
             </li>
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
-
-
-
-
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction to FLASC</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Reference</span></p>
 <ul class="nav bd-sidenav">
@@ -209,6 +204,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../energy_ratio.html">Energy ratio analysis</a></li>
 
 <li class="toctree-l1"><a class="reference internal" href="../energy_change.html">Calculating the change in energy production</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model_fit.html">FLORIS model calibration with ModelFit</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../licensing.html">Licensing</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Examples Data Processing</span></p>
@@ -300,6 +296,7 @@
 <li class="toctree-l4"><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.get_num_turbines.html">flasc.data_processing.dataframe_manipulations.get_num_turbines</a></li>
 <li class="toctree-l4"><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.is_day_or_night.html">flasc.data_processing.dataframe_manipulations.is_day_or_night</a></li>
 <li class="toctree-l4"><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.plot_sun_altitude_with_day_night_color.html">flasc.data_processing.dataframe_manipulations.plot_sun_altitude_with_day_night_color</a></li>
+<li class="toctree-l4"><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.set_col_by_turbines.html">flasc.data_processing.dataframe_manipulations.set_col_by_turbines</a></li>
 <li class="toctree-l4"><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.set_pow_ref_by_n_closest_upstream_turbines.html">flasc.data_processing.dataframe_manipulations.set_pow_ref_by_n_closest_upstream_turbines</a></li>
 <li class="toctree-l4"><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.set_pow_ref_by_turbines.html">flasc.data_processing.dataframe_manipulations.set_pow_ref_by_turbines</a></li>
 <li class="toctree-l4"><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.set_pow_ref_by_upstream_turbines.html">flasc.data_processing.dataframe_manipulations.set_pow_ref_by_upstream_turbines</a></li>
@@ -690,7 +687,7 @@ direction.</p>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="flasc.data_processing.energy_ratio_wd_bias_estimation.bias_estimation._load_a_input_for_wd_bias">
-<span class="sig-name descname"><span class="pre">_load_a_input_for_wd_bias</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wd_bias</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flasc/data_processing/energy_ratio_wd_bias_estimation.html#bias_estimation._load_a_input_for_wd_bias"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flasc.data_processing.energy_ratio_wd_bias_estimation.bias_estimation._load_a_input_for_wd_bias" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">_load_a_input_for_wd_bias</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wd_bias</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flasc/data_processing/energy_ratio_wd_bias_estimation.html#bias_estimation._load_a_input_for_wd_bias"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flasc.data_processing.energy_ratio_wd_bias_estimation.bias_estimation._load_a_input_for_wd_bias" title="Link to this definition">#</a></dt>
 <dd><p>Load AnalysisInput objects with bias.</p>
 <p>This function initializes an instance of the AnalysisInput
 where the dataframe is shifted by wd_bias for each test turbine.
@@ -727,7 +724,7 @@ to the nominal dataset.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="flasc.data_processing.energy_ratio_wd_bias_estimation.bias_estimation._get_energy_ratios_allbins">
-<span class="sig-name descname"><span class="pre">_get_energy_ratios_allbins</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wd_bias</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ws_mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(6.0,</span> <span class="pre">10.0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wd_mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ti_mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wd_step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ws_step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wd_bin_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N_btstrp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_iter_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flasc/data_processing/energy_ratio_wd_bias_estimation.html#bias_estimation._get_energy_ratios_allbins"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flasc.data_processing.energy_ratio_wd_bias_estimation.bias_estimation._get_energy_ratios_allbins" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">_get_energy_ratios_allbins</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wd_bias</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_mask</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ws_mask</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(6.0,</span> <span class="pre">10.0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wd_mask</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ti_mask</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wd_step</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ws_step</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wd_bin_width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N_btstrp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_iter_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flasc/data_processing/energy_ratio_wd_bias_estimation.html#bias_estimation._get_energy_ratios_allbins"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flasc.data_processing.energy_ratio_wd_bias_estimation.bias_estimation._get_energy_ratios_allbins" title="Link to this definition">#</a></dt>
 <dd><p>Calculate the energy ratios.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -737,8 +734,7 @@ to the nominal dataset.</p>
 the data based on this variable. Defaults to None.</p></li>
 <li><p><strong>ws_mask</strong> (<em>[</em><em>iterable</em><em>]</em><em>, </em><em>optional</em>) -- Wind speed mask. Should be an
 iterable of length 2, e.g., [6.0, 10.0], defining the lower
-and upper bound, respectively. If not specified, will not
-mask the data based on this variable. Defaults to (6, 10).</p></li>
+and upper bound, respectively. Defaults to (6, 10).</p></li>
 <li><p><strong>wd_mask</strong> (<em>[</em><em>iterable</em><em>]</em><em>, </em><em>optional</em>) -- Wind direction mask. Should
 be an iterable of length 2, e.g., [0.0, 180.0], defining
 the lower and upper bound, respectively. If not specified,

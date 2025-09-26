@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -188,19 +188,14 @@
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="../index.html">
-                    FLASC documentation
+                    FLASC
                 </a>
             </li>
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
-
-
-
-
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction to FLASC</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Reference</span></p>
 <ul class="nav bd-sidenav">
@@ -209,6 +204,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../energy_ratio.html">Energy ratio analysis</a></li>
 
 <li class="toctree-l1"><a class="reference internal" href="../energy_change.html">Calculating the change in energy production</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model_fit.html">FLORIS model calibration with ModelFit</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../licensing.html">Licensing</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Examples Data Processing</span></p>
@@ -300,6 +296,7 @@
 <li class="toctree-l4"><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.get_num_turbines.html">flasc.data_processing.dataframe_manipulations.get_num_turbines</a></li>
 <li class="toctree-l4"><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.is_day_or_night.html">flasc.data_processing.dataframe_manipulations.is_day_or_night</a></li>
 <li class="toctree-l4"><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.plot_sun_altitude_with_day_night_color.html">flasc.data_processing.dataframe_manipulations.plot_sun_altitude_with_day_night_color</a></li>
+<li class="toctree-l4"><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.set_col_by_turbines.html">flasc.data_processing.dataframe_manipulations.set_col_by_turbines</a></li>
 <li class="toctree-l4"><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.set_pow_ref_by_n_closest_upstream_turbines.html">flasc.data_processing.dataframe_manipulations.set_pow_ref_by_n_closest_upstream_turbines</a></li>
 <li class="toctree-l4"><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.set_pow_ref_by_turbines.html">flasc.data_processing.dataframe_manipulations.set_pow_ref_by_turbines</a></li>
 <li class="toctree-l4"><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.set_pow_ref_by_upstream_turbines.html">flasc.data_processing.dataframe_manipulations.set_pow_ref_by_upstream_turbines</a></li>
@@ -637,7 +634,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#flasc.data_processing.dataframe_manipulations.filter_df_by_ti"><code class="docutils literal notranslate"><span class="pre">filter_df_by_ti()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#flasc.data_processing.dataframe_manipulations.get_num_turbines"><code class="docutils literal notranslate"><span class="pre">get_num_turbines()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#flasc.data_processing.dataframe_manipulations.get_column_mean"><code class="docutils literal notranslate"><span class="pre">get_column_mean()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#flasc.data_processing.dataframe_manipulations._set_col_by_turbines"><code class="docutils literal notranslate"><span class="pre">_set_col_by_turbines()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#flasc.data_processing.dataframe_manipulations.set_col_by_turbines"><code class="docutils literal notranslate"><span class="pre">set_col_by_turbines()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#flasc.data_processing.dataframe_manipulations._set_col_by_n_closest_upstream_turbines"><code class="docutils literal notranslate"><span class="pre">_set_col_by_n_closest_upstream_turbines()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#flasc.data_processing.dataframe_manipulations._set_col_by_upstream_turbines"><code class="docutils literal notranslate"><span class="pre">_set_col_by_upstream_turbines()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#flasc.data_processing.dataframe_manipulations._set_col_by_radius_from_turbine"><code class="docutils literal notranslate"><span class="pre">_set_col_by_radius_from_turbine()</span></code></a></li>
@@ -720,58 +717,61 @@ document.write(`
 <tr class="row-even"><td><p><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.plot_sun_altitude_with_day_night_color.html#flasc.data_processing.dataframe_manipulations.plot_sun_altitude_with_day_night_color" title="flasc.data_processing.dataframe_manipulations.plot_sun_altitude_with_day_night_color"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_sun_altitude_with_day_night_color</span></code></a></p></td>
 <td><p>Plot sun altitude with day-night color differentiation.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.set_pow_ref_by_n_closest_upstream_turbines.html#flasc.data_processing.dataframe_manipulations.set_pow_ref_by_n_closest_upstream_turbines" title="flasc.data_processing.dataframe_manipulations.set_pow_ref_by_n_closest_upstream_turbines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_pow_ref_by_n_closest_upstream_turbines</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.set_col_by_turbines.html#flasc.data_processing.dataframe_manipulations.set_col_by_turbines" title="flasc.data_processing.dataframe_manipulations.set_col_by_turbines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_col_by_turbines</span></code></a></p></td>
+<td><p>Average over specified turbines and add as a new column.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.set_pow_ref_by_n_closest_upstream_turbines.html#flasc.data_processing.dataframe_manipulations.set_pow_ref_by_n_closest_upstream_turbines" title="flasc.data_processing.dataframe_manipulations.set_pow_ref_by_n_closest_upstream_turbines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_pow_ref_by_n_closest_upstream_turbines</span></code></a></p></td>
 <td><p>Add pow_ref column using N-nearest upstream turbines.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.set_pow_ref_by_turbines.html#flasc.data_processing.dataframe_manipulations.set_pow_ref_by_turbines" title="flasc.data_processing.dataframe_manipulations.set_pow_ref_by_turbines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_pow_ref_by_turbines</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.set_pow_ref_by_turbines.html#flasc.data_processing.dataframe_manipulations.set_pow_ref_by_turbines" title="flasc.data_processing.dataframe_manipulations.set_pow_ref_by_turbines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_pow_ref_by_turbines</span></code></a></p></td>
 <td><p>Add power reference column by list of turbines.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.set_pow_ref_by_upstream_turbines.html#flasc.data_processing.dataframe_manipulations.set_pow_ref_by_upstream_turbines" title="flasc.data_processing.dataframe_manipulations.set_pow_ref_by_upstream_turbines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_pow_ref_by_upstream_turbines</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.set_pow_ref_by_upstream_turbines.html#flasc.data_processing.dataframe_manipulations.set_pow_ref_by_upstream_turbines" title="flasc.data_processing.dataframe_manipulations.set_pow_ref_by_upstream_turbines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_pow_ref_by_upstream_turbines</span></code></a></p></td>
 <td><p>Add pow_ref column using upstream turbines.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.set_pow_ref_by_upstream_turbines_in_radius.html#flasc.data_processing.dataframe_manipulations.set_pow_ref_by_upstream_turbines_in_radius" title="flasc.data_processing.dataframe_manipulations.set_pow_ref_by_upstream_turbines_in_radius"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_pow_ref_by_upstream_turbines_in_radius</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.set_pow_ref_by_upstream_turbines_in_radius.html#flasc.data_processing.dataframe_manipulations.set_pow_ref_by_upstream_turbines_in_radius" title="flasc.data_processing.dataframe_manipulations.set_pow_ref_by_upstream_turbines_in_radius"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_pow_ref_by_upstream_turbines_in_radius</span></code></a></p></td>
 <td><p>Add pow_ref column using upstream turbines within a radius.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.set_ti_by_all_turbines.html#flasc.data_processing.dataframe_manipulations.set_ti_by_all_turbines" title="flasc.data_processing.dataframe_manipulations.set_ti_by_all_turbines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_ti_by_all_turbines</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.set_ti_by_all_turbines.html#flasc.data_processing.dataframe_manipulations.set_ti_by_all_turbines" title="flasc.data_processing.dataframe_manipulations.set_ti_by_all_turbines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_ti_by_all_turbines</span></code></a></p></td>
 <td><p>Add TI column using all turbines.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.set_ti_by_turbines.html#flasc.data_processing.dataframe_manipulations.set_ti_by_turbines" title="flasc.data_processing.dataframe_manipulations.set_ti_by_turbines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_ti_by_turbines</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.set_ti_by_turbines.html#flasc.data_processing.dataframe_manipulations.set_ti_by_turbines" title="flasc.data_processing.dataframe_manipulations.set_ti_by_turbines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_ti_by_turbines</span></code></a></p></td>
 <td><p>Add TI column by list of turbines.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.set_ti_by_upstream_turbines.html#flasc.data_processing.dataframe_manipulations.set_ti_by_upstream_turbines" title="flasc.data_processing.dataframe_manipulations.set_ti_by_upstream_turbines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_ti_by_upstream_turbines</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.set_ti_by_upstream_turbines.html#flasc.data_processing.dataframe_manipulations.set_ti_by_upstream_turbines" title="flasc.data_processing.dataframe_manipulations.set_ti_by_upstream_turbines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_ti_by_upstream_turbines</span></code></a></p></td>
 <td><p>Add TI column using upstream turbines.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.set_ti_by_upstream_turbines_in_radius.html#flasc.data_processing.dataframe_manipulations.set_ti_by_upstream_turbines_in_radius" title="flasc.data_processing.dataframe_manipulations.set_ti_by_upstream_turbines_in_radius"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_ti_by_upstream_turbines_in_radius</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.set_ti_by_upstream_turbines_in_radius.html#flasc.data_processing.dataframe_manipulations.set_ti_by_upstream_turbines_in_radius" title="flasc.data_processing.dataframe_manipulations.set_ti_by_upstream_turbines_in_radius"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_ti_by_upstream_turbines_in_radius</span></code></a></p></td>
 <td><p>Add TI column by upstream turbines within a radius.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.set_wd_by_all_turbines.html#flasc.data_processing.dataframe_manipulations.set_wd_by_all_turbines" title="flasc.data_processing.dataframe_manipulations.set_wd_by_all_turbines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_wd_by_all_turbines</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.set_wd_by_all_turbines.html#flasc.data_processing.dataframe_manipulations.set_wd_by_all_turbines" title="flasc.data_processing.dataframe_manipulations.set_wd_by_all_turbines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_wd_by_all_turbines</span></code></a></p></td>
 <td><p>Add a wind direction column using all turbines.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.set_wd_by_radius_from_turbine.html#flasc.data_processing.dataframe_manipulations.set_wd_by_radius_from_turbine" title="flasc.data_processing.dataframe_manipulations.set_wd_by_radius_from_turbine"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_wd_by_radius_from_turbine</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.set_wd_by_radius_from_turbine.html#flasc.data_processing.dataframe_manipulations.set_wd_by_radius_from_turbine" title="flasc.data_processing.dataframe_manipulations.set_wd_by_radius_from_turbine"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_wd_by_radius_from_turbine</span></code></a></p></td>
 <td><p>Add wind direction column by turbines in radius.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.set_wd_by_turbines.html#flasc.data_processing.dataframe_manipulations.set_wd_by_turbines" title="flasc.data_processing.dataframe_manipulations.set_wd_by_turbines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_wd_by_turbines</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.set_wd_by_turbines.html#flasc.data_processing.dataframe_manipulations.set_wd_by_turbines" title="flasc.data_processing.dataframe_manipulations.set_wd_by_turbines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_wd_by_turbines</span></code></a></p></td>
 <td><p>Add WD column by list of turbines.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.set_wd_by_upstream_turbines.html#flasc.data_processing.dataframe_manipulations.set_wd_by_upstream_turbines" title="flasc.data_processing.dataframe_manipulations.set_wd_by_upstream_turbines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_wd_by_upstream_turbines</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.set_wd_by_upstream_turbines.html#flasc.data_processing.dataframe_manipulations.set_wd_by_upstream_turbines" title="flasc.data_processing.dataframe_manipulations.set_wd_by_upstream_turbines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_wd_by_upstream_turbines</span></code></a></p></td>
 <td><p>Add wind direction column using upstream turbines.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.set_wd_by_upstream_turbines_in_radius.html#flasc.data_processing.dataframe_manipulations.set_wd_by_upstream_turbines_in_radius" title="flasc.data_processing.dataframe_manipulations.set_wd_by_upstream_turbines_in_radius"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_wd_by_upstream_turbines_in_radius</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.set_wd_by_upstream_turbines_in_radius.html#flasc.data_processing.dataframe_manipulations.set_wd_by_upstream_turbines_in_radius" title="flasc.data_processing.dataframe_manipulations.set_wd_by_upstream_turbines_in_radius"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_wd_by_upstream_turbines_in_radius</span></code></a></p></td>
 <td><p>Add wind direction column using in-radius upstream turbines.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.set_ws_by_all_turbines.html#flasc.data_processing.dataframe_manipulations.set_ws_by_all_turbines" title="flasc.data_processing.dataframe_manipulations.set_ws_by_all_turbines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_ws_by_all_turbines</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.set_ws_by_all_turbines.html#flasc.data_processing.dataframe_manipulations.set_ws_by_all_turbines" title="flasc.data_processing.dataframe_manipulations.set_ws_by_all_turbines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_ws_by_all_turbines</span></code></a></p></td>
 <td><p>Add ws column by all turbines.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.set_ws_by_n_closest_upstream_turbines.html#flasc.data_processing.dataframe_manipulations.set_ws_by_n_closest_upstream_turbines" title="flasc.data_processing.dataframe_manipulations.set_ws_by_n_closest_upstream_turbines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_ws_by_n_closest_upstream_turbines</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.set_ws_by_n_closest_upstream_turbines.html#flasc.data_processing.dataframe_manipulations.set_ws_by_n_closest_upstream_turbines" title="flasc.data_processing.dataframe_manipulations.set_ws_by_n_closest_upstream_turbines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_ws_by_n_closest_upstream_turbines</span></code></a></p></td>
 <td><p>Add wind speed column by N closest upstream turbines.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.set_ws_by_turbines.html#flasc.data_processing.dataframe_manipulations.set_ws_by_turbines" title="flasc.data_processing.dataframe_manipulations.set_ws_by_turbines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_ws_by_turbines</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.set_ws_by_turbines.html#flasc.data_processing.dataframe_manipulations.set_ws_by_turbines" title="flasc.data_processing.dataframe_manipulations.set_ws_by_turbines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_ws_by_turbines</span></code></a></p></td>
 <td><p>Add ws column by list of turbines.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.set_ws_by_upstream_turbines.html#flasc.data_processing.dataframe_manipulations.set_ws_by_upstream_turbines" title="flasc.data_processing.dataframe_manipulations.set_ws_by_upstream_turbines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_ws_by_upstream_turbines</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.set_ws_by_upstream_turbines.html#flasc.data_processing.dataframe_manipulations.set_ws_by_upstream_turbines" title="flasc.data_processing.dataframe_manipulations.set_ws_by_upstream_turbines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_ws_by_upstream_turbines</span></code></a></p></td>
 <td><p>Add wind speed column using upstream turbines.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.set_ws_by_upstream_turbines_in_radius.html#flasc.data_processing.dataframe_manipulations.set_ws_by_upstream_turbines_in_radius" title="flasc.data_processing.dataframe_manipulations.set_ws_by_upstream_turbines_in_radius"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_ws_by_upstream_turbines_in_radius</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="flasc.data_processing.dataframe_manipulations.set_ws_by_upstream_turbines_in_radius.html#flasc.data_processing.dataframe_manipulations.set_ws_by_upstream_turbines_in_radius" title="flasc.data_processing.dataframe_manipulations.set_ws_by_upstream_turbines_in_radius"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_ws_by_upstream_turbines_in_radius</span></code></a></p></td>
 <td><p>Add wind speed column using in-radius upstream turbines.</p></td>
 </tr>
 </tbody>
@@ -878,9 +878,10 @@ If None, all turbines are used.  Defaults to None.</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="flasc.data_processing.dataframe_manipulations._set_col_by_turbines">
-<span class="sig-prename descclassname"><span class="pre">flasc.data_processing.dataframe_manipulations.</span></span><span class="sig-name descname"><span class="pre">_set_col_by_turbines</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">col_out</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col_prefix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">turbine_numbers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">circular_mean</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flasc/data_processing/dataframe_manipulations.html#_set_col_by_turbines"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flasc.data_processing.dataframe_manipulations._set_col_by_turbines" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
+<dt class="sig sig-object py" id="flasc.data_processing.dataframe_manipulations.set_col_by_turbines">
+<span class="sig-prename descclassname"><span class="pre">flasc.data_processing.dataframe_manipulations.</span></span><span class="sig-name descname"><span class="pre">set_col_by_turbines</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">col_out</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col_prefix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">turbine_numbers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">circular_mean</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flasc/data_processing/dataframe_manipulations.html#set_col_by_turbines"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flasc.data_processing.dataframe_manipulations.set_col_by_turbines" title="Link to this definition">#</a></dt>
+<dd><p>Average over specified turbines and add as a new column.</p>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="flasc.data_processing.dataframe_manipulations._set_col_by_n_closest_upstream_turbines">
@@ -1847,7 +1848,7 @@ rows have been merged.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#flasc.data_processing.dataframe_manipulations.filter_df_by_ti"><code class="docutils literal notranslate"><span class="pre">filter_df_by_ti()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#flasc.data_processing.dataframe_manipulations.get_num_turbines"><code class="docutils literal notranslate"><span class="pre">get_num_turbines()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#flasc.data_processing.dataframe_manipulations.get_column_mean"><code class="docutils literal notranslate"><span class="pre">get_column_mean()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#flasc.data_processing.dataframe_manipulations._set_col_by_turbines"><code class="docutils literal notranslate"><span class="pre">_set_col_by_turbines()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#flasc.data_processing.dataframe_manipulations.set_col_by_turbines"><code class="docutils literal notranslate"><span class="pre">set_col_by_turbines()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#flasc.data_processing.dataframe_manipulations._set_col_by_n_closest_upstream_turbines"><code class="docutils literal notranslate"><span class="pre">_set_col_by_n_closest_upstream_turbines()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#flasc.data_processing.dataframe_manipulations._set_col_by_upstream_turbines"><code class="docutils literal notranslate"><span class="pre">_set_col_by_upstream_turbines()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#flasc.data_processing.dataframe_manipulations._set_col_by_radius_from_turbine"><code class="docutils literal notranslate"><span class="pre">_set_col_by_radius_from_turbine()</span></code></a></li>

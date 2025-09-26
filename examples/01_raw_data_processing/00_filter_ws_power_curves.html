@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -188,19 +188,14 @@
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="../../index.html">
-                    FLASC documentation
+                    FLASC
                 </a>
             </li>
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview</a></li>
-
-
-
-
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction to FLASC</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting started</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Reference</span></p>
 <ul class="nav bd-sidenav">
@@ -209,6 +204,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../energy_ratio.html">Energy ratio analysis</a></li>
 
 <li class="toctree-l1"><a class="reference internal" href="../../energy_change.html">Calculating the change in energy production</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../model_fit.html">FLORIS model calibration with ModelFit</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../licensing.html">Licensing</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Examples Data Processing</span></p>
@@ -300,6 +296,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../../_autosummary/flasc.data_processing.dataframe_manipulations.get_num_turbines.html">flasc.data_processing.dataframe_manipulations.get_num_turbines</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../_autosummary/flasc.data_processing.dataframe_manipulations.is_day_or_night.html">flasc.data_processing.dataframe_manipulations.is_day_or_night</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../_autosummary/flasc.data_processing.dataframe_manipulations.plot_sun_altitude_with_day_night_color.html">flasc.data_processing.dataframe_manipulations.plot_sun_altitude_with_day_night_color</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../_autosummary/flasc.data_processing.dataframe_manipulations.set_col_by_turbines.html">flasc.data_processing.dataframe_manipulations.set_col_by_turbines</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../_autosummary/flasc.data_processing.dataframe_manipulations.set_pow_ref_by_n_closest_upstream_turbines.html">flasc.data_processing.dataframe_manipulations.set_pow_ref_by_n_closest_upstream_turbines</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../_autosummary/flasc.data_processing.dataframe_manipulations.set_pow_ref_by_turbines.html">flasc.data_processing.dataframe_manipulations.set_pow_ref_by_turbines</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../_autosummary/flasc.data_processing.dataframe_manipulations.set_pow_ref_by_upstream_turbines.html">flasc.data_processing.dataframe_manipulations.set_pow_ref_by_upstream_turbines</a></li>
@@ -788,260 +785,262 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Column wd_truth [&#39;float64&#39;] was downsampled to float32.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Column wd_truth [&#39;float64&#39;] was downsampled to float32.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Max error: 1.2207031261368684e-05
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Max error: 1.2207031261368684e-05
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Column ws_truth [&#39;float64&#39;] was downsampled to float32.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Column ws_truth [&#39;float64&#39;] was downsampled to float32.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Max error: 9.155273446026513e-07
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Max error: 9.155273446026513e-07
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Column ti_truth [&#39;float64&#39;] was downsampled to float32.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Column ti_truth [&#39;float64&#39;] was downsampled to float32.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Max error: 3.337860099428269e-08
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Max error: 3.337860099428269e-08
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Datatype &#39;datetime64[ns]&#39; not recognized. Not downsampling.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Datatype &#39;datetime64[ns]&#39; not recognized. Not downsampling.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Column pow_000 [&#39;float64&#39;] was downsampled to float32.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Column pow_000 [&#39;float64&#39;] was downsampled to float32.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Max error: 0.00019531250018189894
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Max error: 0.00019531250018189894
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Column pow_001 [&#39;float64&#39;] was downsampled to float32.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Column pow_001 [&#39;float64&#39;] was downsampled to float32.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Max error: 0.00019531250018189894
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Max error: 0.00019531250018189894
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Column pow_002 [&#39;float64&#39;] was downsampled to float32.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Column pow_002 [&#39;float64&#39;] was downsampled to float32.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Max error: 0.00019531250018189894
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Max error: 0.00019531250018189894
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Column pow_003 [&#39;float64&#39;] was downsampled to float32.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Column pow_003 [&#39;float64&#39;] was downsampled to float32.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Max error: 0.00019531250018189894
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Max error: 0.00019531250018189894
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Column pow_004 [&#39;float64&#39;] was downsampled to float32.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Column pow_004 [&#39;float64&#39;] was downsampled to float32.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Max error: 0.00019531250018189894
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Max error: 0.00019531250018189894
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Column pow_005 [&#39;float64&#39;] was downsampled to float32.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Column pow_005 [&#39;float64&#39;] was downsampled to float32.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Max error: 0.00019531250018189894
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Max error: 0.00019531250018189894
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Column pow_006 [&#39;float64&#39;] was downsampled to float32.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Column pow_006 [&#39;float64&#39;] was downsampled to float32.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Max error: 0.00019531250018189894
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Max error: 0.00019531250018189894
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Column ws_000 [&#39;float64&#39;] was downsampled to float32.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Column ws_000 [&#39;float64&#39;] was downsampled to float32.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Max error: 9.155273446026513e-07
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Max error: 9.155273446026513e-07
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Column ws_001 [&#39;float64&#39;] was downsampled to float32.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Column ws_001 [&#39;float64&#39;] was downsampled to float32.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Max error: 9.155273446026513e-07
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Max error: 9.155273446026513e-07
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Column ws_002 [&#39;float64&#39;] was downsampled to float32.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Column ws_002 [&#39;float64&#39;] was downsampled to float32.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Max error: 9.155273446026513e-07
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Max error: 9.155273446026513e-07
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Column ws_003 [&#39;float64&#39;] was downsampled to float32.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Column ws_003 [&#39;float64&#39;] was downsampled to float32.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Max error: 9.155273446026513e-07
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Max error: 9.155273446026513e-07
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Column ws_004 [&#39;float64&#39;] was downsampled to float32.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Column ws_004 [&#39;float64&#39;] was downsampled to float32.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Max error: 9.155273446026513e-07
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Max error: 9.155273446026513e-07
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Column ws_005 [&#39;float64&#39;] was downsampled to float32.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Column ws_005 [&#39;float64&#39;] was downsampled to float32.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Max error: 9.155273446026513e-07
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Max error: 9.155273446026513e-07
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Column ws_006 [&#39;float64&#39;] was downsampled to float32.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Column ws_006 [&#39;float64&#39;] was downsampled to float32.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Max error: 9.155273446026513e-07
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Max error: 9.155273446026513e-07
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Column wd_000 [&#39;float64&#39;] was downsampled to float32.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Column wd_000 [&#39;float64&#39;] was downsampled to float32.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Max error: 1.2207031261368684e-05
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Max error: 1.2207031261368684e-05
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Column wd_001 [&#39;float64&#39;] was downsampled to float32.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Column wd_001 [&#39;float64&#39;] was downsampled to float32.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Max error: 1.2207031261368684e-05
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Max error: 1.2207031261368684e-05
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Column wd_002 [&#39;float64&#39;] was downsampled to float32.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Column wd_002 [&#39;float64&#39;] was downsampled to float32.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Max error: 1.2207031261368684e-05
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Max error: 1.2207031261368684e-05
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Column wd_003 [&#39;float64&#39;] was downsampled to float32.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Column wd_003 [&#39;float64&#39;] was downsampled to float32.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Max error: 1.2207031261368684e-05
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Max error: 1.2207031261368684e-05
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Column wd_004 [&#39;float64&#39;] was downsampled to float32.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Column wd_004 [&#39;float64&#39;] was downsampled to float32.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Max error: 1.2207031261368684e-05
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Max error: 1.2207031261368684e-05
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Column wd_005 [&#39;float64&#39;] was downsampled to float32.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Column wd_005 [&#39;float64&#39;] was downsampled to float32.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Max error: 1.2207031261368684e-05
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Max error: 1.2207031261368684e-05
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Column wd_006 [&#39;float64&#39;] was downsampled to float32.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Column wd_006 [&#39;float64&#39;] was downsampled to float32.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Max error: 1.2207031261368684e-05
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Max error: 1.2207031261368684e-05
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Column ti_000 [&#39;float64&#39;] was downsampled to float32.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Column ti_000 [&#39;float64&#39;] was downsampled to float32.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Max error: 1.478195188475695e-08
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Max error: 1.478195188475695e-08
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Column ti_001 [&#39;float64&#39;] was downsampled to float32.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Column ti_001 [&#39;float64&#39;] was downsampled to float32.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Max error: 1.478195188475695e-08
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Max error: 1.478195188475695e-08
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Column ti_002 [&#39;float64&#39;] was downsampled to float32.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Column ti_002 [&#39;float64&#39;] was downsampled to float32.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Max error: 5.91278075390278e-08
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Max error: 5.91278075390278e-08
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Column ti_003 [&#39;float64&#39;] was downsampled to float32.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Column ti_003 [&#39;float64&#39;] was downsampled to float32.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Max error: 5.91278075390278e-08
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Max error: 5.91278075390278e-08
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Column ti_004 [&#39;float64&#39;] was downsampled to float32.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Column ti_004 [&#39;float64&#39;] was downsampled to float32.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Max error: 5.91278075390278e-08
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Max error: 5.91278075390278e-08
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Column ti_005 [&#39;float64&#39;] was downsampled to float32.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Column ti_005 [&#39;float64&#39;] was downsampled to float32.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Max error: 5.91278075390278e-08
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Max error: 5.91278075390278e-08
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Column ti_006 [&#39;float64&#39;] was downsampled to float32.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Column ti_006 [&#39;float64&#39;] was downsampled to float32.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Max error: 1.478195188475695e-08
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Max error: 1.478195188475695e-08
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Column is_operation_normal_000 [&#39;int64&#39;] was downsampled to bool.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Column is_operation_normal_000 [&#39;int64&#39;] was downsampled to bool.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Max error: 0
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Max error: 0
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Column is_operation_normal_001 [&#39;int64&#39;] was downsampled to bool.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Column is_operation_normal_001 [&#39;int64&#39;] was downsampled to bool.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Max error: 0
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Max error: 0
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Column is_operation_normal_002 [&#39;int64&#39;] was downsampled to bool.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Column is_operation_normal_002 [&#39;int64&#39;] was downsampled to bool.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Max error: 0
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Max error: 0
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Column is_operation_normal_003 [&#39;int64&#39;] was downsampled to bool.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Column is_operation_normal_003 [&#39;int64&#39;] was downsampled to bool.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Max error: 0
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Max error: 0
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Column is_operation_normal_004 [&#39;int64&#39;] was downsampled to bool.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Column is_operation_normal_004 [&#39;int64&#39;] was downsampled to bool.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Max error: 0
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Max error: 0
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Column is_operation_normal_005 [&#39;int64&#39;] was downsampled to bool.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Column is_operation_normal_005 [&#39;int64&#39;] was downsampled to bool.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Max error: 0
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Max error: 0
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Column is_operation_normal_006 [&#39;int64&#39;] was downsampled to bool.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Column is_operation_normal_006 [&#39;int64&#39;] was downsampled to bool.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Max error: 0
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Max error: 0
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Datatype &#39;datetime64[ns]&#39; not recognized. Not downsampling.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Datatype &#39;datetime64[ns]&#39; not recognized. Not downsampling.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Column WindSpeed_80m [&#39;float64&#39;] was downsampled to float32.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Column WindSpeed_80m [&#39;float64&#39;] was downsampled to float32.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Max error: 9.155273446026513e-07
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Max error: 9.155273446026513e-07
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Column WindDirection_80m [&#39;float64&#39;] was downsampled to float32.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Column WindDirection_80m [&#39;float64&#39;] was downsampled to float32.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Max error: 1.2207031261368684e-05
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Max error: 1.2207031261368684e-05
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Column TurbulenceIntensity_80m [&#39;float64&#39;] was downsampled to float32.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Column TurbulenceIntensity_80m [&#39;float64&#39;] was downsampled to float32.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Max error: 2.95639037695139e-08
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:07</span> Max error: 2.95639037695139e-08
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Formatting dataframe...
-Columns available in df_scada_formatted: [&#39;wd_truth&#39;, &#39;ws_truth&#39;, &#39;ti_truth&#39;, &#39;time&#39;, &#39;pow_000&#39;, &#39;pow_001&#39;, &#39;pow_002&#39;, &#39;pow_003&#39;, &#39;pow_004&#39;, &#39;pow_005&#39;, &#39;pow_006&#39;, &#39;ws_000&#39;, &#39;ws_001&#39;, &#39;ws_002&#39;, &#39;ws_003&#39;, &#39;ws_004&#39;, &#39;ws_005&#39;, &#39;ws_006&#39;, &#39;wd_000&#39;, &#39;wd_001&#39;, &#39;wd_002&#39;, &#39;wd_003&#39;, &#39;wd_004&#39;, &#39;wd_005&#39;, &#39;wd_006&#39;, &#39;ti_000&#39;, &#39;ti_001&#39;, &#39;ti_002&#39;, &#39;ti_003&#39;, &#39;ti_004&#39;, &#39;ti_005&#39;, &#39;ti_006&#39;, &#39;is_operation_normal_000&#39;, &#39;is_operation_normal_001&#39;, &#39;is_operation_normal_002&#39;, &#39;is_operation_normal_003&#39;, &#39;is_operation_normal_004&#39;, &#39;is_operation_normal_005&#39;, &#39;is_operation_normal_006&#39;].
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Columns available in df_scada_formatted: [&#39;wd_truth&#39;, &#39;ws_truth&#39;, &#39;ti_truth&#39;, &#39;time&#39;, &#39;pow_000&#39;, &#39;pow_001&#39;, &#39;pow_002&#39;, &#39;pow_003&#39;, &#39;pow_004&#39;, &#39;pow_005&#39;, &#39;pow_006&#39;, &#39;ws_000&#39;, &#39;ws_001&#39;, &#39;ws_002&#39;, &#39;ws_003&#39;, &#39;ws_004&#39;, &#39;ws_005&#39;, &#39;ws_006&#39;, &#39;wd_000&#39;, &#39;wd_001&#39;, &#39;wd_002&#39;, &#39;wd_003&#39;, &#39;wd_004&#39;, &#39;wd_005&#39;, &#39;wd_006&#39;, &#39;ti_000&#39;, &#39;ti_001&#39;, &#39;ti_002&#39;, &#39;ti_003&#39;, &#39;ti_004&#39;, &#39;ti_005&#39;, &#39;ti_006&#39;, &#39;is_operation_normal_000&#39;, &#39;is_operation_normal_001&#39;, &#39;is_operation_normal_002&#39;, &#39;is_operation_normal_003&#39;, &#39;is_operation_normal_004&#39;, &#39;is_operation_normal_005&#39;, &#39;is_operation_normal_006&#39;].
 </pre></div>
 </div>
 </div>
@@ -1314,277 +1313,263 @@ Columns available in df_scada_formatted: [&#39;wd_truth&#39;, &#39;ws_truth&#39;
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/runner/work/flasc/flasc/flasc/data_processing/filtering.py:70: FutureWarning: Setting an item of incompatible dtype is deprecated and will raise an error in a future version of pandas. Value &#39;nan&#39; has dtype incompatible with bool, please explicitly cast to a compatible dtype first.
-  df.loc[cond, cols] = None  # Delete measurements
-<span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Faulty measurements for WTG 000 increased from 0.015 % to 0.015 %. Reason: &#39;Wind speed and/or power is NaN&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:08</span> Faulty measurements for WTG 000 increased from 0.015 % to 0.015 %. Reason: &#39;Wind speed and/or power is NaN&#39;.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Faulty measurements for WTG 000 increased from 0.015 % to 0.319 %. Reason: &#39;Wind speed below zero&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:08</span> Faulty measurements for WTG 000 increased from 0.015 % to 0.319 %. Reason: &#39;Wind speed below zero&#39;.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Faulty measurements for WTG 000 increased from 0.319 % to 0.319 %. Reason: &#39;Power below zero&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:08</span> Faulty measurements for WTG 000 increased from 0.319 % to 0.319 %. Reason: &#39;Power below zero&#39;.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Faulty measurements for WTG 000 increased from 0.319 % to 0.319 %. Reason: &#39;Wind speed above 50 m/s&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:08</span> Faulty measurements for WTG 000 increased from 0.319 % to 0.319 %. Reason: &#39;Wind speed above 50 m/s&#39;.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Faulty measurements for WTG 000 increased from 0.319 % to 0.319 %. Reason: &#39;Power above 30 MW&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:08</span> Faulty measurements for WTG 000 increased from 0.319 % to 0.319 %. Reason: &#39;Power above 30 MW&#39;.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Faulty measurements for WTG 000 increased from 0.319 % to 0.340 %. Reason: &#39;Power below 1 kW while wind speed above 4 m/s&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:08</span> Faulty measurements for WTG 000 increased from 0.319 % to 0.340 %. Reason: &#39;Power below 1 kW while wind speed above 4 m/s&#39;.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Faulty measurements for WTG 000 increased from 0.340 % to 6.262 %. Reason: &#39;Self-flagged (is_operation_normal==False)&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:08</span> Faulty measurements for WTG 000 increased from 0.340 % to 6.262 %. Reason: &#39;Self-flagged (is_operation_normal==False)&#39;.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Faulty measurements for WTG 000 increased from 6.262 % to 6.401 %. Reason: &#39;Sensor-stuck fault&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:08</span> Faulty measurements for WTG 000 increased from 6.262 % to 6.401 %. Reason: &#39;Sensor-stuck fault&#39;.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Faulty measurements for WTG 000 increased from 6.401 % to 6.448 %. Reason: &#39;Curtailment: wind speed above 10.2 m/s but power below 3200 kW&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:08</span> Faulty measurements for WTG 000 increased from 6.401 % to 6.448 %. Reason: &#39;Curtailment: wind speed above 10.2 m/s but power below 3200 kW&#39;.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:58</span> Faulty measurements for WTG 000 increased from 6.448 % to 6.558 %. Reason: &#39;Mean power curve outlier&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:08</span> Faulty measurements for WTG 000 increased from 6.448 % to 6.558 %. Reason: &#39;Mean power curve outlier&#39;.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/runner/work/flasc/flasc/flasc/data_processing/filtering.py:70: FutureWarning: Setting an item of incompatible dtype is deprecated and will raise an error in a future version of pandas. Value &#39;nan&#39; has dtype incompatible with bool, please explicitly cast to a compatible dtype first.
-  df.loc[cond, cols] = None  # Delete measurements
-<span class=" -Color -Color-Green">2025-05-12 18:25:59</span> Faulty measurements for WTG 001 increased from 0.015 % to 0.015 %. Reason: &#39;Wind speed and/or power is NaN&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:09</span> Faulty measurements for WTG 001 increased from 0.015 % to 0.015 %. Reason: &#39;Wind speed and/or power is NaN&#39;.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:59</span> Faulty measurements for WTG 001 increased from 0.015 % to 0.292 %. Reason: &#39;Wind speed below zero&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:09</span> Faulty measurements for WTG 001 increased from 0.015 % to 0.292 %. Reason: &#39;Wind speed below zero&#39;.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:59</span> Faulty measurements for WTG 001 increased from 0.292 % to 0.294 %. Reason: &#39;Power below zero&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:09</span> Faulty measurements for WTG 001 increased from 0.292 % to 0.294 %. Reason: &#39;Power below zero&#39;.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:59</span> Faulty measurements for WTG 001 increased from 0.294 % to 0.294 %. Reason: &#39;Wind speed above 50 m/s&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:09</span> Faulty measurements for WTG 001 increased from 0.294 % to 0.294 %. Reason: &#39;Wind speed above 50 m/s&#39;.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:59</span> Faulty measurements for WTG 001 increased from 0.294 % to 0.294 %. Reason: &#39;Power above 30 MW&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:09</span> Faulty measurements for WTG 001 increased from 0.294 % to 0.294 %. Reason: &#39;Power above 30 MW&#39;.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:59</span> Faulty measurements for WTG 001 increased from 0.294 % to 0.309 %. Reason: &#39;Power below 1 kW while wind speed above 4 m/s&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:09</span> Faulty measurements for WTG 001 increased from 0.294 % to 0.309 %. Reason: &#39;Power below 1 kW while wind speed above 4 m/s&#39;.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:59</span> Faulty measurements for WTG 001 increased from 0.309 % to 4.590 %. Reason: &#39;Self-flagged (is_operation_normal==False)&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:09</span> Faulty measurements for WTG 001 increased from 0.309 % to 4.590 %. Reason: &#39;Self-flagged (is_operation_normal==False)&#39;.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:59</span> Faulty measurements for WTG 001 increased from 4.590 % to 4.697 %. Reason: &#39;Sensor-stuck fault&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:09</span> Faulty measurements for WTG 001 increased from 4.590 % to 4.697 %. Reason: &#39;Sensor-stuck fault&#39;.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:59</span> Faulty measurements for WTG 001 increased from 4.697 % to 4.746 %. Reason: &#39;Curtailment: wind speed above 10.2 m/s but power below 3200 kW&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:09</span> Faulty measurements for WTG 001 increased from 4.697 % to 4.746 %. Reason: &#39;Curtailment: wind speed above 10.2 m/s but power below 3200 kW&#39;.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:25:59</span> Faulty measurements for WTG 001 increased from 4.746 % to 4.888 %. Reason: &#39;Mean power curve outlier&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:09</span> Faulty measurements for WTG 001 increased from 4.746 % to 4.888 %. Reason: &#39;Mean power curve outlier&#39;.
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/runner/work/flasc/flasc/flasc/data_processing/filtering.py:70: FutureWarning: Setting an item of incompatible dtype is deprecated and will raise an error in a future version of pandas. Value &#39;nan&#39; has dtype incompatible with bool, please explicitly cast to a compatible dtype first.
-  df.loc[cond, cols] = None  # Delete measurements
-<span class=" -Color -Color-Green">2025-05-12 18:26:00</span> Faulty measurements for WTG 002 increased from 0.015 % to 0.015 %. Reason: &#39;Wind speed and/or power is NaN&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:10</span> Faulty measurements for WTG 002 increased from 0.015 % to 0.015 %. Reason: &#39;Wind speed and/or power is NaN&#39;.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:26:00</span> Faulty measurements for WTG 002 increased from 0.015 % to 0.294 %. Reason: &#39;Wind speed below zero&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:10</span> Faulty measurements for WTG 002 increased from 0.015 % to 0.294 %. Reason: &#39;Wind speed below zero&#39;.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:26:00</span> Faulty measurements for WTG 002 increased from 0.294 % to 0.294 %. Reason: &#39;Power below zero&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:10</span> Faulty measurements for WTG 002 increased from 0.294 % to 0.294 %. Reason: &#39;Power below zero&#39;.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:26:00</span> Faulty measurements for WTG 002 increased from 0.294 % to 0.294 %. Reason: &#39;Wind speed above 50 m/s&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:10</span> Faulty measurements for WTG 002 increased from 0.294 % to 0.294 %. Reason: &#39;Wind speed above 50 m/s&#39;.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:26:00</span> Faulty measurements for WTG 002 increased from 0.294 % to 0.294 %. Reason: &#39;Power above 30 MW&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:10</span> Faulty measurements for WTG 002 increased from 0.294 % to 0.294 %. Reason: &#39;Power above 30 MW&#39;.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:26:00</span> Faulty measurements for WTG 002 increased from 0.294 % to 0.298 %. Reason: &#39;Power below 1 kW while wind speed above 4 m/s&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:10</span> Faulty measurements for WTG 002 increased from 0.294 % to 0.298 %. Reason: &#39;Power below 1 kW while wind speed above 4 m/s&#39;.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:26:00</span> Faulty measurements for WTG 002 increased from 0.298 % to 2.142 %. Reason: &#39;Self-flagged (is_operation_normal==False)&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:10</span> Faulty measurements for WTG 002 increased from 0.298 % to 2.142 %. Reason: &#39;Self-flagged (is_operation_normal==False)&#39;.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:26:00</span> Faulty measurements for WTG 002 increased from 2.142 % to 2.184 %. Reason: &#39;Sensor-stuck fault&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:10</span> Faulty measurements for WTG 002 increased from 2.142 % to 2.184 %. Reason: &#39;Sensor-stuck fault&#39;.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:26:00</span> Faulty measurements for WTG 002 increased from 2.184 % to 5.287 %. Reason: &#39;Curtailment: wind speed above 10.2 m/s but power below 3200 kW&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:10</span> Faulty measurements for WTG 002 increased from 2.184 % to 5.287 %. Reason: &#39;Curtailment: wind speed above 10.2 m/s but power below 3200 kW&#39;.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:26:00</span> Faulty measurements for WTG 002 increased from 5.287 % to 5.368 %. Reason: &#39;Mean power curve outlier&#39;.
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/runner/work/flasc/flasc/flasc/data_processing/filtering.py:70: FutureWarning: Setting an item of incompatible dtype is deprecated and will raise an error in a future version of pandas. Value &#39;nan&#39; has dtype incompatible with bool, please explicitly cast to a compatible dtype first.
-  df.loc[cond, cols] = None  # Delete measurements
-<span class=" -Color -Color-Green">2025-05-12 18:26:01</span> Faulty measurements for WTG 003 increased from 0.015 % to 0.015 %. Reason: &#39;Wind speed and/or power is NaN&#39;.
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:26:01</span> Faulty measurements for WTG 003 increased from 0.015 % to 0.328 %. Reason: &#39;Wind speed below zero&#39;.
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:26:01</span> Faulty measurements for WTG 003 increased from 0.328 % to 0.328 %. Reason: &#39;Power below zero&#39;.
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:26:01</span> Faulty measurements for WTG 003 increased from 0.328 % to 0.328 %. Reason: &#39;Wind speed above 50 m/s&#39;.
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:26:01</span> Faulty measurements for WTG 003 increased from 0.328 % to 0.328 %. Reason: &#39;Power above 30 MW&#39;.
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:26:01</span> Faulty measurements for WTG 003 increased from 0.328 % to 0.336 %. Reason: &#39;Power below 1 kW while wind speed above 4 m/s&#39;.
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:26:01</span> Faulty measurements for WTG 003 increased from 0.336 % to 2.558 %. Reason: &#39;Self-flagged (is_operation_normal==False)&#39;.
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:26:01</span> Faulty measurements for WTG 003 increased from 2.558 % to 2.666 %. Reason: &#39;Sensor-stuck fault&#39;.
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:26:01</span> Faulty measurements for WTG 003 increased from 2.666 % to 2.715 %. Reason: &#39;Curtailment: wind speed above 10.2 m/s but power below 3200 kW&#39;.
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:26:01</span> Faulty measurements for WTG 003 increased from 2.715 % to 2.858 %. Reason: &#39;Mean power curve outlier&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:10</span> Faulty measurements for WTG 002 increased from 5.287 % to 5.368 %. Reason: &#39;Mean power curve outlier&#39;.
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/runner/work/flasc/flasc/flasc/data_processing/filtering.py:70: FutureWarning: Setting an item of incompatible dtype is deprecated and will raise an error in a future version of pandas. Value &#39;nan&#39; has dtype incompatible with bool, please explicitly cast to a compatible dtype first.
-  df.loc[cond, cols] = None  # Delete measurements
-<span class=" -Color -Color-Green">2025-05-12 18:26:02</span> Faulty measurements for WTG 004 increased from 0.015 % to 0.015 %. Reason: &#39;Wind speed and/or power is NaN&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:10</span> Faulty measurements for WTG 003 increased from 0.015 % to 0.015 %. Reason: &#39;Wind speed and/or power is NaN&#39;.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:26:02</span> Faulty measurements for WTG 004 increased from 0.015 % to 0.330 %. Reason: &#39;Wind speed below zero&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:10</span> Faulty measurements for WTG 003 increased from 0.015 % to 0.328 %. Reason: &#39;Wind speed below zero&#39;.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:26:02</span> Faulty measurements for WTG 004 increased from 0.330 % to 0.330 %. Reason: &#39;Power below zero&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:10</span> Faulty measurements for WTG 003 increased from 0.328 % to 0.328 %. Reason: &#39;Power below zero&#39;.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:26:02</span> Faulty measurements for WTG 004 increased from 0.330 % to 0.330 %. Reason: &#39;Wind speed above 50 m/s&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:10</span> Faulty measurements for WTG 003 increased from 0.328 % to 0.328 %. Reason: &#39;Wind speed above 50 m/s&#39;.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:26:02</span> Faulty measurements for WTG 004 increased from 0.330 % to 0.330 %. Reason: &#39;Power above 30 MW&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:10</span> Faulty measurements for WTG 003 increased from 0.328 % to 0.328 %. Reason: &#39;Power above 30 MW&#39;.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:26:02</span> Faulty measurements for WTG 004 increased from 0.330 % to 0.336 %. Reason: &#39;Power below 1 kW while wind speed above 4 m/s&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:10</span> Faulty measurements for WTG 003 increased from 0.328 % to 0.336 %. Reason: &#39;Power below 1 kW while wind speed above 4 m/s&#39;.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:26:02</span> Faulty measurements for WTG 004 increased from 0.336 % to 3.194 %. Reason: &#39;Self-flagged (is_operation_normal==False)&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:10</span> Faulty measurements for WTG 003 increased from 0.336 % to 2.558 %. Reason: &#39;Self-flagged (is_operation_normal==False)&#39;.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:26:02</span> Faulty measurements for WTG 004 increased from 3.194 % to 3.289 %. Reason: &#39;Sensor-stuck fault&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:10</span> Faulty measurements for WTG 003 increased from 2.558 % to 2.666 %. Reason: &#39;Sensor-stuck fault&#39;.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:26:02</span> Faulty measurements for WTG 004 increased from 3.289 % to 3.342 %. Reason: &#39;Curtailment: wind speed above 10.2 m/s but power below 3200 kW&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:10</span> Faulty measurements for WTG 003 increased from 2.666 % to 2.715 %. Reason: &#39;Curtailment: wind speed above 10.2 m/s but power below 3200 kW&#39;.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:26:02</span> Faulty measurements for WTG 004 increased from 3.342 % to 3.454 %. Reason: &#39;Mean power curve outlier&#39;.
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/runner/work/flasc/flasc/flasc/data_processing/filtering.py:70: FutureWarning: Setting an item of incompatible dtype is deprecated and will raise an error in a future version of pandas. Value &#39;nan&#39; has dtype incompatible with bool, please explicitly cast to a compatible dtype first.
-  df.loc[cond, cols] = None  # Delete measurements
-<span class=" -Color -Color-Green">2025-05-12 18:26:03</span> Faulty measurements for WTG 005 increased from 0.015 % to 0.015 %. Reason: &#39;Wind speed and/or power is NaN&#39;.
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:26:03</span> Faulty measurements for WTG 005 increased from 0.015 % to 0.326 %. Reason: &#39;Wind speed below zero&#39;.
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:26:03</span> Faulty measurements for WTG 005 increased from 0.326 % to 0.326 %. Reason: &#39;Power below zero&#39;.
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:26:03</span> Faulty measurements for WTG 005 increased from 0.326 % to 0.326 %. Reason: &#39;Wind speed above 50 m/s&#39;.
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:26:03</span> Faulty measurements for WTG 005 increased from 0.326 % to 0.326 %. Reason: &#39;Power above 30 MW&#39;.
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:26:03</span> Faulty measurements for WTG 005 increased from 0.326 % to 0.330 %. Reason: &#39;Power below 1 kW while wind speed above 4 m/s&#39;.
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:26:03</span> Faulty measurements for WTG 005 increased from 0.330 % to 2.433 %. Reason: &#39;Self-flagged (is_operation_normal==False)&#39;.
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:26:03</span> Faulty measurements for WTG 005 increased from 2.433 % to 2.588 %. Reason: &#39;Sensor-stuck fault&#39;.
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:26:03</span> Faulty measurements for WTG 005 increased from 2.588 % to 5.239 %. Reason: &#39;Curtailment: wind speed above 10.2 m/s but power below 3200 kW&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:10</span> Faulty measurements for WTG 003 increased from 2.715 % to 2.858 %. Reason: &#39;Mean power curve outlier&#39;.
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:26:03</span> Faulty measurements for WTG 005 increased from 5.239 % to 5.323 %. Reason: &#39;Mean power curve outlier&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:11</span> Faulty measurements for WTG 004 increased from 0.015 % to 0.015 %. Reason: &#39;Wind speed and/or power is NaN&#39;.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/runner/work/flasc/flasc/flasc/data_processing/filtering.py:70: FutureWarning: Setting an item of incompatible dtype is deprecated and will raise an error in a future version of pandas. Value &#39;nan&#39; has dtype incompatible with bool, please explicitly cast to a compatible dtype first.
-  df.loc[cond, cols] = None  # Delete measurements
-<span class=" -Color -Color-Green">2025-05-12 18:26:03</span> Faulty measurements for WTG 006 increased from 0.015 % to 0.015 %. Reason: &#39;Wind speed and/or power is NaN&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:11</span> Faulty measurements for WTG 004 increased from 0.015 % to 0.330 %. Reason: &#39;Wind speed below zero&#39;.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:26:03</span> Faulty measurements for WTG 006 increased from 0.015 % to 0.323 %. Reason: &#39;Wind speed below zero&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:11</span> Faulty measurements for WTG 004 increased from 0.330 % to 0.330 %. Reason: &#39;Power below zero&#39;.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:26:03</span> Faulty measurements for WTG 006 increased from 0.323 % to 0.323 %. Reason: &#39;Power below zero&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:11</span> Faulty measurements for WTG 004 increased from 0.330 % to 0.330 %. Reason: &#39;Wind speed above 50 m/s&#39;.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:26:04</span> Faulty measurements for WTG 006 increased from 0.323 % to 0.323 %. Reason: &#39;Wind speed above 50 m/s&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:11</span> Faulty measurements for WTG 004 increased from 0.330 % to 0.330 %. Reason: &#39;Power above 30 MW&#39;.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:26:04</span> Faulty measurements for WTG 006 increased from 0.323 % to 0.323 %. Reason: &#39;Power above 30 MW&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:11</span> Faulty measurements for WTG 004 increased from 0.330 % to 0.336 %. Reason: &#39;Power below 1 kW while wind speed above 4 m/s&#39;.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:26:04</span> Faulty measurements for WTG 006 increased from 0.323 % to 0.343 %. Reason: &#39;Power below 1 kW while wind speed above 4 m/s&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:11</span> Faulty measurements for WTG 004 increased from 0.336 % to 3.194 %. Reason: &#39;Self-flagged (is_operation_normal==False)&#39;.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:26:04</span> Faulty measurements for WTG 006 increased from 0.343 % to 4.499 %. Reason: &#39;Self-flagged (is_operation_normal==False)&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:11</span> Faulty measurements for WTG 004 increased from 3.194 % to 3.289 %. Reason: &#39;Sensor-stuck fault&#39;.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:26:04</span> Faulty measurements for WTG 006 increased from 4.499 % to 4.571 %. Reason: &#39;Sensor-stuck fault&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:11</span> Faulty measurements for WTG 004 increased from 3.289 % to 3.342 %. Reason: &#39;Curtailment: wind speed above 10.2 m/s but power below 3200 kW&#39;.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:26:04</span> Faulty measurements for WTG 006 increased from 4.571 % to 4.613 %. Reason: &#39;Curtailment: wind speed above 10.2 m/s but power below 3200 kW&#39;.
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-05-12 18:26:04</span> Faulty measurements for WTG 006 increased from 4.613 % to 4.735 %. Reason: &#39;Mean power curve outlier&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:11</span> Faulty measurements for WTG 004 increased from 3.342 % to 3.454 %. Reason: &#39;Mean power curve outlier&#39;.
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/runner/work/flasc/flasc/flasc/data_processing/filtering.py:1197: RuntimeWarning: More than 20 figures have been opened. Figures created through the pyplot interface (`matplotlib.pyplot.figure`) are retained until explicitly closed and may consume too much memory. (To control this warning, see the rcParam `figure.max_open_warning`). Consider using `matplotlib.pyplot.close()`.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:12</span> Faulty measurements for WTG 005 increased from 0.015 % to 0.015 %. Reason: &#39;Wind speed and/or power is NaN&#39;.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:12</span> Faulty measurements for WTG 005 increased from 0.015 % to 0.326 %. Reason: &#39;Wind speed below zero&#39;.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:12</span> Faulty measurements for WTG 005 increased from 0.326 % to 0.326 %. Reason: &#39;Power below zero&#39;.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:12</span> Faulty measurements for WTG 005 increased from 0.326 % to 0.326 %. Reason: &#39;Wind speed above 50 m/s&#39;.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:12</span> Faulty measurements for WTG 005 increased from 0.326 % to 0.326 %. Reason: &#39;Power above 30 MW&#39;.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:12</span> Faulty measurements for WTG 005 increased from 0.326 % to 0.330 %. Reason: &#39;Power below 1 kW while wind speed above 4 m/s&#39;.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:12</span> Faulty measurements for WTG 005 increased from 0.330 % to 2.433 %. Reason: &#39;Self-flagged (is_operation_normal==False)&#39;.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:12</span> Faulty measurements for WTG 005 increased from 2.433 % to 2.588 %. Reason: &#39;Sensor-stuck fault&#39;.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:12</span> Faulty measurements for WTG 005 increased from 2.588 % to 5.239 %. Reason: &#39;Curtailment: wind speed above 10.2 m/s but power below 3200 kW&#39;.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:12</span> Faulty measurements for WTG 005 increased from 5.239 % to 5.323 %. Reason: &#39;Mean power curve outlier&#39;.
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:13</span> Faulty measurements for WTG 006 increased from 0.015 % to 0.015 %. Reason: &#39;Wind speed and/or power is NaN&#39;.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:13</span> Faulty measurements for WTG 006 increased from 0.015 % to 0.323 %. Reason: &#39;Wind speed below zero&#39;.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:13</span> Faulty measurements for WTG 006 increased from 0.323 % to 0.323 %. Reason: &#39;Power below zero&#39;.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:13</span> Faulty measurements for WTG 006 increased from 0.323 % to 0.323 %. Reason: &#39;Wind speed above 50 m/s&#39;.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:13</span> Faulty measurements for WTG 006 increased from 0.323 % to 0.323 %. Reason: &#39;Power above 30 MW&#39;.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:13</span> Faulty measurements for WTG 006 increased from 0.323 % to 0.343 %. Reason: &#39;Power below 1 kW while wind speed above 4 m/s&#39;.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:13</span> Faulty measurements for WTG 006 increased from 0.343 % to 4.499 %. Reason: &#39;Self-flagged (is_operation_normal==False)&#39;.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:13</span> Faulty measurements for WTG 006 increased from 4.499 % to 4.571 %. Reason: &#39;Sensor-stuck fault&#39;.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:13</span> Faulty measurements for WTG 006 increased from 4.571 % to 4.613 %. Reason: &#39;Curtailment: wind speed above 10.2 m/s but power below 3200 kW&#39;.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">2025-09-26 03:54:13</span> Faulty measurements for WTG 006 increased from 4.613 % to 4.735 %. Reason: &#39;Mean power curve outlier&#39;.
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/runner/work/flasc/flasc/flasc/data_processing/filtering.py:1202: RuntimeWarning: More than 20 figures have been opened. Figures created through the pyplot interface (`matplotlib.pyplot.figure`) are retained until explicitly closed and may consume too much memory. (To control this warning, see the rcParam `figure.max_open_warning`). Consider using `matplotlib.pyplot.close()`.
   _, ax = plt.subplots(figsize=(13, 7))
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
-<img alt="../../_images/8066dc9f59ae857d116c52f4f1d6822ea2eb57c13499052a7b9ca7c1a60417f0.png" src="../../_images/8066dc9f59ae857d116c52f4f1d6822ea2eb57c13499052a7b9ca7c1a60417f0.png" />
-<img alt="../../_images/c8b0745a497ec41aadb5747a5ee90aa3f66592a821dbe0ad53e1fe9a33cf3e3c.png" src="../../_images/c8b0745a497ec41aadb5747a5ee90aa3f66592a821dbe0ad53e1fe9a33cf3e3c.png" />
-<img alt="../../_images/d3ce7fb5e472b1ded24bf1f86f2873eeaa10b8667d721579f97a8bcf65882cdc.png" src="../../_images/d3ce7fb5e472b1ded24bf1f86f2873eeaa10b8667d721579f97a8bcf65882cdc.png" />
-<img alt="../../_images/e871d15516a754210db8f0d3b44b885fd1e5658da29fc16a0792419b32fd61aa.png" src="../../_images/e871d15516a754210db8f0d3b44b885fd1e5658da29fc16a0792419b32fd61aa.png" />
-<img alt="../../_images/3e350ccfd58d6164aa71f2e9b5910dde4f65f50fe53342995e42dc358125fbab.png" src="../../_images/3e350ccfd58d6164aa71f2e9b5910dde4f65f50fe53342995e42dc358125fbab.png" />
-<img alt="../../_images/5f923a513e34785d2c33fd7ecc463f8f7ad4c71811b93e6cfa73ab0bb7cbece3.png" src="../../_images/5f923a513e34785d2c33fd7ecc463f8f7ad4c71811b93e6cfa73ab0bb7cbece3.png" />
-<img alt="../../_images/3d1d916560cd41c0165bea4825b68d86ee909d8afd41a1fce2c03b59b464a59e.png" src="../../_images/3d1d916560cd41c0165bea4825b68d86ee909d8afd41a1fce2c03b59b464a59e.png" />
-<img alt="../../_images/67de5f3b1bbd772dbc0a53e06d825617758b5629befed571e2d081a0b04f1148.png" src="../../_images/67de5f3b1bbd772dbc0a53e06d825617758b5629befed571e2d081a0b04f1148.png" />
-<img alt="../../_images/257922df2baad7eb6eb912c45505ecdf1b33e40864d58a2f972b4347d31b0a05.png" src="../../_images/257922df2baad7eb6eb912c45505ecdf1b33e40864d58a2f972b4347d31b0a05.png" />
-<img alt="../../_images/b675c0eb28b3f5e3330717c34df380269525ab5429fcb889e414de1c53b0d9d7.png" src="../../_images/b675c0eb28b3f5e3330717c34df380269525ab5429fcb889e414de1c53b0d9d7.png" />
-<img alt="../../_images/c2f7b0f5ba66a72709462466edb6dee62eb972f5c0462a88338b469ca13e40b4.png" src="../../_images/c2f7b0f5ba66a72709462466edb6dee62eb972f5c0462a88338b469ca13e40b4.png" />
-<img alt="../../_images/c0a9d7a7f98f0c1b4454c0dee72c96d4df2e4c42173b594532f0a987cecf458c.png" src="../../_images/c0a9d7a7f98f0c1b4454c0dee72c96d4df2e4c42173b594532f0a987cecf458c.png" />
-<img alt="../../_images/97d4831394a17823ca0bda01e59f670ae39d1e9bf6b138f975e11ba6c87ebabd.png" src="../../_images/97d4831394a17823ca0bda01e59f670ae39d1e9bf6b138f975e11ba6c87ebabd.png" />
-<img alt="../../_images/a40f2b45ee6ef4576783173ee1e91a5fc704f963894de0a9bd001424a1bdb31b.png" src="../../_images/a40f2b45ee6ef4576783173ee1e91a5fc704f963894de0a9bd001424a1bdb31b.png" />
-<img alt="../../_images/fdcf32b19a56b909330d8a9e618c473f6cacdcf4287eba3af79cf1d621660132.png" src="../../_images/fdcf32b19a56b909330d8a9e618c473f6cacdcf4287eba3af79cf1d621660132.png" />
-<img alt="../../_images/3a92c283e0b113997e47d711b3a3b46f162961df7ad6ff8c37707e91c92832cf.png" src="../../_images/3a92c283e0b113997e47d711b3a3b46f162961df7ad6ff8c37707e91c92832cf.png" />
-<img alt="../../_images/03f340f5e847d035e0464ab2240a17d4c466baf12cb4b71177df0694796206d2.png" src="../../_images/03f340f5e847d035e0464ab2240a17d4c466baf12cb4b71177df0694796206d2.png" />
-<img alt="../../_images/55d5907c141bae445046b501aab41cd80b7d049ab573f5fa8b7f2cedc291669b.png" src="../../_images/55d5907c141bae445046b501aab41cd80b7d049ab573f5fa8b7f2cedc291669b.png" />
-<img alt="../../_images/64768d28a26b32bbd9f9ff868d70ddbe55ef18330f80d13f78dd0caca51501da.png" src="../../_images/64768d28a26b32bbd9f9ff868d70ddbe55ef18330f80d13f78dd0caca51501da.png" />
-<img alt="../../_images/eff28e4588e13a84222ea73c4fd906ffe11f8e8020ce4f16e3f66caa91e859e8.png" src="../../_images/eff28e4588e13a84222ea73c4fd906ffe11f8e8020ce4f16e3f66caa91e859e8.png" />
-<img alt="../../_images/042c772056984b9370ed96eeae1228393eb65539d914b64c71e7ff5c2bf92bad.png" src="../../_images/042c772056984b9370ed96eeae1228393eb65539d914b64c71e7ff5c2bf92bad.png" />
-<img alt="../../_images/8750ec9edc45ea36047342ec741efb89bf1e7a3d975b967458ef4da56a6451c9.png" src="../../_images/8750ec9edc45ea36047342ec741efb89bf1e7a3d975b967458ef4da56a6451c9.png" />
+<img alt="../../_images/0fe7cf2da7d60889954f957732f89c73b537bce3d4464c3f12e46f16f7762f6b.png" src="../../_images/0fe7cf2da7d60889954f957732f89c73b537bce3d4464c3f12e46f16f7762f6b.png" />
+<img alt="../../_images/489284adc09bbe4a44d529a52cea9a8e6793c3079db0149286ef2d8ae9215fa7.png" src="../../_images/489284adc09bbe4a44d529a52cea9a8e6793c3079db0149286ef2d8ae9215fa7.png" />
+<img alt="../../_images/ae178776e3c0bb775853f670a4d0c5a8df53b3670b21a769d94ebe5cd06a7bd7.png" src="../../_images/ae178776e3c0bb775853f670a4d0c5a8df53b3670b21a769d94ebe5cd06a7bd7.png" />
+<img alt="../../_images/41b3f326ad589d655e22e8be319f82c8518c92fe49612c7c7a7cea7299afd1ee.png" src="../../_images/41b3f326ad589d655e22e8be319f82c8518c92fe49612c7c7a7cea7299afd1ee.png" />
+<img alt="../../_images/ac409242565e32f125e82e3b2fc044d8ea99e0e0516328f38eefa6787959f50d.png" src="../../_images/ac409242565e32f125e82e3b2fc044d8ea99e0e0516328f38eefa6787959f50d.png" />
+<img alt="../../_images/ef0e09903855eac79f18767c54d2922ed86d0e6fdc176cc43a6024c958db81f6.png" src="../../_images/ef0e09903855eac79f18767c54d2922ed86d0e6fdc176cc43a6024c958db81f6.png" />
+<img alt="../../_images/13cbbd08420d2c7efaa7e136bfed9cf7c159ae20de04f5cf7dc7b8d3be513e01.png" src="../../_images/13cbbd08420d2c7efaa7e136bfed9cf7c159ae20de04f5cf7dc7b8d3be513e01.png" />
+<img alt="../../_images/9d1ed2127fd781e11128450ac734b0517e968ae5564e3fd325503dda7a49ff23.png" src="../../_images/9d1ed2127fd781e11128450ac734b0517e968ae5564e3fd325503dda7a49ff23.png" />
+<img alt="../../_images/29ceae35b5b7e28c8d0f4d742fbae9e115949f4b87eff196a5a5c6a18c6b4833.png" src="../../_images/29ceae35b5b7e28c8d0f4d742fbae9e115949f4b87eff196a5a5c6a18c6b4833.png" />
+<img alt="../../_images/cd6fc1f96b73b76a42492f279a5e572b8b6210a00268acf24abcfe9d5d136302.png" src="../../_images/cd6fc1f96b73b76a42492f279a5e572b8b6210a00268acf24abcfe9d5d136302.png" />
+<img alt="../../_images/70e7092e7a0a3acaeb58cc7b39adcaa24e34e330b3a0b568047b0c5af7ad00f1.png" src="../../_images/70e7092e7a0a3acaeb58cc7b39adcaa24e34e330b3a0b568047b0c5af7ad00f1.png" />
+<img alt="../../_images/923a6772d9d7be7762e542d13a94bdee66f9fdd52005536d133780feb7bde316.png" src="../../_images/923a6772d9d7be7762e542d13a94bdee66f9fdd52005536d133780feb7bde316.png" />
+<img alt="../../_images/4a5c827f9697937aa00849473343056a6a05c1c3d45789be4c3ee7fdbd104dcc.png" src="../../_images/4a5c827f9697937aa00849473343056a6a05c1c3d45789be4c3ee7fdbd104dcc.png" />
+<img alt="../../_images/2294ee49f769fa2209a2441652536f74c3dd4d469d1624032f8fbd899038aa02.png" src="../../_images/2294ee49f769fa2209a2441652536f74c3dd4d469d1624032f8fbd899038aa02.png" />
+<img alt="../../_images/be4c28c7e6a4180ca5cec038465b28da11667634f4e2821682ab60eddd04e3b8.png" src="../../_images/be4c28c7e6a4180ca5cec038465b28da11667634f4e2821682ab60eddd04e3b8.png" />
+<img alt="../../_images/ae10aaacb8a19d97e2ffc7022f272112b0dabc1295b51380576e3a5bca69fc88.png" src="../../_images/ae10aaacb8a19d97e2ffc7022f272112b0dabc1295b51380576e3a5bca69fc88.png" />
+<img alt="../../_images/3d6f6a91b87ec04f8f263e0ce0d84e3a2de4253d3ccb692b729716f29e70c430.png" src="../../_images/3d6f6a91b87ec04f8f263e0ce0d84e3a2de4253d3ccb692b729716f29e70c430.png" />
+<img alt="../../_images/45ab4ac26ec3a764199f9308ca25e5252c7d526f6eecfe3ac4d60859010c9aac.png" src="../../_images/45ab4ac26ec3a764199f9308ca25e5252c7d526f6eecfe3ac4d60859010c9aac.png" />
+<img alt="../../_images/d4a2e4adfc61a184ec9483c03fcb4c2d4369b0df966a54fc54cb0e5fe2b1aebc.png" src="../../_images/d4a2e4adfc61a184ec9483c03fcb4c2d4369b0df966a54fc54cb0e5fe2b1aebc.png" />
+<img alt="../../_images/c91708dba3bae860ef9d228cc3417b90fe73c6cb30d7ed31b4e311cb9bba7584.png" src="../../_images/c91708dba3bae860ef9d228cc3417b90fe73c6cb30d7ed31b4e311cb9bba7584.png" />
+<img alt="../../_images/8db2aff081848772b5a9e6c4da76c6cadbd24735729b47169d650bca7a32549a.png" src="../../_images/8db2aff081848772b5a9e6c4da76c6cadbd24735729b47169d650bca7a32549a.png" />
+<img alt="../../_images/80fdd936a68bf83526ca3e14a6f915756f313d3e12d3a979a50f885e65d25fae.png" src="../../_images/80fdd936a68bf83526ca3e14a6f915756f313d3e12d3a979a50f885e65d25fae.png" />
 </div>
 </div>
 </section>
@@ -1639,7 +1624,7 @@ Columns available in df_scada_formatted: [&#39;wd_truth&#39;, &#39;ws_truth&#39;
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Saving figure to /home/runner/work/flasc/flasc/docs/examples/01_raw_data_processing/postprocessed/figures/faults_by_layout.png.
 </pre></div>
 </div>
-<img alt="../../_images/5cd55847a16c0f91bb2fc83e1e63870f6fc88194049e9002196fd83b7ad1c59d.png" src="../../_images/5cd55847a16c0f91bb2fc83e1e63870f6fc88194049e9002196fd83b7ad1c59d.png" />
+<img alt="../../_images/6c0a92a0474d34d0c512b7bf0053e3e8c433d469496aa76276b25705bb932591.png" src="../../_images/6c0a92a0474d34d0c512b7bf0053e3e8c433d469496aa76276b25705bb932591.png" />
 </div>
 </div>
 </section>
