@@ -277,9 +277,7 @@ class WakeLossRootMeanSquaredError(CostFunctionBase):
 
     def initialize_for_evaluation(self):
         """Apply the reference and test turbines to the SCADA dataframe."""
-        self.assign_df_scada(
-            set_pow_ref_by_turbines(self.df_scada, self.reference_turbines)
-        )
+        self.assign_df_scada(set_pow_ref_by_turbines(self.df_scada, self.reference_turbines))
         self.assign_df_scada(
             set_col_by_turbines("pow_test", "pow", self.df_scada, self.test_turbines, False)
         )
