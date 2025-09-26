@@ -1,0 +1,334 @@
+import numpy as np
+import pandas as pd
+import pytest
+from floris import UncertainFlorisModel
+
+from flasc.model_fitting.cost_library import CostFunctionBase
+from flasc.model_fitting.model_fit import ModelFit
+from flasc.utilities.utilities_examples import load_floris_artificial
+
+
+def get_simple_inputs_gch():
+    # Create a simple dataframe
+    df = pd.DataFrame(
+        {
+            "time": np.array([0, 1, 2]),
+            "pow_000": np.array([1000.0, np.nan, 1200.0]),
+            "ws_000": np.array([8.0, 9.0, 10.0]),
+            "wd_000": np.array([270.0, 270.0, 270.0]),
+        }
+    )
+
+    # Assign ws_000 to ws and wd_000 to wd using the assign function
+    df = df.assign(ws=df["ws_000"], wd=df["wd_000"])
+
+    # Load floris and set to single turbine layout
+    fm, _ = load_floris_artificial(wake_model="gch")
+    fm.set(layout_x=[0.0], layout_y=[0.0])
+
+    # Define cost_function as a simple function
+    class CostFunctionTest(CostFunctionBase):
+        def cost(self, df_floris):
+            return None
+
+    cost_function = CostFunctionTest(df)
+
+    # Define the parameters to tune the kA parameter of GCH
+    parameter_list = [("wake", "wake_velocity_parameters", "gauss", "ka")]
+    parameter_name_list = ["kA"]
+    parameter_range_list = [(0.1, 0.5)]
+    parameter_index_list = []
+
+    return (
+        df,
+        fm,
+        cost_function,
+        parameter_list,
+        parameter_name_list,
+        parameter_range_list,
+        parameter_index_list,
+    )
+
+
+def test_instantiate_model():
+    # Get simple inputs
+    (
+        df,
+        fm,
+        cost_function,
+        parameter_list,
+        parameter_name_list,
+        parameter_range_list,
+        parameter_index_list,
+    ) = get_simple_inputs_gch()
+
+    # Instantiate the ModelFit object without parameters
+    ModelFit(
+        df,
+        fm,
+        cost_function,
+    )
+
+    # Instantiate the ModelFit object with parameters
+    ModelFit(
+        df,
+        fm,
+        cost_function,
+        parameter_list,
+        parameter_name_list,
+        parameter_range_list,
+        parameter_index_list,
+    )
+
+
+def test_df():
+    # Get simple inputs
+    (
+        df,
+        fm,
+        cost_function,
+        _,
+        _,
+        _,
+        _,
+    ) = get_simple_inputs_gch()
+
+    # Remove the wd column from the dataframe
+    df = df.drop(columns=["wd"])
+
+    # Instantiate the ModelFit object without parameters
+    with pytest.raises(ValueError):
+        ModelFit(
+            df,
+            fm,
+            cost_function,
+        )
+
+
+def test_get_set_param_no_params():
+    # Get simple inputs
+    (
+        df,
+        fm,
+        cost_function,
+        _,
+        _,
+        _,
+        _,
+    ) = get_simple_inputs_gch()
+
+    # Instantiate the ModelFit object without parameters
+    model_fit = ModelFit(
+        df,
+        fm,
+        cost_function,
+    )
+
+    # Assert that parameter_index_list is an empty list
+    assert model_fit.parameter_index_list == []
+
+    # Assert number parameters = 0
+    assert model_fit.n_parameters == 0
+
+    # Assert that initial_parameter_values is a numpy array with length 0
+    np.testing.assert_array_equal(model_fit.initial_parameter_values, np.array([]))
+
+    # Get that get_parameter_values returns an empty numpy array
+    np.testing.assert_array_equal(model_fit.get_parameter_values(), np.array([]))
+
+
+def test_get_set_param_with_params():
+    # Get simple inputs
+    (
+        df,
+        fm,
+        cost_function,
+        parameter_list,
+        parameter_name_list,
+        parameter_range_list,
+        parameter_index_list,
+    ) = get_simple_inputs_gch()
+
+    # Instantiate the ModelFit object with parameters
+    model_fit = ModelFit(
+        df,
+        fm,
+        cost_function,
+        parameter_list,
+        parameter_name_list,
+        parameter_range_list,
+        parameter_index_list,
+    )
+
+    # Check the initialization of the initial parameter values
+    np.testing.assert_array_equal(model_fit.initial_parameter_values, np.array([0.38]))
+    np.testing.assert_array_equal(model_fit.get_parameter_values(), np.array([0.38]))
+
+    # Change the model parameter values
+    model_fit.set_parameter_values(np.array([10.0]))
+
+    # Check the set value
+    np.testing.assert_array_equal(model_fit.get_parameter_values(), np.array([10.0]))
+
+    # Assert that parameter_index_list is a list with one element, and that element is None
+    assert model_fit.parameter_index_list == [None]
+
+
+def test_run_floris():
+    # Get simple inputs
+    (
+        df,
+        fm,
+        cost_function,
+        parameter_list,
+        parameter_name_list,
+        parameter_range_list,
+        parameter_index_list,
+    ) = get_simple_inputs_gch()
+
+    # Instantiate the ModelFit object with parameters
+    model_fit = ModelFit(
+        df,
+        fm,
+        cost_function,
+        parameter_list,
+        parameter_name_list,
+        parameter_range_list,
+        parameter_index_list,
+    )
+
+    df_floris = model_fit.run_floris_model()
+
+    # df_floris is a FlaskDataFrame
+    assert isinstance(df_floris, pd.DataFrame)
+
+    # df and df_floris have the same number of rows
+    assert df.shape[0] == df_floris.shape[0]
+
+    # df['ws] == df_floris['ws']
+    np.testing.assert_array_equal(df["ws"].values, df_floris["ws"].values)
+
+    # The second element of df_floris['pow_000'] is a NaN
+    assert np.isnan(df_floris.loc[1, "pow_000"])
+
+    # Check that the first element in power corresponds to power of 8 m/s
+    # for default NREL 5MW turbine
+    assert np.isclose(df_floris.loc[0, "pow_000"], 1753.9, atol=10)
+
+
+def test_cost_function():
+    # Get simple inputs
+    df, fm = get_simple_inputs_gch()[0:2]
+
+    # Cost function has to be subclass of CostFunctionBase
+    # Cost function has wrong number of inputs
+    class Cost1:
+        def __init__(self):
+            pass
+
+        def cost(self, df_floris):
+            return 0
+
+    # Cost function must be an subclass of CostFunctionBase
+    with pytest.raises(TypeError):
+        ModelFit(
+            df,
+            fm,
+            Cost1(),
+        )
+
+    # Wrong number of arguments in cost function
+    class Cost2(CostFunctionBase):
+        def cost(self, df_floris, extra_arg):
+            return 0
+
+    # Uninstantiated cost function raises TypeError
+    with pytest.raises(TypeError):
+        ModelFit(df, fm, Cost2)
+
+    # Wrong number of arguments in cost function.
+    with pytest.raises(TypeError):
+        cf = Cost2()
+        cf(df)
+
+    # Valid cost function (extra argument in init, but not in cost)
+    class Cost3(CostFunctionBase):
+        def __init__(self, df_scada, temp_arg):
+            super().__init__(df_scada)
+            self.temp_arg = temp_arg
+
+        def cost(self, df_floris):
+            self.temp_arg += 1
+            return 0
+
+    # Instantiate without providing the extra argument raises TypeError
+    with pytest.raises(TypeError):
+        Cost3(df)
+
+    # Instantiate with providing the extra argument works
+    ModelFit(df, fm, Cost3(df, temp_arg=5))
+
+
+def test_use_non_default_wd_sample_points():
+    """Test that use_non_default_wd_sample_points correctly scales wd_sample_points with wd_std."""
+    # Create a simple dataframe
+    df = pd.DataFrame(
+        {
+            "time": np.array([0, 1, 2]),
+            "pow_000": np.array([1000.0, np.nan, 1200.0]),
+            "ws_000": np.array([8.0, 9.0, 10.0]),
+            "wd_000": np.array([270.0, 270.0, 270.0]),
+        }
+    )
+    df = df.assign(ws=df["ws_000"], wd=df["wd_000"])
+
+    # Load floris and set to single turbine layout
+    fm, _ = load_floris_artificial(wake_model="gch")
+    fm.set(layout_x=[0.0], layout_y=[0.0])
+
+    # Create an UncertainFlorisModel with initial wd_std and custom wd_sample_points
+    initial_wd_std = 5.0
+    custom_wd_sample_points = np.array([-3.0, -1.5, 0.0, 1.5, 3.0])  # in degrees
+    fm_uncertain = UncertainFlorisModel(
+        fm.core.as_dict(), wd_std=initial_wd_std, wd_sample_points=custom_wd_sample_points
+    )
+
+    # Define cost_function as a simple function
+    class CostFunctionTest(CostFunctionBase):
+        def cost(self, df_floris):
+            return None
+
+    cost_function = CostFunctionTest(df)
+
+    # Create ModelFit with use_non_default_wd_sample_points=True
+    model_fit = ModelFit(df, fm_uncertain, cost_function, use_non_default_wd_sample_points=True)
+
+    # Test with first wd_std value
+    wd_std_1 = 3.0
+    model_fit.set_wd_std(wd_std_1)
+
+    # Expected wd_sample_points should be the original custom points scaled by the ratio
+    expected_wd_sample_points_1 = custom_wd_sample_points * (wd_std_1 / initial_wd_std)
+    np.testing.assert_allclose(
+        model_fit.fmodel.wd_sample_points, expected_wd_sample_points_1, rtol=1e-10
+    )
+
+    # Test with second wd_std value
+    wd_std_2 = 7.0
+    model_fit.set_wd_std(wd_std_2)
+
+    # Expected wd_sample_points should be the original custom points scaled by the new ratio
+    expected_wd_sample_points_2 = custom_wd_sample_points * (wd_std_2 / initial_wd_std)
+    np.testing.assert_allclose(
+        model_fit.fmodel.wd_sample_points, expected_wd_sample_points_2, rtol=1e-10
+    )
+
+    # Verify that the scaling is different for the two wd_std values
+    assert not np.allclose(expected_wd_sample_points_1, expected_wd_sample_points_2)
+
+    # Test that if wd_std_3 is 5.0, the wd_sample_points are the same as the original custom points
+    wd_std_3 = 5.0
+    model_fit.set_wd_std(wd_std_3)
+    np.testing.assert_allclose(
+        model_fit.fmodel.wd_sample_points, custom_wd_sample_points, rtol=1e-10
+    )

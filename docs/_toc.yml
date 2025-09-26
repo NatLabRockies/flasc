@@ -6,23 +6,17 @@ root: index
 parts:
   - caption: Getting Started
     chapters:
-    - file: overview
+    - file: introduction
     - file: installation
-    - file: getting_started
 
   - caption: User Reference
     chapters:
-    # - file: data_processing
     - file: flasc_data_format
     - file: energy_ratio
     - file: energy_change
+    - file: model_fit
     - file: licensing
 
-  # - caption: Developer Reference
-  #   chapters:
-  #   - file: contributing
-  #   - file: development
-  #   - file: testing
   - caption: Examples Data Processing
     chapters:
     - file: examples/01_raw_data_processing/03_northing_calibration_hoger

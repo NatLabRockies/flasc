@@ -7,6 +7,8 @@
 # Doekemeijer at Shell, as well as discussions with Diederik van Binsbergen at
 # NTNU. Please see readme.txt for more information.
 
+import warnings
+
 import numpy as np
 import polars as pl
 
@@ -15,6 +17,11 @@ from flasc.analysis import energy_ratio as er, total_uplift_power_ratio as tup
 from flasc.analysis.analysis_input import AnalysisInput
 from flasc.utilities.energy_ratio_utilities import add_power_ref, add_power_test
 from flasc.utilities.tuner_utilities import replicate_nan_values, resim_floris
+
+floris_tuning_deprecation_message = (
+    "The floris_tuning package is deprecated as of FLASC v2.4. "
+    "Please see the ModelFit package for tuning FLORIS models to SCADA data. "
+)
 
 
 def evaluate_overall_wake_loss(df_, df_freq=None):
@@ -28,6 +35,7 @@ def evaluate_overall_wake_loss(df_, df_freq=None):
         float: Overall wake losses
 
     """
+    warnings.warn(floris_tuning_deprecation_message, DeprecationWarning)
     # Not sure yet if we want to figure out how to use df_freq here
     return 100 * (df_["pow_ref"].sum() - df_["pow_test"].sum()) / df_["pow_ref"].sum()
 
@@ -71,6 +79,7 @@ def sweep_velocity_model_parameter_for_overall_wake_losses(
         A tuple (np.ndarray, np.ndarray) where the first element is the FLORIS wake losses
         and the second element is the SCADA wake losses
     """
+    warnings.warn(floris_tuning_deprecation_message, DeprecationWarning)
     # Currently assuming pow_ref and pow_test already assigned
     # Also assuming limit to ws/wd range accomplished but could revisit?
 
@@ -137,6 +146,7 @@ def select_best_wake_model_parameter(floris_results, scada_results, value_candid
     Returns:
         float: best fit parameter value
     """
+    warnings.warn(floris_tuning_deprecation_message, DeprecationWarning)
     error_values = (floris_results - scada_results) ** 2
 
     best_param = value_candidates[np.argmin(error_values)]
@@ -198,6 +208,7 @@ def sweep_wd_std_for_er(
             and the second element is the dataframes.
 
     """
+    warnings.warn(floris_tuning_deprecation_message, DeprecationWarning)
     # Currently assuming pow_ref and pow_test already assigned
     # Also assuming limit to ws/wd range accomplished but could revisit?
 
@@ -289,6 +300,7 @@ def select_best_wd_std(er_results, value_candidates, ax=None):
     Returns:
         float: The best parameter value
     """
+    warnings.warn(floris_tuning_deprecation_message, DeprecationWarning)
     error_sq = er_results**2
 
     best_param = value_candidates[np.argmin(error_sq)]
@@ -355,6 +367,7 @@ def sweep_deflection_parameter_for_total_uplift(
         A typle (np.ndarray, np.ndarray) where the first element is the FLORIS total uplifts
         and the second element is the SCADA total uplifts
     """
+    warnings.warn(floris_tuning_deprecation_message, DeprecationWarning)
     # Currently assuming pow_ref and pow_test already assigned
     # Also assuming limit to ws/wd range accomplished but could revisit?
 
