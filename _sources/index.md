@@ -4,7 +4,7 @@
 Welcome to the documentation of the NREL FLASC repository!
 
 ```{note}
-FLASC v2.3 now requires `numpy` version 2, following the update in FLORIS v4.3. See the [numpy documentation for details](https://numpy.org/doc/stable/numpy_2_0_migration_guide.html).
+As of FLASC v2.3, FLASC requires `numpy` version 2, following the update in FLORIS v4.3. See the [numpy documentation for details](https://numpy.org/doc/stable/numpy_2_0_migration_guide.html).
 ```
 
 FLASC provides a comprehensive toolkit for wind farm analysis, combining SCADA data processing with advanced wake modeling capabilities. The repository is intended as a community-driven toolbox, available on its [GitHub Repository](https://github.com/NREL/flasc).
