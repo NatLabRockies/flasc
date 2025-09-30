@@ -577,9 +577,9 @@ def bin_and_group_dataframe(
             pl.all_horizontal(pl.col(bin_cols_with_df_name).is_not_null())
         )  # Select for all bin cols present
         .group_by(bin_cols_with_df_name, maintain_order=True)
-        .agg([pl.mean("pow_ref"), pl.mean("pow_test"), pl.count()])
+        .agg([pl.mean("pow_ref"), pl.mean("pow_test"), pl.len().alias("count")])
         # Enforce that each ws/wd bin combination has to appear in all dataframes
-        .filter(pl.count().over(bin_cols_without_df_name) == num_df)
+        .filter(pl.len().over(bin_cols_without_df_name) == num_df)
     )
 
     return df_

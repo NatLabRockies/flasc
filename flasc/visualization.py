@@ -242,7 +242,9 @@ def plot_binned_mean_and_ci(
     df["x_bin"] = pd.cut(df["x"], x_edges, labels=x_labels)
 
     # Get aggregate statistics
-    df_agg = df.groupby("x_bin").agg({"y": ["count", "std", "min", "max", "mean", st.sem]})
+    df_agg = df.groupby("x_bin", observed=False).agg(
+        {"y": ["count", "std", "min", "max", "mean", st.sem]}
+    )
     # Flatten column names
     df_agg.columns = ["_".join(c) for c in df_agg.columns]
 

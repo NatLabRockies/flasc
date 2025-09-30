@@ -56,21 +56,21 @@ def df_movingaverage(
     # Carry out the mean calculations
     df_regular = (
         df[cols_regular]  # Select only non-angular columns
-        .rolling(window_width, center=center, axis=0, min_periods=min_periods)
+        .rolling(window_width, center=center, min_periods=min_periods)
         .mean()
     )
 
     df_cos = (
         df[cols_angular]  # Select only angular columns
         .pipe(lambda df_: np.cos(df_ * np.pi / 180.0))
-        .rolling(window_width, center=center, axis=0, min_periods=min_periods)
+        .rolling(window_width, center=center, min_periods=min_periods)
         .mean()
     )
 
     df_sin = (
         df[cols_angular]  # Select only angular columns
         .pipe(lambda df_: np.sin(df_ * np.pi / 180.0))
-        .rolling(window_width, center=center, axis=0, min_periods=min_periods)
+        .rolling(window_width, center=center, min_periods=min_periods)
         .mean()
     )
 
@@ -83,7 +83,7 @@ def df_movingaverage(
 
     if calc_median_min_max_std:  # if including other statistics
         df_regular_stats = (
-            df.rolling(window_width, center=center, axis=0, min_periods=min_periods)
+            df.rolling(window_width, center=center, min_periods=min_periods)
             .agg(["median", "min", "max", "std"])
             .pipe(lambda df_: flatten_cols(df_))
         )
@@ -168,7 +168,7 @@ def df_downsample(
 
     # Now calculate downsampled dataframe, automatically
     # mark by label on the right (i.e., "past 10 minutes").
-    df_resample = df.resample(window_width, label="right", axis=0)
+    df_resample = df.resample(window_width, label="right")
 
     # First calculate mean values of non-angular columns
     df_mean = df_resample[cols_regular].mean().copy()
@@ -204,7 +204,7 @@ def df_downsample(
         # Compute the stats for the non_angular columns
         df_stats_regular = (
             df_stats[cols_regular]  # Select non-angular columns
-            .resample(window_width, label="right", axis=0)  # Resample to desired window
+            .resample(window_width, label="right")  # Resample to desired window
             .agg(["median", "min", "max", "std"])  # Perform aggregations
             .pipe(lambda df_: flatten_cols(df_))  # Flatten columns
         )
@@ -224,7 +224,7 @@ def df_downsample(
             .add(180)  # Shift up by 180 (start of sequence for -180/180 wrap)
             .mod(360)  # Wrap by 360
             .subtract(180)  # Remove shift (end of sequence for -180/180 wrap)
-            .resample(window_width, label="right", axis=0)  # Resample to desired window
+            .resample(window_width, label="right")  # Resample to desired window
         )
 
         # Now create the individual statistics
@@ -297,7 +297,7 @@ def df_downsample(
 
     if return_index_mapping:
         df_tmp = pd.DataFrame(data={"time": df.reset_index()["time"], "tmp": 1}).resample(
-            window_width, on="time", label="right", axis=0
+            window_width, on="time", label="right"
         )
 
         # Grab index of first and last time entry for each window

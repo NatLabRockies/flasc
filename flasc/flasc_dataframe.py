@@ -67,14 +67,15 @@ class FlascDataFrame(DataFrame):
                 raise ValueError("long_data_columns must be a dictionary")
             if not all(col in long_data_columns for col in ["variable_column", "value_column"]):
                 raise ValueError(
-                    "long_data_columns must contain keys 'variable_column', " "and 'value_column'"
+                    "long_data_columns must contain keys 'variable_column', and 'value_column'"
                 )
             self._long_data_columns = long_data_columns
 
     @property
     def in_flasc_format(self):
         """Return True if the data is in FLASC format, False otherwise."""
-        if ("time" in self.columns) and ("pow_000" in self.columns):
+        pow_cols = [c for c in self.columns if c[:4] == "pow_" and c[4:].isdigit()]
+        if "time" in self.columns and len(pow_cols) > 0:
             return True
         else:
             return False

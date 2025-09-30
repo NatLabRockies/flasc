@@ -98,7 +98,7 @@ wake:
       - 10
       sigma_0_D: 0.28
       smoothing_length_D: 2.0
-      mixing_gain_velocity: 2.0
+      mixing_gain_velocity: 0.0 # Note difference from defaults in FLORIS v4.5
   wake_turbulence_parameters:
     crespo_hernandez:
       initial: 0.1

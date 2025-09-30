@@ -63,12 +63,20 @@ class ExpectedPowerAnalysisOutput:
         self.cov_terms = cov_terms
 
     def _return_uplift_string(self):
-        return (
-            f"{self.uplift_results['scada_uplift']['energy_uplift_ctr_pc']:+0.2f}%, ("
-            f"{self.uplift_results['scada_uplift']['energy_uplift_lb_pc']:+0.2f}% - "
-            f"{self.uplift_results['scada_uplift']['energy_uplift_ub_pc']:+0.2f}%)"
-            f" -- N={self.uplift_results['scada_uplift']['count']}"
-        )
+        return_string = ""
+
+        for un in self.uplift_names:
+            uplift_string = (
+                f"{un}: "
+                f"{self.uplift_results[un]['energy_uplift_ctr_pc']:+0.2f}%, ("
+                f"{self.uplift_results[un]['energy_uplift_lb_pc']:+0.2f}% - "
+                f"{self.uplift_results[un]['energy_uplift_ub_pc']:+0.2f}%)"
+                f" -- N={self.uplift_results[un]['count']}"
+                "\n"
+            )
+            return_string += uplift_string
+
+        return return_string
 
     def print_uplift(self):
         """Print the uplift results."""

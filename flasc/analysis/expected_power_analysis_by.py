@@ -308,7 +308,7 @@ class _total_uplift_expected_power_by_:
         # If the color dict is empty fill using a matplotlib palette
         if len(color_dict) == 0:
             num_uplift_names = len(self.uplift_names)
-            c_pal = plt.cm.get_cmap("tab10", num_uplift_names)
+            c_pal = plt.get_cmap("tab10", num_uplift_names)
             color_dict = {
                 uplift_name: c_pal(up_idx) for up_idx, uplift_name in enumerate(self.uplift_names)
             }
@@ -703,7 +703,7 @@ def total_uplift_expected_power_by_wd_shift_ws_min(
     labels = [f"ws_min = {ws_min_loop:.1f}" for ws_min_loop in ws_min_values]
 
     # Define the color dict
-    c_pal = plt.cm.get_cmap("viridis", n_step)
+    c_pal = plt.get_cmap("viridis", n_step)
     color_dict = {label: c_pal(idx) for idx, label in enumerate(labels)}
 
     # Declare a figure
