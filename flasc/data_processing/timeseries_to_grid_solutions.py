@@ -105,26 +105,6 @@ class ConvertTimeseriesToSolutionGrid():
 
         return df_binned
 
-    def bin_timeseries_by_theoretical_ws_to_ti_curve(self, ws_to_ti_function, wd_step=5.0, ws_array=np.arange(3.5, 17.501, 1.0), ti_margin=0.01, plot=False):
-        # Generate ws_bins array
-        ws_intervals = [pd.Interval(l, r) for l, r in zip(ws_array[:-1], ws_array[1:])]
-        df_binned_list = []
-        for ws_interval in ws_intervals:
-            # Find the fitting turbulence intensity range.
-            ti_limits = [ws_to_ti_function(l) for l in [ws_interval.left, ws_interval.right]]
-            ti_limits = np.array(np.sort(ti_limits)) + ti_margin * np.array([-1, 1])  # Add additional margin
-            df_binned_ti = self.bin_timeseries(wd_step=wd_step, ws_array=[ws_interval.left, ws_interval.right], ti_array=ti_limits, plot=False, verbose=False)
-            df_binned_ti["ti_theoretical_curve"] = ws_to_ti_function(df_binned_ti["ws"])  # Add theoretical TI value according to curve
-            df_binned_list.append(df_binned_ti)
-
-        df_binned = pd.concat(df_binned_list, axis=0, ignore_index=True).reset_index(drop=True)
-        self.df_binned = df_binned
-        
-        if plot:
-            self._plot_binned_data_counts_for_theoretical_ws_to_ti_curve()
-
-        return df_binned
-
     def convert_binned_dataframe_to_df_fi_approx(self, N_min: int = 3):
         """Convert the binned dataframe to a df_fi_approx format, similar to the FLASC floris_tools definition.
 
