@@ -21,5 +21,5 @@ Key syntax for computing energy ratios is provided in the examples:
 
  Within the set of analysis of the smarteole dataset are also examples of using flasc's energy ratio calculations.  See for example:
 
- - [Baseline Energy Ratio Analysis](https://github.com/NREL/flasc/blob/main/examples_smarteole/05_baseline_energy_ratio_analysis.ipynb)
- - [Wake Steering Energy Ratio Analysis](https://github.com/NREL/flasc/blob/main/examples_smarteole/06_wake_steering_energy_ratio_analysis.ipynb)
+ - [Baseline Energy Ratio Analysis](https://github.com/NatLabRockies/flasc/blob/main/examples_smarteole/05_baseline_energy_ratio_analysis.ipynb)
+ - [Wake Steering Energy Ratio Analysis](https://github.com/NatLabRockies/flasc/blob/main/examples_smarteole/06_wake_steering_energy_ratio_analysis.ipynb)

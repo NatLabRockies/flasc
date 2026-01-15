@@ -63,7 +63,7 @@ develop = [
 include = ["flasc*"]
 
 [project.urls]
-Homepage = "https://github.com/NREL/flasc"
+Homepage = "https://github.com/NatLabRockies/flasc"
 Documentation = "https://readthedocs.org"
 
 

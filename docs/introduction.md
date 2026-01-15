@@ -1,6 +1,6 @@
 # Introduction to FLASC
 
-FLASC provides a rich suite of analysis tools for SCADA data filtering & analysis, wind farm model validation, field experiment design, and field experiment monitoring. The repository is centrally built around NREL's in-house [FLORIS](https://github.com/nrel/floris) wake modeling utility. FLASC also largely relies on the "energy ratio" to quantify wake losses in synthetic and historical data, perform turbine northing calibrations, and for model parameter estimation.
+FLASC provides a rich suite of analysis tools for SCADA data filtering & analysis, wind farm model validation, field experiment design, and field experiment monitoring. The repository is centrally built around NREL's in-house [FLORIS](https://github.com/NatLabRockies/floris) wake modeling utility. FLASC also largely relies on the "energy ratio" to quantify wake losses in synthetic and historical data, perform turbine northing calibrations, and for model parameter estimation.
 
 ## Getting Started
 
@@ -59,7 +59,7 @@ See {cite:p}`Doekemeijer2022a` and {cite:p}`Bay2022a` for practical examples of 
 
 If FLASC played a role in your research, please cite it. This software can be cited as:
 
-   FLASC. Version 2.0.1 (2024). Available at https://github.com/NREL/flasc.
+   FLASC. Version 2.0.1 (2024). Available at https://github.com/NatLabRockies/flasc.
 
 For LaTeX users:
 
@@ -69,9 +69,9 @@ For LaTeX users:
       year = {2024},
       publisher = {GitHub},
       journal = {GitHub repository},
-      url = {https://github.com/NREL/flasc},
+      url = {https://github.com/NatLabRockies/flasc},
     }
 
 ## Questions
 
-For technical questions regarding FLASC usage, please post your questions to [GitHub Discussions](https://github.com/NREL/flasc/discussions) on the FLASC repository. Alternatively, email the NREL FLASC team at `paul.fleming@nrel.gov <mailto:paul.fleming@nrel.gov>`_ or `michael.sinner@nrel.gov <mailto:michael.sinner@nrel.gov>`_.
+For technical questions regarding FLASC usage, please post your questions to [GitHub Discussions](https://github.com/NatLabRockies/flasc/discussions) on the FLASC repository. Alternatively, email the NREL FLASC team at `paul.fleming@nrel.gov <mailto:paul.fleming@nrel.gov>`_ or `michael.sinner@nrel.gov <mailto:michael.sinner@nrel.gov>`_.

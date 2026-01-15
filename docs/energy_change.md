@@ -8,7 +8,7 @@ FLASC now however includes three methods for quantifying the change in energy pr
 
 `total_uplift_power_ratio` uses a similar input as the [energy ratio](energy_ratio) methods but returns a single value representing the total uplift, rather than uplift binned by wind direction.  The method is named power_ratio because the change in energy production is computed using the mean per-wind-condition-bin power ratios.  The change in ratio per bin is then combined with the mean base power and frequency to estimate change in energy production.
 
-Currently the main example usage of the total uplift function is at the end of [smarteole example 06](https://github.com/NREL/flasc/blob/main/examples_smarteole/06_wake_steering_energy_ratio_analysis.ipynb).  Documentation of the function itself is available in the [API documentation](https://nrel.github.io/flasc/_autosummary/flasc.analysis.total_uplift_power_ratio.compute_total_uplift.html#flasc.analysis.total_uplift_power_ratio.compute_total_uplift).  Uncertainty of the results can be computed via bootstrapping.
+Currently the main example usage of the total uplift function is at the end of [smarteole example 06](https://github.com/NatLabRockies/flasc/blob/main/examples_smarteole/06_wake_steering_energy_ratio_analysis.ipynb).  Documentation of the function itself is available in the [API documentation](https://natlabrockies.github.io/flasc/_autosummary/flasc.analysis.total_uplift_power_ratio.compute_total_uplift.html#flasc.analysis.total_uplift_power_ratio.compute_total_uplift).  Uncertainty of the results can be computed via bootstrapping.
 
 The method was developed by Eric Simley and implemented by Paul Fleming and Misha Sinner of NREL.  
 
@@ -16,7 +16,7 @@ The method was developed by Eric Simley and implemented by Paul Fleming and Mish
 
 FLASC further includes methods for calculating change in energy production using the [wind-up](https://github.com/resgroup/wind-up) module.   [wind-up](https://github.com/resgroup/wind-up) is a tool to assess yield uplift of wind turbines developed by Alex Clerc of RES and available open-source on GitHub.  Using translation methods in the [FlascDataFrame](flasc_data_format), the methods and analysis of wind-up can be invoked from FLASC.
 
-[smarteole example 09](https://github.com/NREL/flasc/blob/main/examples_smarteole/09_wind-up_wake_steering_uplift_analysis.ipynb), calculates the change in energy production (as in [smarteole example 06](https://github.com/NREL/flasc/blob/main/examples_smarteole/06_wake_steering_energy_ratio_analysis.ipynb)) using wind-up.
+[smarteole example 09](https://github.com/NatLabRockies/flasc/blob/main/examples_smarteole/09_wind-up_wake_steering_uplift_analysis.ipynb), calculates the change in energy production (as in [smarteole example 06](https://github.com/NatLabRockies/flasc/blob/main/examples_smarteole/06_wake_steering_energy_ratio_analysis.ipynb)) using wind-up.
 
 ## Expected Power Analysis
 
@@ -28,5 +28,5 @@ The module provides two approaches for quantifying uncertainty in the total upli
 
 The approach is different from the above approaches in several ways (refer to [AWC validation methodology](https://publications.tno.nl/publication/34637216/LWOb3s/TNO-2020-R11300.pdf) for full description).  First, as mentioned above, the uncertainty of the result can be computed directly from the variance and co-variances of the turbine powers instead of relying on the more computationally expensive bootstrapping approach.  Additionally, the method does not normalize the power of the test turbines by reference powers.  Therefore, the method may be more sensitive to wind speed variations within bins and other atmospheric conditions that would otherwise be partially controlled for through normalization by reference powers. To account for this sensitivity we suggest using smaller wind speed bins and wind speed estimates based on measured turbine performance (rather than nacelle anemometry) when calculating the expected power.  However, by avoiding normalization by a reference power signal, this method does not require all test turbines to be operating normally at each sample, increasing the amount of usable data, especially when large wind farms are being analyzed.
 
-Similar to above, an example using the smarteole data provides usage example, see [smarteole example 10](https://github.com/NREL/flasc/blob/main/examples_smarteole/examples_smarteole/10_uplift_with_expected_power.ipynb)
+Similar to above, an example using the smarteole data provides usage example, see [smarteole example 10](https://github.com/NatLabRockies/flasc/blob/main/examples_smarteole/examples_smarteole/10_uplift_with_expected_power.ipynb)
 
