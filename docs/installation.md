@@ -20,7 +20,7 @@ use `git clone`. Then, add it to your Python path with the "local editable insta
 
 ```bash
 # Download the source code.
-git clone https://github.com/NREL/flasc.git
+git clone https://github.com/NatLabRockies/flasc.git
 
 # Install into your Python environment
 pip install -e flasc
@@ -38,12 +38,12 @@ Recommended approach is to:
 
 1. Declare a new directory to be the root folder, for example FLASC/
 2. Setup a new virtual environement with venv or conda and activate
-3. Clone and install FLORIS into this root directory and environment, following the [developer install](https://nrel.github.io/floris/dev_guide.html)
+3. Clone and install FLORIS into this root directory and environment, following the [developer install](https://natlabrockies.github.io/floris/dev_guide.html)
 4. Clone and install flasc with developer options:
 
     ```bash
     # Download the source code.
-    git clone https://github.com/NREL/flasc.git
+    git clone https://github.com/NatLabRockies/flasc.git
 
     # Install into your Python environment
     pip install -e flasc ".[develop, docs]"

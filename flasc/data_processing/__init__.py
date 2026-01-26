@@ -3,7 +3,7 @@
 """Dataframe operations module for FLORIS SCADA Analysis repository."""
 
 __author__ = """Bart Doekemeijer, Paul Fleming"""
-__email__ = "paul.fleming@nrel.gov, michael.sinner@nrel.gov"
+__email__ = "paul.fleming@nlr.gov, michael.sinner@nlr.gov"
 
 from pathlib import Path
 

@@ -7,7 +7,7 @@ body:
     id: feature-description
     attributes:
       label: Description
-      description: Describe the suggested feature in as much detail as possible. If the idea is not fully developed, first open a Discussion to work through aspects of the feature with the NREL team prior to creating an Issue.
+      description: Describe the suggested feature in as much detail as possible. If the idea is not fully developed, first open a Discussion to work through aspects of the feature with the NLR team prior to creating an Issue.
       placeholder: |
         Example: FLASC should support parallelization. Based on _this_ paper, it seems possible that the algorithms could all be modified with this line of code `call parallelize()` from an open source library. A good case to demonstrate this feature is ...
 

@@ -3,7 +3,7 @@
 """Energy ratio module for FLORIS SCADA Analysis repository."""
 
 __author__ = """Paul Fleming"""
-__email__ = "paul.fleming@nrel.gov"
+__email__ = "paul.fleming@nlr.gov"
 __version__ = "0.1.0"
 
 from pathlib import Path
