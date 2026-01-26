@@ -44,7 +44,7 @@ dependencies = [
 
 [project.optional-dependencies]
 docs = [
-    "jupyter-book",
+    "jupyter-book~=1.0",
     "sphinx-book-theme",
     "sphinx-autodoc-typehints",
     "sphinxcontrib-autoyaml",

@@ -6,7 +6,8 @@ FLASC also largely relies on the "energy ratio" to quantify wake losses in synth
 
 ## Getting Started
 
-The easiest way to get started is to install FLASC and then follow the examples. The recommended approach is:
+The easiest way to get started is to install FLASC and then follow the examples.
+The recommended approach is:
 
 ### 1. Install FLASC
 Install the repository following the instructions in [installation](installation).
