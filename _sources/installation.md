@@ -1,0 +1,55 @@
+# Installation
+
+FLASC is available as a package on PyPI. We strongly recommend installing FLASC
+into a conda environment. To do this, use the following commands (replacing
+`flasc-env` with the conda environment name of your choosing).
+```bash
+# Create a conda environment containing python and activate it
+conda create --name flasc-env python
+conda activate flasc-env
+
+# Pip install flasc and its dependencies from PyPI
+pip install flasc
+```
+That's it, now you're ready to use FLASC.
+
+To download the source code from the GitHub repository (which will also give
+you access to the examples) and install locally,
+use `git clone`. Then, add it to your Python path with the "local editable install" through `pip`. Again, we recommend doing this in a dedicated conda environment
+(see conda commands above).
+
+```bash
+# Download the source code.
+git clone https://github.com/NatLabRockies/flasc.git
+
+# Install into your Python environment
+pip install -e flasc
+```
+
+If everything is configured correctly, any changes made to the source
+code will be available directly through your local Python. Remember
+to re-import the FLASC module when changes are made if you are working
+in an interactive environment like Jupyter.
+
+## Installation for developers
+
+A more complete installation is recommended if interested in developing FLASC.
+Recommended approach is to:
+
+1. Declare a new directory to be the root folder, for example FLASC/
+2. Setup a new virtual environement with venv or conda and activate
+3. Clone and install FLORIS into this root directory and environment, following the [developer install](https://natlabrockies.github.io/floris/dev_guide.html)
+4. Clone and install flasc with developer options:
+
+    ```bash
+    # Download the source code.
+    git clone https://github.com/NatLabRockies/flasc.git
+
+    # Install into your Python environment
+    pip install -e flasc ".[develop, docs]"
+    ```
+
+5. Turn on the linting and code checking tools
+    ```bash
+    pre-commit install
+    ```
