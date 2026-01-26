@@ -1,6 +1,8 @@
 # Introduction to FLASC
 
-FLASC provides a rich suite of analysis tools for SCADA data filtering & analysis, model validation, field experiment design, and field experiment monitoring. The repository is centrally built around NLR's in-house [FLORIS](https://github.com/NatLabRockies/floris) wake modeling utility. FLASC also largely relies on the "energy ratio" to quantify wake losses in synthetic and historical data, perform turbine northing calibrations, and for model parameter estimation.
+FLASC provides a rich suite of analysis tools for SCADA data filtering & analysis, model validation, field experiment design, and field experiment monitoring.
+The repository is centrally built around NLR's in-house [FLORIS](https://github.com/NatLabRockies/floris) wake modeling utility.
+FLASC also largely relies on the "energy ratio" to quantify wake losses in synthetic and historical data, perform turbine northing calibrations, and for model parameter estimation.
 
 ## Getting Started
 
