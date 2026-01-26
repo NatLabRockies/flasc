@@ -3,6 +3,6 @@
 """Modular model fitting for FLASC."""
 
 __author__ = """Paul Fleming, Michael Sinner, Bart Doekemeijer"""
-__email__ = "paul.fleming@nrel.gov, michael.sinner@nrel.gov"
+__email__ = "paul.fleming@nlr.gov, michael.sinner@nlr.gov"
 
 from pathlib import Path

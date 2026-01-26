@@ -20,5 +20,5 @@
 <!-- Release checklist:
 - Update the version in
     - [ ] pyproject.toml
-- [ ] Create a tag in the NREL/FLASC repository
+- [ ] Create a tag in the NatLabRockies/FLASC repository
 -->

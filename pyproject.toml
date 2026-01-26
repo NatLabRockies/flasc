@@ -9,9 +9,8 @@ description = "FLASC provides a rich suite of analysis tools for SCADA data filt
 readme = "README.md"
 requires-python = ">=3.9"
 authors = [
-    { name = "Paul Fleming", email = "paul.fleming@nrel.gov" },
-    { name = "Michael (Misha) Sinner", email = "Michael.Sinner@nrel.gov" },
-    { name = "Eric Simley", email = "Eric.Simley@nrel.gov" },
+    { name = "Paul Fleming", email = "paul.fleming@nlr.gov" },
+    { name = "Michael (Misha) Sinner", email = "michael.sinner@nlr.gov" },
 ]
 license = { file = "LICENSE.txt" }
 keywords = ["flasc"]
@@ -63,7 +62,7 @@ develop = [
 include = ["flasc*"]
 
 [project.urls]
-Homepage = "https://github.com/NREL/flasc"
+Homepage = "https://github.com/NatLabRockies/flasc"
 Documentation = "https://readthedocs.org"
 
 
