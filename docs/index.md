@@ -1,7 +1,7 @@
 
 # FLASC
 
-Welcome to the documentation of the NREL FLASC repository!
+Welcome to the documentation of the NLR FLASC repository!
 
 ```{note}
 As of FLASC v2.3, FLASC requires `numpy` version 2, following the update in FLORIS v4.3. See the [numpy documentation for details](https://numpy.org/doc/stable/numpy_2_0_migration_guide.html).
@@ -11,11 +11,11 @@ FLASC provides a comprehensive toolkit for wind farm analysis, combining SCADA d
 
 ## What is FLASC?
 
-FLASC offers analysis tools for SCADA data filtering & analysis, wind farm model validation, field experiment design, and field experiment monitoring. Built around NREL's [FLORIS](https://github.com/NatLabRockies/floris/discussions/) wake modeling utility, FLASC enables researchers and practitioners to:
+FLASC offers analysis tools for SCADA data filtering & analysis, model validation, field experiment design, and field experiment monitoring. Linked to NLR's [FLORIS](https://github.com/NatLabRockies/floris/) model, FLASC enables researchers and practitioners to:
 
 - **Process and filter SCADA data** with robust outlier detection and quality control
 - **Analyze energy production patterns** using energy ratio methodology for wake quantification  
-- **Calibrate wake models** automatically to match observed turbine performance
+- **Calibrate wake models** automatically to match observed performance
 - **Evaluate field experiments** with comprehensive uplift analysis tools
 
 ## Documentation Structure

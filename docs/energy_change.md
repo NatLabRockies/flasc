@@ -10,7 +10,7 @@ FLASC now however includes three methods for quantifying the change in energy pr
 
 Currently the main example usage of the total uplift function is at the end of [smarteole example 06](https://github.com/NatLabRockies/flasc/blob/main/examples_smarteole/06_wake_steering_energy_ratio_analysis.ipynb).  Documentation of the function itself is available in the [API documentation](https://natlabrockies.github.io/flasc/_autosummary/flasc.analysis.total_uplift_power_ratio.compute_total_uplift.html#flasc.analysis.total_uplift_power_ratio.compute_total_uplift).  Uncertainty of the results can be computed via bootstrapping.
 
-The method was developed by Eric Simley and implemented by Paul Fleming and Misha Sinner of NREL.  
+The method was developed by Eric Simley and implemented by Paul Fleming and Misha Sinner of NLR.
 
 ## Wind-Up
 
@@ -20,7 +20,7 @@ FLASC further includes methods for calculating change in energy production using
 
 ## Expected Power Analysis
 
-The final included methodology for calculating change in energy production is the module `expected_power_analysis`.  This module implements the calculations of change in energy production described in [AWC validation methodology](https://publications.tno.nl/publication/34637216/LWOb3s/TNO-2020-R11300.pdf), by Stoyan Kanev of TNO.  The method was implemented into python/FLASC by Paul Fleming and Eric Simley of NREL referring to the above publication by Stoyan Kanev.  The method is named `expected_power_analysis` within FLASC to denote its calculation of the expected farm power as the weighted sum of the per-bin expected powers, rather than power ratios, and using this to calculate the change in energy production.
+The final included methodology for calculating change in energy production is the module `expected_power_analysis`.  This module implements the calculations of change in energy production described in [AWC validation methodology](https://publications.tno.nl/publication/34637216/LWOb3s/TNO-2020-R11300.pdf), by Stoyan Kanev of TNO.  The method was implemented into python/FLASC by Paul Fleming and Eric Simley of NLR referring to the above publication by Stoyan Kanev.  The method is named `expected_power_analysis` within FLASC to denote its calculation of the expected farm power as the weighted sum of the per-bin expected powers, rather than power ratios, and using this to calculate the change in energy production.
 
 Specifically, this module computes the total uplift along with the confidence interval of the total uplift estimate by implementing Equations 4.11 - 4.29 in the abovementioned TNO report. To determine the expected wind farm power for each wind direction/wind speed bin the expected power of each individual turbine is summed for the bin. One advantage of this method is that by computing expected power at the turbine level before summing, the method does not require that all test turbines are operating normally at each timestamp. Total wind farm energy is then computed by summing the expected farm power values weighted by their frequencies of occurrence over all wind condition bins. 
 

@@ -6,14 +6,14 @@
 ## Description
 
 FLASC provides a **rich suite of analysis tools** for SCADA data filtering, analysis,
-wind farm model validation, field experiment design, and field experiment monitoring.
+model validation, field experiment design, and field experiment monitoring.
 
-The repository is centrally built around NRELs in-house ``FLORIS`` wind farm model, available at
+The repository is linked to NLR's in-house ``FLORIS`` model, available at
 **https://github.com/NatLabRockies/floris**. FLASC also largely relies on the ``energy ratio``, among others,
-to quantify wake losses in synthetic and historical data, to perform turbine northing calibrations,
+to quantify wake losses in synthetic and historical data, to perform northing calibrations,
 and model parameter estimation.
 
-For technical questions or concerns, please email paul.fleming@nrel.gov.
+For technical questions or concerns, please email paul.fleming@nlr.gov.
 
 
 [![pages-build-deployment](https://github.com/NatLabRockies/flasc/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/NatLabRockies/flasc/actions/workflows/pages/pages-build-deployment)
@@ -49,7 +49,7 @@ FLASC leverages the following GitHub features to coordinate support and developm
 
 - [Discussions](https://github.com/NatLabRockies/flasc/discussions): Collaborate to develop ideas for new use cases, features, and software designs, and get support for usage questions
 - [Issues](https://github.com/NatLabRockies/flasc/issues): Report potential bugs and well-developed feature requests
-- [Projects](https://github.com/orgs/NREL/projects/39): Include current and future work on a timeline and assign a person to "own" it
+- [Projects](https://github.com/orgs/NatLabRockies/projects/39): Include current and future work on a timeline and assign a person to "own" it
 
 Your feedback is crucial in this environment, as it helps identify areas for enhancement, resolve issues, and ensure the project meets the needs of its users. By sharing your insights and suggestions, you contribute to the project's evolution and success.
 
@@ -65,7 +65,7 @@ space to show off the things you are doing with FLORIS.
 
 BSD 3-Clause License
 
-Copyright (c) 2024, Alliance for Sustainable Energy LLC, All rights reserved.
+Copyright (c) 2026, Alliance for Energy Innovation, LLC, All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted
 provided that the following conditions are met:
