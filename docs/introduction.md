@@ -6,7 +6,8 @@ FLASC also largely relies on the "energy ratio" to quantify wake losses in synth
 
 ## Getting Started
 
-The easiest way to get started is to install FLASC and then follow the examples. The recommended approach is:
+The easiest way to get started is to install FLASC and then follow the examples.
+The recommended approach is:
 
 ### 1. Install FLASC
 Install the repository following the instructions in [installation](installation).
@@ -61,13 +62,13 @@ See {cite:p}`Doekemeijer2022a` and {cite:p}`Bay2022a` for practical examples of 
 
 If FLASC played a role in your research, please cite it. This software can be cited as:
 
-   FLASC. Version 2.4.1 (2026). Available at https://github.com/NatLabRockies/flasc.
+   FLASC. Version 2.4.2 (2026). Available at https://github.com/NatLabRockies/flasc.
 
 For LaTeX users:
 
     @misc{flasc2026,
       author = {NLR},
-      title = {FLASC. Version 2.4.1},
+      title = {FLASC. Version 2.4.2},
       year = {2026},
       publisher = {GitHub},
       journal = {GitHub repository},

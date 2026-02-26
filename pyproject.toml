@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "flasc"
-version = "2.4.1"
+version = "2.4.2"
 description = "FLASC provides a rich suite of analysis tools for SCADA data filtering & analysis, wind farm model validation, field experiment design, and field experiment monitoring."
 readme = "README.md"
 requires-python = ">=3.9"
@@ -44,7 +44,7 @@ dependencies = [
 
 [project.optional-dependencies]
 docs = [
-    "jupyter-book",
+    "jupyter-book~=1.0",
     "sphinx-book-theme",
     "sphinx-autodoc-typehints",
     "sphinxcontrib-autoyaml",
