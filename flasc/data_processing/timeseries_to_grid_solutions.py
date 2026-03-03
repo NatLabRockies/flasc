@@ -8,7 +8,6 @@ import polars as pl
 
 
 def _plot_binned_data_counts(df_grid):
-    # Load df_binned from self
     df_binned = df_grid
     df_N = df_binned[["wd_bin", "ws_bin", "count"]].set_index(["wd_bin", "ws_bin"]).unstack().transpose()
     df_N.index = [i[1] for i in df_N.index]
@@ -17,6 +16,7 @@ def _plot_binned_data_counts(df_grid):
     sns.heatmap(df_N, annot=True, annot_kws={"fontsize": 8}, linewidth=.5, cmap="rocket_r", ax=ax, fmt=".0f", cbar=False)
     ax.set_ylabel("Wind speed bin (m/s)")
     ax.set_xlabel("Wind direction bin (deg)")
+    ax.set_title("Number of entries per wd/ws bin in binning of timeseries data")
     plt.tight_layout()
 
     return ax
@@ -32,7 +32,6 @@ def bin_timeseries_to_grid(
     ws_max: float = 50.0,
     N_min: int = 3,  # Minimum number of samples within a bin for it to be considered valid and used to generate an approximate table entry with
     plot: bool = False,
-    verbose: bool = True
 ):
     # Local copy of the timeseries that we can manipulate
     df_ = pl.from_pandas(df_timeseries.copy())
