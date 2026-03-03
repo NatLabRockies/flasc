@@ -10,8 +10,8 @@ def _err(old_val, new_val):
 
 
 # Introduce helper functions for calculating wake loss (%)
-def _wake_loss(aep_waked, aep_unwaked):
-    return 100.0 * (aep_unwaked-aep_waked) / aep_unwaked
+def _wake_loss(cumprod_waked, cumprod_unwaked):
+    return 100.0 * (cumprod_unwaked-cumprod_waked) / cumprod_unwaked
 
 
 # A function to print table
@@ -96,18 +96,18 @@ def compare_cumulative_production_and_relative_wake_loss(
         f"reported numbers are CUMULATIVE ENERGY, not AEP. Offset from whole number of years: {offset_prct:+.2f}%.")
 
     # Absolute cumulative energy production for the entire farm and per turbine
-    aep_turbine_list = [[(df[pc].sum() / n_measurements_per_hour) for pc in pow_cols] for df in df_list]
-    aep_farm_list = [np.sum(aep_tm) for aep_tm in aep_turbine_list]
+    cumprod_turbine_list = [[(df[pc].sum() / n_measurements_per_hour) for pc in pow_cols] for df in df_list]
+    cumprod_farm_list = [np.sum(cumprod_tm) for cumprod_tm in cumprod_turbine_list]
 
-    table_absolute_aep_dict = {
+    table_absolute_cumprod_dict = {
         "Selection": ["Entire farm"] + [f"Turbine {ti:02d}" for ti in range(n_turbs)],
     }
     for mii, model_tag in enumerate(model_tags):
-        table_absolute_aep_dict[f"{model_tag} (MWh)"] = [aep_farm_list[mii]] + aep_turbine_list[mii]
+        table_absolute_cumprod_dict[f"{model_tag} (MWh)"] = [cumprod_farm_list[mii]] + cumprod_turbine_list[mii]
         if mii > 0:  # Compare against first entry (usually SCADA or LES) and calculate errors
-            table_absolute_aep_dict[f"{model_tag} error (%)"] = (
-                [_err(aep_farm_list[0], aep_farm_list[mii])] +
-                [_err(x, y) for x, y in zip(aep_turbine_list[0], aep_turbine_list[mii])]
+            table_absolute_cumprod_dict[f"{model_tag} error (%)"] = (
+                [_err(cumprod_farm_list[0], cumprod_farm_list[mii])] +
+                [_err(x, y) for x, y in zip(cumprod_turbine_list[0], cumprod_turbine_list[mii])]
             )
 
     #######################################################################################################################
@@ -116,8 +116,8 @@ def compare_cumulative_production_and_relative_wake_loss(
 
 
     # Compare cumulative energy wake loss relative to most upstream turbines
-    aep_turbine_waked_list = [np.array([None for _ in range(n_turbs)], dtype=float) for _ in df_list]
-    aep_turbine_unwaked_list = [np.array([None for _ in range(n_turbs)], dtype=float) for _ in df_list]
+    cumprod_turbine_waked_list = [np.array([None for _ in range(n_turbs)], dtype=float) for _ in df_list]
+    cumprod_turbine_unwaked_list = [np.array([None for _ in range(n_turbs)], dtype=float) for _ in df_list]
 
     # For each timeseries and for every turbine, determine test and reference power productions
     for ti in range(n_turbs):
@@ -125,14 +125,14 @@ def compare_cumulative_production_and_relative_wake_loss(
             p_test = np.array(df[f"pow_{ti:03d}"], dtype=float, copy=True)
             p_ref = np.array(df["pow_ref"], dtype=float, copy=True)
             ids_non_nan = (~np.isnan(p_test)) & (~np.isnan(p_ref))
-            aep_turbine_unwaked_list[dii][ti] = np.sum(p_ref[ids_non_nan]) / n_measurements_per_hour
-            aep_turbine_waked_list[dii][ti] = np.sum(p_test[ids_non_nan]) / n_measurements_per_hour
+            cumprod_turbine_unwaked_list[dii][ti] = np.sum(p_ref[ids_non_nan]) / n_measurements_per_hour
+            cumprod_turbine_waked_list[dii][ti] = np.sum(p_test[ids_non_nan]) / n_measurements_per_hour
 
-    aep_farm_waked_list = [np.sum(aep_tm_waked) for aep_tm_waked in aep_turbine_waked_list]
-    aep_farm_unwaked_list = [np.sum(aep_tm_unwaked) for aep_tm_unwaked in aep_turbine_unwaked_list]
+    cumprod_farm_waked_list = [np.sum(cumprod_tm_waked) for cumprod_tm_waked in cumprod_turbine_waked_list]
+    cumprod_farm_unwaked_list = [np.sum(cumprod_tm_unwaked) for cumprod_tm_unwaked in cumprod_turbine_unwaked_list]
 
     # Create placeholder dictionary to collect wake loss results
-    table_wakeloss_aep_dict = {
+    table_wakeloss_cumprod_dict = {
         "Selection": ["Entire farm"] + [f"Turbine {ti:02d}" for ti in range(n_turbs)],
     }
 
@@ -140,8 +140,8 @@ def compare_cumulative_production_and_relative_wake_loss(
     wake_losses_list = [
             np.hstack(
             [
-                _wake_loss(aep_farm_waked_list[dii], aep_farm_unwaked_list[dii]),
-                _wake_loss(aep_turbine_waked_list[dii], aep_turbine_unwaked_list[dii])
+                _wake_loss(cumprod_farm_waked_list[dii], cumprod_farm_unwaked_list[dii]),
+                _wake_loss(cumprod_turbine_waked_list[dii], cumprod_turbine_unwaked_list[dii])
             ]
         )
         for dii in range(len(df_list))
@@ -149,14 +149,14 @@ def compare_cumulative_production_and_relative_wake_loss(
 
     # Calculate wake loss errors between first and all remaining models, and store in list
     for mii, model_tag in enumerate(model_tags):
-        table_wakeloss_aep_dict[f"{model_tag} (%)"] = wake_losses_list[mii]
+        table_wakeloss_cumprod_dict[f"{model_tag} (%)"] = wake_losses_list[mii]
         if mii > 0:  # Compare against first entry (usually SCADA or LES) and calculate error
-            table_wakeloss_aep_dict[f"{model_tag} error (p.p.)"] = wake_losses_list[mii] - wake_losses_list[0]
+            table_wakeloss_cumprod_dict[f"{model_tag} error (p.p.)"] = wake_losses_list[mii] - wake_losses_list[0]
 
     # Finally print
     if print_to_console:
-        _print_pretty_table(table_absolute_aep_dict, title="Absolute cumulative energy (MWh)")
+        _print_pretty_table(table_absolute_cumprod_dict, title="Absolute cumulative energy (MWh)")
         print("\n")
-        _print_pretty_table(table_wakeloss_aep_dict, title="Cumulative energy wake loss (%)")
+        _print_pretty_table(table_wakeloss_cumprod_dict, title="Cumulative energy wake loss (%)")
 
-    return table_absolute_aep_dict, table_wakeloss_aep_dict
+    return table_absolute_cumprod_dict, table_wakeloss_cumprod_dict
