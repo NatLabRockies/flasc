@@ -45,9 +45,12 @@ def compare_absolute_aep_and_relative_wake_loss(
     for ti in exclude_turbs:
         for df in df_list:
             df[f"pow_{ti:03d}"] = None
-    
-    # First ensure consistent NaN mapping between modelled data and SCADA timeseries
+
+    # Helper variables
     n_turbs = dfm.get_num_turbines(df_list[0])
+    pow_cols = [f"pow_{ti:03d}" for ti in range(n_turbs)]
+
+    # First ensure consistent NaN mapping between modelled data and SCADA timeseries
     for ti in range(n_turbs):
         # For each individual turbine, identify all timestamps where any of the timeseries have NaN values, and create a combined mask of these
         ids_nan = np.zeros(len(df_list[0]), dtype=bool)
@@ -59,22 +62,13 @@ def compare_absolute_aep_and_relative_wake_loss(
         for df in df_list:
             df.loc[ids_nan, f"pow_{ti:03d}"] = None
 
-    # Helper variable
-    pow_cols = [f"pow_{ti:03d}" for ti in range(n_turbs)]
-
-    # Assert NaNs are identical between dataframes
-    n_nans_per_timeseries = [df[pow_cols].isna().sum().sum() for df in df_list]
-    print(f"NaNs in df_list power columns: {n_nans_per_timeseries}")
+    # # Assert NaNs are identical between dataframes
+    # n_nans_per_timeseries = [df[pow_cols].isna().sum().sum() for df in df_list]
+    # print(f"NaNs in df_list power columns: {n_nans_per_timeseries}")
 
     for df in df_list:
         # Specify upstream power in the exact same way as with the SCADA data
         df = dfm.set_pow_ref_by_upstream_turbines(df, df_upstream, exclude_turbs=exclude_turbs)
-
-        # Determine number of turbines available at any given time, similar to SCADA
-        df["n_turbs_available"] = (~df[pow_cols].isna()).sum(axis=1)
-
-    # Assert that number of turbines available at each timestamp is identical between SCADA and LES simulation
-    print(all(df_list[0]["n_turbs_available"] == df_list[1]["n_turbs_available"]))
 
     #######################################################################################################################
     ################## Compare absolute AEP directly between SCADA and simulated data (LES) ###############################
