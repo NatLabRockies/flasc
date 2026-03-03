@@ -31,6 +31,10 @@ def compare_cumulative_production_and_relative_wake_loss(
     model_tags=None,
     print_to_console=True,
 ):
+    # Apply default model tags if not provided
+    if model_tags is None:
+        model_tags = [f"Model {ti}" for ti in range(len(df_list))]
+
     # Check input dataframes are consistent in terms of number of turbines and timestamps
     if not all([all(df_list[0]["time"] == df["time"]) for df in df_list]):
         raise ValueError("Input dataframes have different timestamps. Please ensure all dataframes have the same timestamps.")
@@ -39,9 +43,9 @@ def compare_cumulative_production_and_relative_wake_loss(
     if len(set(n_turbs_list)) > 1:
         raise ValueError(f"Input dataframes have different number of turbines: {n_turbs_list}. Please ensure all dataframes have the same number of turbines.")
 
-    # Apply default model tags if not provided
-    if model_tags is None:
-        model_tags = [f"Model {ti}" for ti in range(len(df_list))]
+    for dfii, df in enumerate(df_list):
+        if "pow_ref" in df.columns:
+            raise ValueError(f"Input dataframe[{dfii}] for {model_tags[dfii]} may not contain 'pow_ref' column. This may only happen AFTER mirroring NaNs between dataframes and will be done automatically.")
 
     # Make local copies of dataframes that we can manipulate
     df_list = [df.copy() for df in df_list]
@@ -71,7 +75,7 @@ def compare_cumulative_production_and_relative_wake_loss(
     # n_nans_per_timeseries = [df[pow_cols].isna().sum().sum() for df in df_list]
     # print(f"NaNs in df_list power columns: {n_nans_per_timeseries}")
 
-    for df in df_list:
+    for dfii, df in enumerate(df_list):
         # Specify upstream power in the exact same way as with the SCADA data
         df = dfm.set_pow_ref_by_upstream_turbines(df, df_upstream, exclude_turbs=exclude_turbs)
 
