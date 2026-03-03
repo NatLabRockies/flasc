@@ -28,6 +28,7 @@ def compare_cumulative_production_and_relative_wake_loss(
     df_list,  # Typical use case: 1st entry is SCADA, then remaining are models to compare. All models are compared against 1st entry.
     df_upstream,
     exclude_turbs=[],
+    ws_range=[0.0, 99.0],
     model_tags=None,
     print_to_console=True,
 ):
@@ -47,13 +48,25 @@ def compare_cumulative_production_and_relative_wake_loss(
         if "pow_ref" in df.columns:
             raise ValueError(f"Input dataframe[{dfii}] for {model_tags[dfii]} may not contain 'pow_ref' column. This may only happen AFTER mirroring NaNs between dataframes and will be done automatically.")
 
+
     # Make local copies of dataframes that we can manipulate
     df_list = [df.copy() for df in df_list]
 
+    # Apply wind speed filter
+    N_b = (~df_list[0]["ws"].isna()).sum()  # Number of valid entries in first df before wind speed masking
+    ids_within_ws_range = (df_list[0]["ws"] >= ws_range[0]) & (df_list[0]["ws"] <= ws_range[1])
+    for dfii in range(len(df_list)):
+        df_list[dfii] = df_list[dfii].loc[ids_within_ws_range].reset_index(drop=True)
+
+    N_a = (~df_list[0]["ws"].isna()).sum()  # Number of valid entries in first df after wind speed masking
+    if N_a < N_b:
+        print(f"Masking down to wind speed range {ws_range[0]:.1f} m/s to {ws_range[1]:.1f} m/s. " +
+        f"Number of measurements before: {N_b}, after: {N_a}. Percentage: {100.0 * N_a / N_b:.1f}%.")
+
     # Apply simple NaN rule for every excluded turbine to avoid annoying edge cases in the analysis
     for ti in exclude_turbs:
-        for df in df_list:
-            df[f"pow_{ti:03d}"] = None
+        for dfii in range(len(df_list)):
+            df_list[dfii][f"pow_{ti:03d}"] = None
 
     # Helper variables
     n_turbs = dfm.get_num_turbines(df_list[0])
@@ -159,8 +172,9 @@ def compare_cumulative_production_and_relative_wake_loss(
 
     # Finally print
     if print_to_console:
-        _print_pretty_table(table_absolute_cumprod_dict, title="Absolute cumulative energy (MWh)")
+        c =  f"Data from {t0.strftime('%Y-%m-%d')} to {t1.strftime('%Y-%m-%d')}; Wind speeds " + f"{ws_range[0]:.1f} m/s to {ws_range[1]:.1f} m/s"
+        _print_pretty_table(table_absolute_cumprod_dict, title=f"Absolute cumulative energy (MWh); {c}")
         print("\n")
-        _print_pretty_table(table_wakeloss_cumprod_dict, title="Cumulative energy wake loss (%)")
+        _print_pretty_table(table_wakeloss_cumprod_dict, title=f"Cumulative energy wake loss (%); {c}")
 
     return table_absolute_cumprod_dict, table_wakeloss_cumprod_dict
