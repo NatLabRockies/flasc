@@ -48,7 +48,6 @@ def compare_cumulative_production_and_relative_wake_loss(
         if "pow_ref" in df.columns:
             raise ValueError(f"Input dataframe[{dfii}] for {model_tags[dfii]} may not contain 'pow_ref' column. This may only happen AFTER mirroring NaNs between dataframes and will be done automatically.")
 
-
     # Make local copies of dataframes that we can manipulate
     df_list = [df.copy() for df in df_list]
 
@@ -72,21 +71,10 @@ def compare_cumulative_production_and_relative_wake_loss(
     n_turbs = dfm.get_num_turbines(df_list[0])
     pow_cols = [f"pow_{ti:03d}" for ti in range(n_turbs)]
 
-    # First ensure consistent NaN mapping between modelled data and SCADA timeseries
-    for ti in range(n_turbs):
-        # For each individual turbine, identify all timestamps where any of the timeseries have NaN values, and create a combined mask of these
-        ids_nan = np.zeros(len(df_list[0]), dtype=bool)
-        for df in df_list:
-            ids_nan = ids_nan | df[f"pow_{ti:03d}"].isna()
-        ids_nan = np.where(ids_nan)[0]
-
-        # Mirror NaNs across all timeseries
-        for df in df_list:
-            df.loc[ids_nan, f"pow_{ti:03d}"] = None
-
-    # # Assert NaNs are identical between dataframes
-    # n_nans_per_timeseries = [df[pow_cols].isna().sum().sum() for df in df_list]
-    # print(f"NaNs in df_list power columns: {n_nans_per_timeseries}")
+    # Mirror NaNs across dataframes to ensure consistent NaN mapping between modelled data and SCADA timeseries.
+    # This is important to ensure that we are comparing production and wake losses over the same timestamps,
+    # and that we are not unfairly penalizing models for having values where SCADA has NaNs (e.g. due to turbine downtime).
+    df_list = dfm.df_mirror_timeseries_nans(df_list, verbose=False)
 
     for dfii, df in enumerate(df_list):
         # Specify upstream power in the exact same way as with the SCADA data
