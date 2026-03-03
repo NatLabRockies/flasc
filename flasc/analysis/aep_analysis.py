@@ -113,7 +113,7 @@ def compare_cumulative_production_and_relative_wake_loss(
         f"reported numbers are CUMULATIVE ENERGY, not AEP. Offset from whole number of years: {offset_prct:+.2f}%.")
 
     # Absolute cumulative energy production for the entire farm and per turbine
-    cumprod_turbine_list = [[(df[pc].sum() / n_measurements_per_hour) for pc in pow_cols] for df in df_list]
+    cumprod_turbine_list = [[(df[pc].sum() * 1.0e-6 / n_measurements_per_hour) for pc in pow_cols] for df in df_list]
     cumprod_farm_list = [np.sum(cumprod_tm) for cumprod_tm in cumprod_turbine_list]
 
     table_absolute_cumprod_dict = {
@@ -142,8 +142,8 @@ def compare_cumulative_production_and_relative_wake_loss(
             p_test = np.array(df[f"pow_{ti:03d}"], dtype=float, copy=True)
             p_ref = np.array(df["pow_ref"], dtype=float, copy=True)
             ids_non_nan = (~np.isnan(p_test)) & (~np.isnan(p_ref))
-            cumprod_turbine_unwaked_list[dii][ti] = np.sum(p_ref[ids_non_nan]) / n_measurements_per_hour
-            cumprod_turbine_waked_list[dii][ti] = np.sum(p_test[ids_non_nan]) / n_measurements_per_hour
+            cumprod_turbine_unwaked_list[dii][ti] = np.sum(p_ref[ids_non_nan]) * 1.0e-6 / n_measurements_per_hour
+            cumprod_turbine_waked_list[dii][ti] = np.sum(p_test[ids_non_nan]) * 1.0e-6 / n_measurements_per_hour
 
     cumprod_farm_waked_list = [np.sum(cumprod_tm_waked) for cumprod_tm_waked in cumprod_turbine_waked_list]
     cumprod_farm_unwaked_list = [np.sum(cumprod_tm_unwaked) for cumprod_tm_unwaked in cumprod_turbine_unwaked_list]
@@ -173,6 +173,7 @@ def compare_cumulative_production_and_relative_wake_loss(
     # Finally print
     if print_to_console:
         c =  f"Data from {t0.strftime('%Y-%m-%d')} to {t1.strftime('%Y-%m-%d')}; Wind speeds " + f"{ws_range[0]:.1f} m/s to {ws_range[1]:.1f} m/s"
+        print("\n")
         _print_pretty_table(table_absolute_cumprod_dict, title=f"Absolute cumulative energy (MWh); {c}")
         print("\n")
         _print_pretty_table(table_wakeloss_cumprod_dict, title=f"Cumulative energy wake loss (%); {c}")
