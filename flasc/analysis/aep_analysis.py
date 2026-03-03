@@ -134,9 +134,9 @@ def compare_absolute_aep_and_relative_wake_loss(
 
     # Calculate wake loss errors between first and all remaining models, and store in list
     for mii, model_tag in enumerate(model_tags):
-        table_wakeloss_aep_dict[f"{model_tag} (%)"] = wake_losses_models[mii]
+        table_wakeloss_aep_dict[f"{model_tag} (%)"] = wake_losses_list[mii]
         if mii > 0:  # Compare against first entry (usually SCADA or LES) and calculate error
-            table_wakeloss_aep_dict[f"{model_tag} error (p.p.)"] = wake_losses_models[mii] - wake_losses_models[0]
+            table_wakeloss_aep_dict[f"{model_tag} error (p.p.)"] = wake_losses_list[mii] - wake_losses_list[0]
 
     # Finally print
     if print_to_console:
