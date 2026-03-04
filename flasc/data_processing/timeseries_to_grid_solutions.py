@@ -7,7 +7,17 @@ from flasc.analysis.expected_power_analysis_utilities import _add_wd_ws_bins, _b
 import polars as pl
 
 
-def _plot_binned_data_counts(df_grid):
+def _plot_binned_data_counts(df_grid: pd.DataFrame):
+    """Plot the number of entries in each wind direction/wind speed bin. This is a supporting function used to display
+    how complete one can derive a steady-state table (grid) from a timeseries of solutions, e.g., from an LES
+    timeseries.
+
+    Args:
+        df_grid (pd.DataFrame): DataFrame containing the binned data.
+
+    Returns:
+        matplotlib.axes.Axes: Axes object of the generated plot.
+    """
     df_binned = df_grid
     df_N = df_binned[["wd_bin", "ws_bin", "count"]].set_index(["wd_bin", "ws_bin"]).unstack().transpose()
     df_N.index = [i[1] for i in df_N.index]
@@ -33,6 +43,23 @@ def bin_timeseries_to_grid(
     N_min: int = 3,  # Minimum number of samples within a bin for it to be considered valid and used to generate an approximate table entry with
     plot: bool = False,
 ):
+    """Convert a timeseries DataFrame into a gridded solution table based on wind direction and wind speed bins.
+
+    Args:
+        df_timeseries (pd.DataFrame): Dataframe with timeseries that you want to turn into a gridded solution table. Requires the columns
+        'wd', 'ws', and one power column (pow_000, pow_001, etc.) for every turbine in your wind farm.
+        wd_step (float, optional): Step size for wind direction bins. Defaults to 5.0.
+        wd_min (float, optional): Minimum wind direction for binning. Defaults to 0.0.
+        wd_max (float, optional): Maximum wind direction for binning. Defaults to 360.0.
+        ws_step (float, optional): Step size for wind speed bins. Defaults to 1.0.
+        ws_min (float, optional): Minimum wind speed for binning. Defaults to 0.0.
+        ws_max (float, optional): Maximum wind speed for binning. Defaults to 50.0.
+        N_min (int, optional): Minimum number of samples within a bin for it to be considered valid. Defaults to 3.
+        plot (bool, optional): Whether to generate a plot of the binned data counts. Defaults to False.
+
+    Returns:
+        pd.DataFrame: DataFrame containing the gridded solution table.
+    """
     # Local copy of the timeseries that we can manipulate
     df_ = pl.from_pandas(df_timeseries.copy())
     df_ = df_.with_columns(pl.lit("name").alias("df_name"))
@@ -58,7 +85,7 @@ def bin_timeseries_to_grid(
         bin_cols_without_df_name=["wd_bin", "ws_bin"],
     )
 
-    # Filter out bins with less than 3 samples.
+    # Filter out bins with less than N_min samples.
     df_bin = df_bin.filter(pl.col("count") >= N_min)
 
     # Convert the dataframe back to Pandas for formatting and plotting
