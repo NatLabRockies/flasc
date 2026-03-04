@@ -4,19 +4,31 @@ import pandas as pd
 from flasc.data_processing import dataframe_manipulations as dfm
 
 
-# Introduce helper functions for calculating errors and generating plots/tables
 def _err(old_val, new_val):
+    """Calculate percentage error between old and new value. Note that this is not
+    a symmetric error metric, and should be interpreted as the percentage change from
+    old_val to new_val.
+    """
     return 100.0 * (new_val-old_val) / old_val
 
 
-# Introduce helper functions for calculating wake loss (%)
 def _wake_loss(cumprod_waked, cumprod_unwaked):
+    """Calculate wake loss percentage between waked and unwaked cumulative production. Note that this is not
+    a symmetric metric, and should be interpreted as the percentage loss from unwaked to waked production.
+    """
     return 100.0 * (cumprod_unwaked-cumprod_waked) / cumprod_unwaked
 
 
-# A function to print table
 def _print_pretty_table(table_dict, title):
-    # Format title to be centered above the table, and print table in pretty format
+    """Print the given table dictionary in a pretty format using markdown. The title is centered above the table.
+
+    Args:
+        table_dict (dict): Dictionary containing the table data.
+        title (str): Title to be displayed above the table.
+
+    Returns:
+        None
+    """
     df_table = pd.DataFrame(table_dict)
     mrkdwn = df_table.to_markdown(headers='keys', tablefmt='psql', index=False, floatfmt=".2f")
     spc = int(np.floor(len(mrkdwn.split("\n")[0]) / 2 - len(title) / 2))
@@ -32,6 +44,28 @@ def compare_cumulative_production_and_relative_wake_loss(
     model_tags=None,
     print_to_console=True,
 ):
+    """Calculate the cumulative energy production and the relative wake loss for a list of Pandas DataFrame timeseries. Then,
+    calculate the error between the first timeseries in the list (typically SCADA or LES) and the remaining timeseries
+    (typically LES and/or FLORIS models). 
+
+    Args:
+        df_list (list): List of Pandas DataFrame timeseries. The first entry is typically SCADA or LES, and the remaining entries are models to compare.
+        df_upstream (Pandas DataFrame): Upstream data for reference, generated using 'ftools.get_upstream_turbs_floris()'
+        exclude_turbs (list, optional): List of turbines to exclude from the analysis, i.e., because of poor performance or odd behavior. Defaults to [].
+        ws_range (list, optional): Wind speed range for filtering the data. When inspecting wake losses, one may want to zoom into the relevant wind
+        speed range, typically between 6 and 14 m/s. This also allows you to inspect the model performance for different wind speed regions. Defaults to [0.0, 99.0].
+        model_tags (list, optional): List of string tags for the models. Defaults to None, which will generate tags as "Model 0", "Model 1", etc.
+        print_to_console (bool, optional): Whether to print the results to the console. Defaults to True.
+
+    Raises:
+        ValueError: If input timeseries dataframes in df_list have different timestamps.
+        ValueError: If input timeseries dataframes in df_list have different number of turbines.
+        ValueError: If input timeseries dataframes in df_list already contain a 'pow_ref' column.
+
+    Returns:
+        table_absolute_cumprod_dict: Dictionary containing the absolute cumulative production numbers, including errors w.r.t. the first dataframe.
+        table_wakeloss_cumprod_dict: Dictionary containing the relative wake loss numbers, including errors w.r.t. the first dataframe.
+    """
     # Apply default model tags if not provided
     if model_tags is None:
         model_tags = [f"Model {ti}" for ti in range(len(df_list))]
