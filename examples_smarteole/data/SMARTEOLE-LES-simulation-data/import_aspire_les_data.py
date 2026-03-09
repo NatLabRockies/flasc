@@ -12,6 +12,9 @@ from datetime import timedelta as td
 import tarfile 
 import xarray as xr
 
+from zenodo_get import download as zn_download
+import zipfile
+
 from floris.utilities import wrap_360
 from flasc.data_processing.time_operations import (
     df_downsample,
@@ -207,9 +210,17 @@ class AspireTimeseriesReader():
 
 
 if __name__ == "__main__":
+    # Download files from Zenodo
     root_path = os.path.dirname(os.path.abspath(__file__))
-    les_path = os.path.join(root_path, "data", "SMARTEOLE-LES-simulation-data")
-    aspire_turbine_files = glob.glob(os.path.join(les_path, "les_output", "2020", "*", "*", "00", "turbinesOut.les.nc"))
+    data_path = os.path.join(root_path, "data")
+    zn_download("10.5281/zenodo.18888663", output_dir=data_path)
+
+    # Unzip the LES timeseries data
+    path_to_zip_file = os.path.join(data_path, "les_output.zip")
+    with zipfile.ZipFile(path_to_zip_file, 'r') as zip_ref:
+        zip_ref.extractall(data_path)
+
+    aspire_turbine_files = glob.glob(os.path.join(data_path, "les_output", "2020", "*", "*", "00", "turbinesOut.les.nc"))
     aspire_turbine_files = np.sort(aspire_turbine_files)
 
     # Load them one at a time
@@ -234,5 +245,6 @@ if __name__ == "__main__":
     )
 
     # Save as .csv
-    fout = os.path.join(les_path, "les_timeseries.csv")
+    fout = os.path.join(root_path, "les_timeseries.csv")
     df_les_timeseries.to_csv(fout, index=False, float_format="%.3f")
+    print("Converted LES timeseries data has been saved to: " + fout)

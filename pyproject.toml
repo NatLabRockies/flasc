@@ -41,6 +41,7 @@ dependencies = [
     "res-wind-up~=0.1",
     "optuna~=4.0",
     "scikit-learn~=1.5",
+    "zenodo-get~=3.0.0",
 ]
 
 [project.optional-dependencies]
