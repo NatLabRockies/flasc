@@ -226,7 +226,9 @@ def interpolate_floris_from_df_approx(
         if (0.0 in df_approx["wd"].values) & ((360.0 - step_size) in df_approx["wd"].values):
             wd_min = 0.0
             wd_max = 360.0 - step_size
-        elif ((step_size / 2) in df_approx["wd"].values) & ((360.0 - step_size / 2) in df_approx["wd"].values):
+        elif ((step_size / 2) in df_approx["wd"].values) & (
+            (360.0 - step_size / 2) in df_approx["wd"].values
+        ):
             wd_min = step_size / 2
             wd_max = 360.0 - step_size / 2
         else:
