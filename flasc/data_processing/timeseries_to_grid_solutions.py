@@ -96,7 +96,7 @@ def bin_timeseries_to_grid(
         _plot_binned_data_counts(df_grid)
 
     # Convert into a minimum dataframe with only necessary columns and rename 
-    df_grid = df_grid.drop(columns=['df_name', 'wd_mean', 'ws_mean', 'time_mean'] + [col for col in df_grid.columns if 'count' in col])
+    df_grid = df_grid[[col for col in df_grid.columns if 'pow_' in col] + ['wd_bin', 'ws_bin', 'ti_mean', 'count']]
     df_grid = df_grid.rename(columns={'wd_bin': 'wd', 'ws_bin': 'ws', **{col: col.replace('_mean', '') for col in df_grid.columns if '_mean' in col}})
 
     # Make sure that all bins exists in df_grid, even if they have no data.
