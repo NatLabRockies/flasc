@@ -7,7 +7,7 @@ name = "flasc"
 version = "2.4.2"
 description = "FLASC provides a rich suite of analysis tools for SCADA data filtering & analysis, wind farm model validation, field experiment design, and field experiment monitoring."
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.10, <3.15"
 authors = [
     { name = "Paul Fleming", email = "paul.fleming@nlr.gov" },
     { name = "Michael (Misha) Sinner", email = "michael.sinner@nlr.gov" },
