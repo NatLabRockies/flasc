@@ -4,14 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "flasc"
-version = "2.4"
+version = "2.4.2"
 description = "FLASC provides a rich suite of analysis tools for SCADA data filtering & analysis, wind farm model validation, field experiment design, and field experiment monitoring."
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.10, <3.15"
 authors = [
-    { name = "Paul Fleming", email = "paul.fleming@nrel.gov" },
-    { name = "Michael (Misha) Sinner", email = "Michael.Sinner@nrel.gov" },
-    { name = "Eric Simley", email = "Eric.Simley@nrel.gov" },
+    { name = "Paul Fleming", email = "paul.fleming@nlr.gov" },
+    { name = "Michael (Misha) Sinner", email = "michael.sinner@nlr.gov" },
 ]
 license = { file = "LICENSE.txt" }
 keywords = ["flasc"]
@@ -46,7 +45,7 @@ dependencies = [
 
 [project.optional-dependencies]
 docs = [
-    "jupyter-book",
+    "jupyter-book~=1.0",
     "sphinx-book-theme",
     "sphinx-autodoc-typehints",
     "sphinxcontrib-autoyaml",
@@ -64,7 +63,7 @@ develop = [
 include = ["flasc*"]
 
 [project.urls]
-Homepage = "https://github.com/NREL/flasc"
+Homepage = "https://github.com/NatLabRockies/flasc"
 Documentation = "https://readthedocs.org"
 
 

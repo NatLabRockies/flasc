@@ -12,7 +12,7 @@ Development Leads
 Contributors
 ------------
 
-* Paul Fleming <paul.fleming@nrel.gov>
-* Eric Simley <eric.simley@nrel.gov>
-* Christopher Bay <christopher.bay@nrel.gov>
-* Misha Sinner <michael.sinner@nrel.gov>
+* Paul Fleming <paul.fleming@nlr.gov>
+* Eric Simley
+* Christopher Bay <christopher.bay@nlr.gov>
+* Misha Sinner <michael.sinner@nlr.gov>

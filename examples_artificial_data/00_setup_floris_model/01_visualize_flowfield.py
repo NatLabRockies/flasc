@@ -1,4 +1,4 @@
-# Copyright 2022 NREL & Shell
+# Copyright 2022 NLR & Shell
 import floris.layout_visualization as layoutviz
 import matplotlib.pyplot as plt
 from floris.flow_visualization import visualize_cut_plane

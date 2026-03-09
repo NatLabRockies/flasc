@@ -2,8 +2,8 @@
 
 # This is a preliminary implementation of tuning methods for FLORIS to SCADA.
 # The code is focused on methods for the Empirical Guassian wake model and is
-# based on contributions from Elizabeth Eyeson, Paul Fleming (paul.fleming@nrel.gov)
-# Misha Sinner (michael.sinner@nrel.gov) and Eric Simley at NREL, and Bart
+# based on contributions from Elizabeth Eyeson, Paul Fleming (paul.fleming@nlr.gov)
+# Misha Sinner (michael.sinner@nlr.gov) and Eric Simley at NLR, and Bart
 # Doekemeijer at Shell, as well as discussions with Diederik van Binsbergen at
 # NTNU. Please see readme.txt for more information.
 
