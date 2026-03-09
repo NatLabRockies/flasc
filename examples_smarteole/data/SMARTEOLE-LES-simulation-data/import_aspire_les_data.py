@@ -1,15 +1,11 @@
 import os
 import glob
 
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import io
-from time import perf_counter as timerpc
 
 from datetime import timedelta as td
 
-import tarfile 
 import xarray as xr
 
 from zenodo_get import download as zn_download
@@ -17,10 +13,8 @@ import zipfile
 
 from floris.utilities import wrap_360
 from flasc.data_processing.time_operations import (
-    df_downsample,
     df_resample_by_interpolation
 )
-from flasc.visualization import plot_with_wrapping
 
 
 class AspireTimeseriesReader():
