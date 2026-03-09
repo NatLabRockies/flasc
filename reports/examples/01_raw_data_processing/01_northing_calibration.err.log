@@ -1,17 +1,30 @@
 Traceback (most recent call last):
-  File "/opt/hostedtoolcache/Python/3.10.19/x64/lib/python3.10/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+  File "/opt/hostedtoolcache/Python/3.14.3/x64/lib/python3.14/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
     executenb(
-  File "/opt/hostedtoolcache/Python/3.10.19/x64/lib/python3.10/site-packages/nbclient/client.py", line 1323, in execute
+    ~~~~~~~~~^
+        nb,
+        ^^^
+    ...<4 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "/opt/hostedtoolcache/Python/3.14.3/x64/lib/python3.14/site-packages/nbclient/client.py", line 1323, in execute
     return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
-  File "/opt/hostedtoolcache/Python/3.10.19/x64/lib/python3.10/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/hostedtoolcache/Python/3.14.3/x64/lib/python3.14/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
     return loop.run_until_complete(inner)
-  File "/opt/hostedtoolcache/Python/3.10.19/x64/lib/python3.10/asyncio/base_events.py", line 649, in run_until_complete
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.14.3/x64/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
     return future.result()
-  File "/opt/hostedtoolcache/Python/3.10.19/x64/lib/python3.10/site-packages/nbclient/client.py", line 709, in async_execute
+           ~~~~~~~~~~~~~^^
+  File "/opt/hostedtoolcache/Python/3.14.3/x64/lib/python3.14/site-packages/nbclient/client.py", line 709, in async_execute
     await self.async_execute_cell(
-  File "/opt/hostedtoolcache/Python/3.10.19/x64/lib/python3.10/site-packages/nbclient/client.py", line 1062, in async_execute_cell
+        cell, index, execution_count=self.code_cells_executed + 1
+    )
+  File "/opt/hostedtoolcache/Python/3.14.3/x64/lib/python3.14/site-packages/nbclient/client.py", line 1062, in async_execute_cell
     await self._check_raise_for_error(cell, cell_index, exec_reply)
-  File "/opt/hostedtoolcache/Python/3.10.19/x64/lib/python3.10/site-packages/nbclient/client.py", line 918, in _check_raise_for_error
+  File "/opt/hostedtoolcache/Python/3.14.3/x64/lib/python3.14/site-packages/nbclient/client.py", line 918, in _check_raise_for_error
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
@@ -34,15 +47,15 @@ else:
 ------------------
 
 
-[0;31m---------------------------------------------------------------------------[0m
-[0;31mUserWarning[0m                               Traceback (most recent call last)
-Cell [0;32mIn[4], line 13[0m
-[1;32m     11[0m     df_fm_approx [38;5;241m=[39m pd[38;5;241m.[39mread_feather(fn_approx)
-[1;32m     12[0m [38;5;28;01melse[39;00m:
-[0;32m---> 13[0m     [38;5;28;01mraise[39;00m [38;5;167;01mUserWarning[39;00m(
-[1;32m     14[0m         [38;5;124m"[39m[38;5;124mPlease run [39m[38;5;124m'[39m[38;5;124m00_setup_floris_model/02_precalculate_floris_solutions.py[39m[38;5;124m'[39m[38;5;124m [39m[38;5;124m"[39m
-[1;32m     15[0m         [38;5;124m"[39m[38;5;124mfor the appropriate wake models first.[39m[38;5;124m"[39m
-[1;32m     16[0m     )
+[31m---------------------------------------------------------------------------[39m
+[31mUserWarning[39m                               Traceback (most recent call last)
+[36mCell[39m[36m [39m[32mIn[4][39m[32m, line 13[39m
+[32m     11[39m     df_fm_approx = pd.read_feather(fn_approx)
+[32m     12[39m [38;5;28;01melse[39;00m:
+[32m---> [39m[32m13[39m     [38;5;28;01mraise[39;00m [38;5;167;01mUserWarning[39;00m(
+[32m     14[39m         [33m"[39m[33mPlease run [39m[33m'[39m[33m00_setup_floris_model/02_precalculate_floris_solutions.py[39m[33m'[39m[33m [39m[33m"[39m
+[32m     15[39m         [33m"[39m[33mfor the appropriate wake models first.[39m[33m"[39m
+[32m     16[39m     )
 
-[0;31mUserWarning[0m: Please run '00_setup_floris_model/02_precalculate_floris_solutions.py' for the appropriate wake models first.
+[31mUserWarning[39m: Please run '00_setup_floris_model/02_precalculate_floris_solutions.py' for the appropriate wake models first.
 
