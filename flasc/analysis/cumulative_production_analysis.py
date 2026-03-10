@@ -45,12 +45,12 @@ def _print_pretty_table(table_dict, title):
 
 
 def _prepare_df_list(df_list: list, model_tags: list, exclude_turbs: list, ws_range: list):
-    """Prepare list with SCADA, LES and/or FLORIS timeseries dataframes in preparation for
-    cumulative production or wind-farm-wide wake loss calculation.
+    """Prepare list with timeseries dataframes for cumulative production and rel. wake loss.
 
     Args:
         df_list (list): List of Pandas DataFrame timeseries. The first entry is typically SCADA or
             LES, and the remaining entries are models to compare.
+        model_tags (list, optional): List of string tags for the models.
         exclude_turbs (list, optional): List of turbines to exclude from the analysis, e.g.,
             because of poor performance or odd behavior. Defaults to [].
         ws_range (list, optional): Wind speed range for filtering the data. When inspecting wake
