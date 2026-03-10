@@ -79,8 +79,8 @@ class AspireTimeseriesReader:
 
         # Establish the end time of the first simulation, so we can use that to remove start-up
         # periods from the next files
-        t_end_prev_simulation = df.iloc[-1]["time"]  
-        
+        t_end_prev_simulation = df.iloc[-1]["time"]
+
         for ii in range(1, len(df_list)):
             # For every file after the first, we can see where the previous simulation ended
             # and make sure we remove measurement data of this simulation that happens *before*
