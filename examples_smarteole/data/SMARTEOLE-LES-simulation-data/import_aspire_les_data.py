@@ -76,7 +76,10 @@ class AspireTimeseriesReader:
         first_day_change = np.where(np.diff([t.day for t in df["time"]]) != 0)[0][0] + 2
         df = df.loc[first_day_change::]  # Remove start-up period from first file
         df_list[0] = df  # Update the dataframe with the start-up measurements removed
-        t_end_prev_simulation = df.iloc[-1]["time"]  # Establish the end time of the first simulation, so we can use that to remove start-up periods from the next files
+
+        # Establish the end time of the first simulation, so we can use that to remove start-up
+        # periods from the next files
+        t_end_prev_simulation = df.iloc[-1]["time"]  
         
         for ii in range(1, len(df_list)):
             # For every file after the first, we can see where the previous simulation ended
