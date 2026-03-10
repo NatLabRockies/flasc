@@ -40,37 +40,23 @@ def _print_pretty_table(table_dict, title):
     df_table = pd.DataFrame(table_dict)
     mrkdwn = df_table.to_markdown(headers="keys", tablefmt="psql", index=False, floatfmt=".2f")
     spc = int(np.floor(len(mrkdwn.split("\n")[0]) / 2 - len(title) / 2))
-    mrkdwn = (" " * spc + title + "\n") + mrkdwn
+    mrkdwn = (" " * spc + title + "\n") + mrkdwn + "\n"
     return print(mrkdwn)
 
 
-def compare_cumulative_production_and_relative_wake_loss(
-    df_list,
-    df_upstream,
-    exclude_turbs=[],
-    ws_range=[0.0, 99.0],
-    model_tags=None,
-    print_to_console=True,
-):
-    """Compare energy and wake losses between dataframes.
-
-    Calculate the cumulative energy production and the relative wake loss for a list of Pandas
-    DataFrame timeseries. Then, calculate the error between the first timeseries in the list
-    (typically SCADA or LES) and the remaining timeseries (typically LES and/or FLORIS models).
+def _prepare_df_list(df_list: list, exclude_turbs: list, ws_range: list):
+    """Prepare list with SCADA, LES and/or FLORIS timeseries dataframes in preparation for
+    cumulative production or wind-farm-wide wake loss calculation.
 
     Args:
         df_list (list): List of Pandas DataFrame timeseries. The first entry is typically SCADA or
             LES, and the remaining entries are models to compare.
-        df_upstream (Pandas DataFrame): Upstream data for reference, generated using
-            'ftools.get_upstream_turbs_floris()'
         exclude_turbs (list, optional): List of turbines to exclude from the analysis, e.g.,
             because of poor performance or odd behavior. Defaults to [].
         ws_range (list, optional): Wind speed range for filtering the data. When inspecting wake
-            losses, one may want to zoom into the relevant wind
-        speed range, typically between 6 and 14 m/s. This also allows you to inspect the model
-            performance for different wind speed regions. Defaults to [0.0, 99.0].
-        model_tags (list, optional): List of string tags for the models. Defaults to None, which
-            will generate tags as "Model 0", "Model 1", etc.
+            losses, one may want to zoom into the relevant wind speed range, typically between
+            6 and 14 m/s. This also allows you to inspect the model performance for different
+            wind speed regions. Defaults to [0.0, 99.0].
         print_to_console (bool, optional): Whether to print the results to the console.
             Defaults to True.
 
@@ -80,15 +66,9 @@ def compare_cumulative_production_and_relative_wake_loss(
         ValueError: If input timeseries dataframes in df_list already contain a 'pow_ref' column.
 
     Returns:
-        table_absolute_cumprod_dict: Dictionary containing the absolute cumulative production
-            numbers, including errors w.r.t. the first dataframe.
-        table_wakeloss_cumprod_dict: Dictionary containing the relative wake loss numbers, including
-            errors w.r.t. the first dataframe.
+        df_list (list): List of Pandas DataFrame timeseries, after applying wind speed filtering,
+            excluding turbines, and mirroring NaNs across dataframes.
     """
-    # Apply default model tags if not provided
-    if model_tags is None:
-        model_tags = [f"Model {ti}" for ti in range(len(df_list))]
-
     # Check input dataframes are consistent in terms of number of turbines and timestamps
     if not all([all(df_list[0]["time"] == df["time"]) for df in df_list]):
         raise ValueError(
@@ -137,23 +117,11 @@ def compare_cumulative_production_and_relative_wake_loss(
         for dfii in range(len(df_list)):
             df_list[dfii][f"pow_{ti:03d}"] = None
 
-    # Helper variables
-    n_turbs = dfm.get_num_turbines(df_list[0])
-    pow_cols = [f"pow_{ti:03d}" for ti in range(n_turbs)]
-
     # Mirror NaNs across dataframes to ensure consistent NaN mapping between modelled data and SCADA
     # timeseries. This is important to ensure that we are comparing production and wake losses over
     # the same timestamps, and that we are not unfairly penalizing models for having values where
     # SCADA has NaNs (e.g. due to turbine downtime).
     df_list = dfm.df_mirror_timeseries_nans(df_list, verbose=False)
-
-    for dfii, df in enumerate(df_list):
-        # Specify upstream power in the exact same way as with the SCADA data
-        df = dfm.set_pow_ref_by_upstream_turbines(df, df_upstream, exclude_turbs=exclude_turbs)
-
-    ################################################################################################
-    ############# Compare cumulative production directly between SCADA and simulated data (LES) ####
-    ################################################################################################
 
     # Check if our dataset is a whole multiple of 8760 hours (1 year), if not, raise a warning that
     # the AEP calculation is not exact and that we are comparing cumulative energy rather than AEP.
@@ -168,18 +136,70 @@ def compare_cumulative_production_and_relative_wake_loss(
     n_weeks = n_hours_total / 168
     n_hours_in_year = 8760
     avg_no_years_in_data = round(n_hours_total / n_hours_in_year)
-    avg_no_years_in_data = np.max(
-        [avg_no_years_in_data, 1]
-    )  # Minimum of 1 year needed to have cumulative production be comparable to AEP
+
+    # Minimum of 1 year needed to have cumulative production be comparable to AEP
+    avg_no_years_in_data = np.max([avg_no_years_in_data, 1])
+
     offset_prct = (
         100.0 * (n_hours_total - avg_no_years_in_data * n_hours_in_year) / n_hours_in_year
     )  # Offset percentage from whole number of years
     if np.abs(offset_prct) > 1.0:
         print(
             f"WARNING: Dataset spans {n_weeks:.1f} weeks and is not a whole multiple of 8760 hours "
-            + "(1 year). Note the reported numbers are CUMULATIVE ENERGY, not AEP. Offset from "
-            + f"whole number of years: {offset_prct:+.2f}%."
+            + "(1 year).\nNote the reported numbers therefore do not represent AEP. Instead, they "
+            + "represent \na form of cumulative production. Offset from whole number of years: "
+            + f"{offset_prct:+.2f} %."
         )
+
+    return df_list, n_measurements_per_hour
+
+
+def compare_cumulative_production(
+    df_list,
+    exclude_turbs=[],
+    ws_range=[0.0, 99.0],
+    model_tags=None,
+    print_to_console=True,
+):
+    """Compare energy and wake losses between dataframes.
+
+    Calculate the cumulative energy production for a list of Pandas DataFrame timeseries.
+    Then, calculate the error between the first timeseries in the list (typically SCADA
+    or LES) and the remaining timeseries (typically LES and/or FLORIS models).
+
+    Args:
+        df_list (list): List of Pandas DataFrame timeseries. The first entry is typically SCADA or
+            LES, and the remaining entries are models to compare.
+        exclude_turbs (list, optional): List of turbines to exclude from the analysis, e.g.,
+            because of poor performance or odd behavior. Defaults to [].
+        ws_range (list, optional): Wind speed range for filtering the data. When inspecting wake
+            losses, one may want to zoom into the relevant wind
+        speed range, typically between 6 and 14 m/s. This also allows you to inspect the model
+            performance for different wind speed regions. Defaults to [0.0, 99.0].
+        model_tags (list, optional): List of string tags for the models. Defaults to None, which
+            will generate tags as "Model 0", "Model 1", etc.
+        print_to_console (bool, optional): Whether to print the results to the console.
+            Defaults to True.
+
+    Raises:
+        ValueError: If input timeseries dataframes in df_list have different timestamps.
+        ValueError: If input timeseries dataframes in df_list have different number of turbines.
+        ValueError: If input timeseries dataframes in df_list already contain a 'pow_ref' column.
+
+    Returns:
+        table_absolute_cumprod_dict: Dictionary containing the absolute cumulative production
+            numbers, including errors w.r.t. the first dataframe.
+    """
+    # Apply default model tags if not provided
+    if model_tags is None:
+        model_tags = [f"Model {ti}" for ti in range(len(df_list))]
+
+    # Check inputs and format df_list as needed
+    df_list, n_measurements_per_hour = _prepare_df_list(df_list, exclude_turbs, ws_range)
+
+    # Helper variables
+    n_turbs = dfm.get_num_turbines(df_list[0])
+    pow_cols = [f"pow_{ti:03d}" for ti in range(n_turbs)]
 
     # Absolute cumulative energy production for the entire farm and per turbine
     cumprod_turbine_list = [
@@ -199,9 +219,76 @@ def compare_cumulative_production_and_relative_wake_loss(
                 _err(cumprod_farm_list[0], cumprod_farm_list[mii])
             ] + [_err(x, y) for x, y in zip(cumprod_turbine_list[0], cumprod_turbine_list[mii])]
 
-    ################################################################################################
-    #### Now we do the same exercise, but with wake loss rather than cumulative production #########
-    ################################################################################################
+    # Finally print
+    if print_to_console:
+        t0 = df_list[0].iloc[0]["time"]
+        t1 = df_list[0].iloc[-1]["time"]
+        c = (
+            f"Data from {t0.strftime('%Y-%m-%d')} to {t1.strftime('%Y-%m-%d')}; Wind speeds "
+            + f"{ws_range[0]:.1f} m/s to {ws_range[1]:.1f} m/s"
+        )
+        print("")
+        _print_pretty_table(
+            table_absolute_cumprod_dict, title=f"Absolute cumulative energy (MWh); {c}"
+        )
+
+    return table_absolute_cumprod_dict
+
+
+def compare_relative_wake_loss(
+    df_list,
+    df_upstream,
+    exclude_turbs=[],
+    ws_range=[0.0, 99.0],
+    model_tags=None,
+    print_to_console=True,
+):
+    """Compare energy and wake losses between dataframes.
+
+    Calculate the relative wake loss for a list of Pandas DataFrame timeseries. Then, calculate
+    the error between the first timeseries in the list (typically SCADA or LES) and the remaining
+    timeseries (typically LES and/or FLORIS models).
+
+    Args:
+        df_list (list): List of Pandas DataFrame timeseries. The first entry is typically SCADA or
+            LES, and the remaining entries are models to compare.
+        df_upstream (Pandas DataFrame): Upstream data for reference, generated using
+            'ftools.get_upstream_turbs_floris()'
+        exclude_turbs (list, optional): List of turbines to exclude from the analysis, e.g.,
+            because of poor performance or odd behavior. Defaults to [].
+        ws_range (list, optional): Wind speed range for filtering the data. When inspecting wake
+            losses, one may want to zoom into the relevant wind
+        speed range, typically between 6 and 14 m/s. This also allows you to inspect the model
+            performance for different wind speed regions. Defaults to [0.0, 99.0].
+        model_tags (list, optional): List of string tags for the models. Defaults to None, which
+            will generate tags as "Model 0", "Model 1", etc.
+        print_to_console (bool, optional): Whether to print the results to the console.
+            Defaults to True.
+
+    Raises:
+        ValueError: If input timeseries dataframes in df_list have different timestamps.
+        ValueError: If input timeseries dataframes in df_list have different number of turbines.
+        ValueError: If input timeseries dataframes in df_list already contain a 'pow_ref' column.
+
+    Returns:
+        table_wakeloss_cumprod_dict: Dictionary containing the relative wake loss numbers, including
+            errors w.r.t. the first dataframe.
+    """
+    # Apply default model tags if not provided
+    if model_tags is None:
+        model_tags = [f"Model {ti}" for ti in range(len(df_list))]
+
+    # Check inputs and format df_list as needed
+    df_list, n_measurements_per_hour = _prepare_df_list(df_list, exclude_turbs, ws_range)
+
+    # Helper variables
+    n_turbs = dfm.get_num_turbines(df_list[0])
+    pow_cols = [f"pow_{ti:03d}" for ti in range(n_turbs)]
+
+    # Specify reference power production as the power production of the most upstream turbine(s)
+    for dfii, df in enumerate(df_list):
+        # Specify upstream power in the exact same way as with the SCADA data
+        df = dfm.set_pow_ref_by_upstream_turbines(df, df_upstream, exclude_turbs=exclude_turbs)
 
     # Compare cumulative energy wake loss relative to most upstream turbines
     cumprod_turbine_waked_list = [
@@ -257,17 +344,15 @@ def compare_cumulative_production_and_relative_wake_loss(
 
     # Finally print
     if print_to_console:
+        t0 = df_list[0].iloc[0]["time"]
+        t1 = df_list[0].iloc[-1]["time"]
         c = (
             f"Data from {t0.strftime('%Y-%m-%d')} to {t1.strftime('%Y-%m-%d')}; Wind speeds "
             + f"{ws_range[0]:.1f} m/s to {ws_range[1]:.1f} m/s"
         )
-        print("\n")
-        _print_pretty_table(
-            table_absolute_cumprod_dict, title=f"Absolute cumulative energy (MWh); {c}"
-        )
-        print("\n")
+        print("")
         _print_pretty_table(
             table_wakeloss_cumprod_dict, title=f"Cumulative energy wake loss (%); {c}"
         )
 
-    return table_absolute_cumprod_dict, table_wakeloss_cumprod_dict
+    return table_wakeloss_cumprod_dict
