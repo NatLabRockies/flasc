@@ -44,6 +44,45 @@ def _print_pretty_table(table_dict, title):
     return print(mrkdwn)
 
 
+def _mirror_timeseries_nans_in_df_list(df_list: list, verbose: bool = False) -> list:
+    """Mirror NaNs in 'pow_{id:03d}' columns across a list of dataframes.
+
+    Args:
+        df_list (list): A list of DataFrames containing SCADA, LES or FLORIS model timeseries with
+            power production columns, pow_000, pow_001, etc.
+        verbose (bool, optional): If True, print the number of NaNs in each dataframe.
+            Defaults to False.
+
+    Returns:
+        list: The list of DataFrames with copied-over NaNs. Each dataframe has an equal number of
+            NaNs in the power columns, and these NaNs are located at the same timestamps across all
+            dataframes.
+    """
+    # Helper variables
+    n_turbs = dfm.get_num_turbines(df_list[0])
+    pow_cols = [f"pow_{ti:03d}" for ti in range(n_turbs)]
+
+    # First ensure consistent NaN mapping between modelled data and SCADA timeseries
+    for ti in range(n_turbs):
+        # For each individual turbine, identify all timestamps where any of the timeseries have NaN
+        # values, and create a combined mask of these
+        ids_nan = np.zeros(len(df_list[0]), dtype=bool)
+        for df in df_list:
+            ids_nan = ids_nan | df[f"pow_{ti:03d}"].isna()
+        ids_nan = np.where(ids_nan)[0]
+
+        # Mirror NaNs across all timeseries
+        for df in df_list:
+            df.loc[ids_nan, f"pow_{ti:03d}"] = None
+
+    if verbose:
+        # Assert NaNs are identical between dataframes
+        n_nans_per_timeseries = [df[pow_cols].isna().sum().sum() for df in df_list]
+        print(f"NaNs in df_list power columns: {n_nans_per_timeseries}")
+
+    return df_list
+
+
 def _prepare_df_list(df_list: list, model_tags: list, exclude_turbs: list, ws_range: list):
     """Prepare list with timeseries dataframes for cumulative production and rel. wake loss.
 
@@ -121,7 +160,7 @@ def _prepare_df_list(df_list: list, model_tags: list, exclude_turbs: list, ws_ra
     # timeseries. This is important to ensure that we are comparing production and wake losses over
     # the same timestamps, and that we are not unfairly penalizing models for having values where
     # SCADA has NaNs (e.g. due to turbine downtime).
-    df_list = dfm.df_mirror_timeseries_nans(df_list, verbose=False)
+    df_list = _mirror_timeseries_nans_in_df_list(df_list, verbose=False)
 
     # Check if our dataset is a whole multiple of 8760 hours (1 year), if not, raise a warning that
     # the AEP calculation is not exact and that we are comparing cumulative energy rather than AEP.
