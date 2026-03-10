@@ -44,7 +44,7 @@ def _print_pretty_table(table_dict, title):
     return print(mrkdwn)
 
 
-def _prepare_df_list(df_list: list, exclude_turbs: list, ws_range: list):
+def _prepare_df_list(df_list: list, model_tags: list, exclude_turbs: list, ws_range: list):
     """Prepare list with SCADA, LES and/or FLORIS timeseries dataframes in preparation for
     cumulative production or wind-farm-wide wake loss calculation.
 
@@ -195,7 +195,9 @@ def compare_cumulative_production(
         model_tags = [f"Model {ti}" for ti in range(len(df_list))]
 
     # Check inputs and format df_list as needed
-    df_list, n_measurements_per_hour = _prepare_df_list(df_list, exclude_turbs, ws_range)
+    df_list, n_measurements_per_hour = _prepare_df_list(
+        df_list, model_tags, exclude_turbs, ws_range
+    )
 
     # Helper variables
     n_turbs = dfm.get_num_turbines(df_list[0])
@@ -279,11 +281,12 @@ def compare_relative_wake_loss(
         model_tags = [f"Model {ti}" for ti in range(len(df_list))]
 
     # Check inputs and format df_list as needed
-    df_list, n_measurements_per_hour = _prepare_df_list(df_list, exclude_turbs, ws_range)
+    df_list, n_measurements_per_hour = _prepare_df_list(
+        df_list, model_tags, exclude_turbs, ws_range
+    )
 
     # Helper variables
     n_turbs = dfm.get_num_turbines(df_list[0])
-    pow_cols = [f"pow_{ti:03d}" for ti in range(n_turbs)]
 
     # Specify reference power production as the power production of the most upstream turbine(s)
     for dfii, df in enumerate(df_list):
