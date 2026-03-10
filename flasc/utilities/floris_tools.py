@@ -234,10 +234,11 @@ def interpolate_floris_from_df_approx(
         else:
             raise UserWarning(
                 "wrap_0deg_to_360deg is set to True but it seems that your table does not cover the wind rose.\n" +
-                "Please assign `wrap_0deg_to_360deg=False` or alternatively ensure the following for your table:\n" +
-                "  - Either 0.0 deg or step_size/2 is included in the table, and\n" +
-                "  - Either (360.0 - step_size) or (360.0 - step_size/2) is included in the table, and\n" +
-                "  - The step size is consistent across the table."
+                f"Your current table covers the following wind directions: {df_approx['wd'].unique()}.\n"
+                "Please assign `wrap_0deg_to_360deg=False` or alternatively ensure that:\n" +
+                "   1.  The step size is consistent across the table, and either:\n" +
+                "   2a. 0.0 deg and (360.0 - step_size) are included in the table, or\n" +
+                "   2b. (step_size/2) and (360.0 - step_size/2) are included in the table."
             )
 
         # Copy lower/upper bounds (e.g. copy 0.0/2.5 deg to 360.0/362.5 deg, and copy 355.0/357.5 deg to -5.0/-2.5 deg) to allow interpolation over the entire wind rose
