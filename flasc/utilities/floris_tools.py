@@ -233,7 +233,11 @@ def interpolate_floris_from_df_approx(
             wd_max = 360.0 - step_size / 2
         else:
             raise UserWarning(
-                "wrap_0deg_to_360deg is set to True but cannot determine if df_approx table fully covers 0 to 360 deg."
+                "wrap_0deg_to_360deg is set to True but it seems that your table does not cover the wind rose.\n" +
+                "Please assign `wrap_0deg_to_360deg=False` or alternatively ensure the following for your table:\n" +
+                "  - Either 0.0 deg or step_size/2 is included in the table, and\n" +
+                "  - Either (360.0 - step_size) or (360.0 - step_size/2) is included in the table, and\n" +
+                "  - The step size is consistent across the table."
             )
 
         # Copy lower/upper bounds (e.g. copy 0.0/2.5 deg to 360.0/362.5 deg, and copy 355.0/357.5 deg to -5.0/-2.5 deg) to allow interpolation over the entire wind rose
