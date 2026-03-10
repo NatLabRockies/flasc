@@ -41,6 +41,8 @@ dependencies = [
     "optuna~=4.0",
     "scikit-learn~=1.5",
     "zenodo-get~=3.0.0",
+    "xarray~=2025.6.1",
+    "netcdf4~=1.6",
 ]
 
 [project.optional-dependencies]
