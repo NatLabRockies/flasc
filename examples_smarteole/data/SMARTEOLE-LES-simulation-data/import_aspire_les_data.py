@@ -67,24 +67,27 @@ class AspireTimeseriesReader:
             df_out (pd.DataFrame): Pandas DataFrame containing multiple days of simulation data,
             with the start-up periods and overlapping measurement times removed.
         """
-        # Now stitch dataframes together while removing start-up periods
-        for ii, df in enumerate(df_list):
-            if ii == 0:
-                # The dataset usually starts a couple hours before midnight in the day before the
-                # actual day of the simulation. That is the start-up period. We must remove that
-                # period from the dataset.
-                first_day_change = np.where(np.diff([t.day for t in df["time"]]) != 0)[0][0] + 2
-                df = df.loc[first_day_change::]  # Remove start-up period from first file
-                t_end_prev_simulation = df.iloc[-1]["time"]
-            else:
-                # For every file besides the first, we can see where the previous simulation ended
-                # and make sure we remove measurement data of this simulation that happens *before*
-                # the latest simulation time of the previous file. Namely, that period is considered
-                # the start-up period for this file and should be removed.
-                dt = df["time"].diff().median()  # Average duration between timesteps
-                df = df.loc[
-                    df["time"] > t_end_prev_simulation + 0.5 * dt
-                ]  # Only keep timesteps at least 5 minutes past the last measurement from previous
+        # Here we stitch dataframes together while removing start-up periods
+
+        # The dataset usually starts a couple hours before midnight in the day before the
+        # actual day of the simulation. That is the start-up period. We must remove that
+        # period from the dataset. Let's do this for the first dataframe separately.
+        df = df_list[0].copy()
+        first_day_change = np.where(np.diff([t.day for t in df["time"]]) != 0)[0][0] + 2
+        df = df.loc[first_day_change::]  # Remove start-up period from first file
+        df_list[0] = df  # Update the dataframe with the start-up measurements removed
+        t_end_prev_simulation = df.iloc[-1]["time"]  # Establish the end time of the first simulation, so we can use that to remove start-up periods from the next files
+        
+        for ii in range(1, len(df_list)):
+            # For every file after the first, we can see where the previous simulation ended
+            # and make sure we remove measurement data of this simulation that happens *before*
+            # the latest simulation time of the previous file. Namely, that period is considered
+            # the start-up period for this file and should be removed.
+            df = df_list[ii].copy()
+            dt = df["time"].diff().median()  # Average duration between timesteps
+            df = df.loc[
+                df["time"] > t_end_prev_simulation + 0.5 * dt
+            ]  # Only keep timesteps at least 5 minutes past the last measurement from previous
 
             # Update the dataframe with the start-up measurements removed
             df_list[ii] = df
