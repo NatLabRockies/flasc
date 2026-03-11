@@ -214,15 +214,39 @@ def interpolate_floris_from_df_approx(
             "  Creating a gridded interpolant with " + "interpolation method '%s'." % method
         )
 
-    # Make a copy from wd=0.0 deg to wd=360.0 deg for wrapping
+    # Make a copy from wd=0.0 deg to wd=360.0 deg for wrapping, and vice versa
     if wrap_0deg_to_360deg and (not (df_approx["wd"] > 359.999999).any()):
-        if not np.any(df_approx["wd"] < 0.01):
+        unique_steps = np.unique(np.diff(np.unique(df_approx["wd"])))
+        step_size = unique_steps[0]
+        if len(unique_steps) > 1:
             raise UserWarning(
-                "wrap_0deg_to_360deg is set to True but no solutions at wd=0 deg in the precalculated solution table."
+                "wrap_0deg_to_360deg is set to True but precalculated solution table has irregular steps in wind direction."
             )
-        df_subset = df_approx[df_approx["wd"] == 0.0].copy()
-        df_subset["wd"] = 360.0
-        df_approx = pd.concat([df_approx, df_subset], axis=0)
+
+        if (0.0 in df_approx["wd"].values) & ((360.0 - step_size) in df_approx["wd"].values):
+            wd_min = 0.0
+            wd_max = 360.0 - step_size
+        elif ((step_size / 2) in df_approx["wd"].values) & (
+            (360.0 - step_size / 2) in df_approx["wd"].values
+        ):
+            wd_min = step_size / 2
+            wd_max = 360.0 - step_size / 2
+        else:
+            raise UserWarning(
+                "wrap_0deg_to_360deg is set to True but it seems that your table does not cover the wind rose.\n"
+                + f"Your current table covers the following wind directions: {df_approx['wd'].unique()}.\n"
+                "Please assign `wrap_0deg_to_360deg=False` or alternatively ensure that:\n"
+                + "   1.  The step size is consistent across the table, and either:\n"
+                + "   2a. 0.0 deg and (360.0 - step_size) are included in the table, or\n"
+                + "   2b. (step_size/2) and (360.0 - step_size/2) are included in the table."
+            )
+
+        # Copy lower/upper bounds (e.g. copy 0.0/2.5 deg to 360.0/362.5 deg, and copy 355.0/357.5 deg to -5.0/-2.5 deg) to allow interpolation over the entire wind rose
+        df_subset_lb = df_approx[df_approx["wd"] == wd_min].copy()
+        df_subset_lb["wd"] += 360.0
+        df_subset_ub = df_approx[df_approx["wd"] == wd_max].copy()
+        df_subset_ub["wd"] += -360.0
+        df_approx = pd.concat([df_approx, df_subset_lb, df_subset_ub], axis=0)
 
     # Copy TI to lower and upper bound
     if (grid_type == "3d") and extrapolate_ti:
