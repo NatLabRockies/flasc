@@ -27,6 +27,7 @@
    :recursive:
 
    analysis_input
+   cumulative_production_analysis
    energy_ratio
    energy_ratio_heterogeneity_mapper
    energy_ratio_input
