@@ -211,7 +211,8 @@ class AspireTimeseriesReader:
 
 
 if __name__ == "__main__":
-    # Download files from Zenodo
+    # Download files from Zenodo. Note that this may fail in certain VPN
+    # environments or with certain SSL certificates.
     root_path = os.path.dirname(os.path.abspath(__file__))
     data_path = os.path.join(root_path, "data")
     zn_download("10.5281/zenodo.18888663", output_dir=data_path)
