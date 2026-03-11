@@ -92,7 +92,7 @@ class TestFlorisTools(unittest.TestCase):
             }
         )
         df["time"] = 0.0  # Empty array
-        df = interpolate_floris_from_df_approx(df, df_fm_approx)
+        df = interpolate_floris_from_df_approx(df, df_fm_approx, wrap_0deg_to_360deg=False)
 
         # Ensure that NaNs are mimicked appropriately
         self.assertTrue(~df[["pow_003", "pow_004"]].isna().any().any())

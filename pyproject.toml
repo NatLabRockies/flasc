@@ -4,10 +4,10 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "flasc"
-version = "2.4.2"
+version = "2.5"
 description = "FLASC provides a rich suite of analysis tools for SCADA data filtering & analysis, wind farm model validation, field experiment design, and field experiment monitoring."
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.10, <3.15"
 authors = [
     { name = "Paul Fleming", email = "paul.fleming@nlr.gov" },
     { name = "Michael (Misha) Sinner", email = "michael.sinner@nlr.gov" },
@@ -40,6 +40,9 @@ dependencies = [
     "res-wind-up~=0.1",
     "optuna~=4.0",
     "scikit-learn~=1.5",
+    "zenodo-get~=3.0.0",
+    "xarray",
+    "netcdf4~=1.6",
 ]
 
 [project.optional-dependencies]
